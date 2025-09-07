@@ -1,4 +1,4 @@
-@use '@/styles/var.scss' as *;
+@use "@/app/styles/tokens.scss" as *;
 
 $pad: convertRem(20);
 
@@ -55,7 +55,7 @@ $pad: convertRem(20);
       }
     }
 
-    [data-slot='accordion-item'] {
+    [data-slot="accordion-item"] {
       &:not(:last-child) {
         padding-bottom: 1em;
       }
@@ -64,7 +64,7 @@ $pad: convertRem(20);
       }
       // background-color: saddlebrown;
 
-      [data-slot='accordion-content'] > div {
+      [data-slot="accordion-content"] > div {
         padding-bottom: 0;
       }
 

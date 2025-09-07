@@ -34,8 +34,8 @@
 
 ## Segments
 
-- `api/`: Backend 통신: Request Function, Data Type, Mapper 등
-- `model/`: Data Model: Schema, Interface, Store, Business Logic
-- `ui/`: UI 관련: Component, Date Formatter, Style 등
-- `lib/`: Slice 내부 Library 코드
-- `config/`: Configuration과 Feature Flag
+- `api/`: request functions, data types, mappers 등 백엔드 통신 및 데이터 로직
+- `model/`: schema, interfaces, store, business logic 등 애플리케이션 도메인 모델
+- `ui/`: UI components, date formatter, styles 등 UI 표현과 직접 관련된 코드
+- `lib/`: 해당 Slice에서 여러 모듈이 함께 사용하는 공통 library code
+- `config/`: configuration files, feature flags 등 환경·기능 설정

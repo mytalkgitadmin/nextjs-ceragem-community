@@ -1,4 +1,4 @@
-@use '@/styles/var.scss' as *;
+@use "@/app/styles/tokens.scss" as *;
 .messageWrap {
   .top {
     font-size: 0.9em;
@@ -42,7 +42,7 @@
         padding: 0.4em 0.6em;
         border-radius: $borderRadius;
 
-        [class*='receiver_message'] & {
+        [class*="receiver_message"] & {
           background-color: rgba(var(--primary-rgb), 0.05);
         }
         svg {

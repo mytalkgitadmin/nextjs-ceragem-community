@@ -1,4 +1,4 @@
-@use "@/styles/var.scss" as *;
+@use "@/app/styles/tokens.scss" as *;
 
 .formWrap {
   width: calc(100% - (convertRem(20) * 2));

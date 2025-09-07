@@ -1,4 +1,4 @@
-@use '@/styles/var.scss' as *;
+@use "@/app/styles/tokens.scss" as *;
 
 $smallText: 0.8em;
 $profileWidth: convertRem(40);
@@ -51,13 +51,13 @@ $gap: convertRem(10);
     justify-items: start; // 기본 왼쪽 정렬
 
     // 기본: 메시지+시간
-    grid-template-areas: 'talk time';
+    grid-template-areas: "talk time";
 
     // 1. 닉네임
     &:has(.nickname) {
       grid-template-areas:
-        'nickname nickname'
-        'talk time';
+        "nickname nickname"
+        "talk time";
 
       .nickname {
         grid-area: nickname;
@@ -67,8 +67,8 @@ $gap: convertRem(10);
     &:has(.mid) {
       // background-color: salmon;
       grid-template-areas:
-        'talk time'
-        'mid mid';
+        "talk time"
+        "mid mid";
 
       .mid {
         grid-area: mid;
@@ -79,8 +79,8 @@ $gap: convertRem(10);
     &:has(.bottom) {
       // background-color: yellow;
       grid-template-areas:
-        'talk time'
-        'etc etc';
+        "talk time"
+        "etc etc";
       .bottom {
         grid-area: etc;
         text-align: left;
@@ -91,27 +91,27 @@ $gap: convertRem(10);
     &:has(.nickname):has(.bottom) {
       // background-color: green;
       grid-template-areas:
-        'nickname nickname'
-        'talk time'
-        'etc etc';
+        "nickname nickname"
+        "talk time"
+        "etc etc";
     }
 
     // 5. 닉네임 + 리액션(og)
     &:has(.nickname):has(.mid) {
       // background-color: green;
       grid-template-areas:
-        'nickname nickname'
-        'talk time'
-        'mid mid';
+        "nickname nickname"
+        "talk time"
+        "mid mid";
     }
 
     // 6. 리액션 + 하단
     &:has(.mid):has(.bottom) {
       // background-color: plum;
       grid-template-areas:
-        'talk time'
-        'mid mid'
-        'etc etc';
+        "talk time"
+        "mid mid"
+        "etc etc";
 
       .bottom {
         grid-area: etc;
@@ -122,10 +122,10 @@ $gap: convertRem(10);
     &:has(.nickname):has(.mid):has(.bottom) {
       // background-color: aqua;
       grid-template-areas:
-        'nickname nickname'
-        'talk time'
-        'mid mid'
-        'etc etc';
+        "nickname nickname"
+        "talk time"
+        "mid mid"
+        "etc etc";
     }
   }
 
@@ -136,13 +136,13 @@ $gap: convertRem(10);
       justify-items: end; // 오른쪽 정렬
 
       // 기본: 메시지+시간
-      grid-template-areas: 'time talk';
+      grid-template-areas: "time talk";
 
       // 1. 닉네임
       &:has(.nickname) {
         grid-template-areas:
-          'nickname nickname'
-          'time talk';
+          "nickname nickname"
+          "time talk";
 
         .nickname {
           grid-area: nickname;
@@ -151,8 +151,8 @@ $gap: convertRem(10);
       // 2. 중간
       &:has(.mid) {
         grid-template-areas:
-          'time talk'
-          'mid mid';
+          "time talk"
+          "mid mid";
 
         .mid {
           grid-area: mid;
@@ -162,8 +162,8 @@ $gap: convertRem(10);
       // 3. 바텀
       &:has(.bottom) {
         grid-template-areas:
-          'time talk'
-          'etc etc';
+          "time talk"
+          "etc etc";
         .bottom {
           grid-area: etc;
           text-align: right;
@@ -174,18 +174,18 @@ $gap: convertRem(10);
       &:has(.nickname):has(.bottom) {
         // background-color: green;
         grid-template-areas:
-          'nickname nickname'
-          'time talk'
-          'etc etc';
+          "nickname nickname"
+          "time talk"
+          "etc etc";
       }
 
       // 5. 리액션 + 하단
       &:has(.mid):has(.bottom) {
         // background-color: plum;
         grid-template-areas:
-          'time talk'
-          'mid mid'
-          'etc etc';
+          "time talk"
+          "mid mid"
+          "etc etc";
 
         .bottom {
           grid-area: etc;
@@ -196,10 +196,10 @@ $gap: convertRem(10);
       &:has(.nickname):has(.mid):has(.bottom) {
         // background-color: aqua;
         grid-template-areas:
-          'nickname nickname'
-          'time talk'
-          'mid mid'
-          'etc etc';
+          "nickname nickname"
+          "time talk"
+          "mid mid"
+          "etc etc";
       }
     }
   }
@@ -227,15 +227,15 @@ $gap: convertRem(10);
     border-color: transparent;
   }
 
-  &:has([class*='file']) {
+  &:has([class*="file"]) {
     padding: 0;
   }
-  &:has([class*='bubble']) {
+  &:has([class*="bubble"]) {
     padding: 0;
     border: 1px solid transparent;
     background: none;
   }
-  &:has([class*='groupImg']) {
+  &:has([class*="groupImg"]) {
     background: none;
     border: 0;
   }
@@ -283,7 +283,7 @@ $gap: convertRem(10);
   transition: al 0.3s;
 }
 .layout {
-  [class*='sendbird-msg-hoc__animated'] & .contents {
+  [class*="sendbird-msg-hoc__animated"] & .contents {
     animation: shake 0.5s ease-in-out 2;
     // 3s linear 1s infinite alternate slidein;
   }
