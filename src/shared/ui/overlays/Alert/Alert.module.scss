@@ -1,0 +1,8 @@
+@use "@/styles/var.scss" as *;
+
+.alertContent {
+  max-width: 420px;
+}
+.alertDesc {
+  color: var(--text2);
+}

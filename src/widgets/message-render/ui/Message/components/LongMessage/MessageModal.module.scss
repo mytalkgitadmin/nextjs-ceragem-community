@@ -1,0 +1,60 @@
+@use '@/styles/var.scss' as *;
+.dialogContent {
+  width: convertRem(1200);
+  height: convertRem(800);
+  max-width: calc(100% - 2rem);
+  max-height: 80vh;
+}
+.inner {
+  max-height: 100%;
+  overflow-y: auto;
+  line-height: 1.6;
+
+  white-space: pre-wrap;
+}
+
+.btn {
+  transition: all 0.3s;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  .success {
+    background: var(--primary);
+    color: var(--primary-text);
+    svg {
+      color: var(--primary-text);
+    }
+  }
+}
+
+.success {
+  svg {
+    path {
+      stroke-dasharray: 22;
+      stroke-dashoffset: 22;
+      animation: drawCheck 0.4s ease-out forwards;
+    }
+  }
+}
+@keyframes drawCheck {
+  0% {
+    stroke-dashoffset: 22;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.dialogFooter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+}

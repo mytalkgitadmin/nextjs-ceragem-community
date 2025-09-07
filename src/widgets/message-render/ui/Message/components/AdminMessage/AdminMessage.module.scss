@@ -1,0 +1,7 @@
+@use '@/styles/var.scss' as *;
+
+.admin_message {
+  text-align: center;
+  font-size: convertRem(14);
+  color: var(--text3);
+}

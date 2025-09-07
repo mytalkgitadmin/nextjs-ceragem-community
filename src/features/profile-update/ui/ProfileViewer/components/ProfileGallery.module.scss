@@ -1,0 +1,17 @@
+@use "@/styles/var.scss" as *;
+
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: convertRem(12);
+}
+
+.title {
+  font-weight: 600;
+}
+
+.profileList {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: convertRem(8);
+}

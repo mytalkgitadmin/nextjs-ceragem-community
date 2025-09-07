@@ -1,0 +1,7 @@
+@use "@/styles/var.scss" as *;
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: convertRem(6);
+}

@@ -1,0 +1,16 @@
+.content {
+  max-width: 480px;
+}
+.friends {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+.selected {
+  outline: 2px solid var(--primary);
+}
+.check {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+}

@@ -1,0 +1,16 @@
+@use "./tokens.scss" as *;
+
+:root {
+  @each $name, $value in $light {
+    --#{'' + $name}: #{$value};
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root,
+  [data-theme="dark"] {
+    @each $name, $value in $dark {
+      --#{'' + $name}: #{$value};
+    }
+  }
+}

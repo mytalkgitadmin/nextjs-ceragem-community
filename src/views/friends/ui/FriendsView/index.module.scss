@@ -1,0 +1,129 @@
+@use '@/styles/var.scss' as *;
+
+$pad: convertRem(20);
+
+.pageWrap {
+  width: 100%;
+  padding: convertRem(20) 0;
+  display: flex;
+  gap: 4rem;
+  flex-wrap: wrap;
+
+  .friends {
+    flex-grow: 1;
+    flex-basis: convertRem(400);
+  }
+  .alarmList {
+    flex-grow: 3;
+    flex-basis: convertRem(400);
+  }
+}
+.friends {
+  width: 100%;
+
+  .title {
+    font-size: 1.6em;
+    font-weight: 200;
+    margin-bottom: 0.4em;
+    strong {
+      font-weight: 500;
+    }
+  }
+
+  .box,
+  .AccordionWrap,
+  .alarm {
+    border: 1px solid var(--border);
+    padding: $pad;
+    border-radius: $borderRadius;
+  }
+
+  .titleFriend {
+    margin-top: convertRem(20);
+    font-weight: 600;
+    margin: convertRem(40) 0 convertRem(10);
+  }
+
+  .AccordionWrap {
+    padding: calc($pad/2) $pad;
+
+    .title2 {
+      font-weight: 600;
+
+      span {
+        color: var(--primary);
+      }
+    }
+
+    [data-slot='accordion-item'] {
+      &:not(:last-child) {
+        padding-bottom: 1em;
+      }
+      &:not(:first-child) {
+        margin-top: 1em;
+      }
+      // background-color: saddlebrown;
+
+      [data-slot='accordion-content'] > div {
+        padding-bottom: 0;
+      }
+
+      button {
+        padding: calc($pad/2) 0;
+      }
+    }
+  }
+}
+
+.item {
+  display: flex;
+  align-items: center;
+}
+
+.alarm {
+  display: flex;
+  align-items: center;
+  gap: 2em;
+  justify-content: center;
+  margin-top: 1em;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    // color: var(--text3);
+    svg {
+      width: convertRem(24);
+      height: convertRem(24);
+    }
+    span {
+      color: var(--text1);
+      font-size: 1;
+      position: absolute;
+      top: -0.6em;
+      right: -0.6em;
+      background-color: var(--error);
+      color: #fff;
+      border-radius: 1em;
+      font-size: 0.7em;
+      min-width: 1.7em;
+      height: 1.6em;
+      display: flex;
+      padding-top: 0.1em;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  .line {
+    width: 1px;
+    height: 2em;
+    background-color: var(--border);
+  }
+}
+
+.horizonWrap {
+  @include grid(convertRem(60), convertRem(10), convertRem(10));
+}

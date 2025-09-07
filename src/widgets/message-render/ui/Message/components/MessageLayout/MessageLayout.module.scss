@@ -1,0 +1,305 @@
+@use '@/styles/var.scss' as *;
+
+$smallText: 0.8em;
+$profileWidth: convertRem(40);
+$gap: convertRem(10);
+.layout {
+  // 프로필 / 내용
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: $gap;
+  margin: 0.6rem 0;
+
+  &.first {
+    margin-top: convertRem(10);
+  }
+
+  .profile {
+    padding: 0;
+    width: $profileWidth;
+  }
+
+  .container {
+    // 그리드
+    display: grid;
+    align-items: end; // 읽음/시간 하단 정렬
+    gap: 0.3em convertRem(6);
+
+    width: fit-content;
+    max-width: min(100%, convertRem(900));
+
+    .contents {
+      grid-area: talk;
+      max-width: convertRem(830);
+    }
+    .date_unread {
+      grid-area: time;
+      width: convertRem(70);
+    }
+    .mid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2em;
+    }
+  }
+  &.onlyMessage {
+    margin-left: calc($profileWidth + $gap);
+  }
+  // 받은 메시지 기본
+  &.receiver_message .container {
+    justify-items: start; // 기본 왼쪽 정렬
+
+    // 기본: 메시지+시간
+    grid-template-areas: 'talk time';
+
+    // 1. 닉네임
+    &:has(.nickname) {
+      grid-template-areas:
+        'nickname nickname'
+        'talk time';
+
+      .nickname {
+        grid-area: nickname;
+      }
+    }
+    // 2. 리액션
+    &:has(.mid) {
+      // background-color: salmon;
+      grid-template-areas:
+        'talk time'
+        'mid mid';
+
+      .mid {
+        grid-area: mid;
+      }
+    }
+
+    // 3. 바텀
+    &:has(.bottom) {
+      // background-color: yellow;
+      grid-template-areas:
+        'talk time'
+        'etc etc';
+      .bottom {
+        grid-area: etc;
+        text-align: left;
+      }
+    }
+
+    // 4. 닉네임 + 하단
+    &:has(.nickname):has(.bottom) {
+      // background-color: green;
+      grid-template-areas:
+        'nickname nickname'
+        'talk time'
+        'etc etc';
+    }
+
+    // 5. 닉네임 + 리액션(og)
+    &:has(.nickname):has(.mid) {
+      // background-color: green;
+      grid-template-areas:
+        'nickname nickname'
+        'talk time'
+        'mid mid';
+    }
+
+    // 6. 리액션 + 하단
+    &:has(.mid):has(.bottom) {
+      // background-color: plum;
+      grid-template-areas:
+        'talk time'
+        'mid mid'
+        'etc etc';
+
+      .bottom {
+        grid-area: etc;
+        text-align: left;
+      }
+    }
+    // 7. 닉네임 + 리액션 + 하단
+    &:has(.nickname):has(.mid):has(.bottom) {
+      // background-color: aqua;
+      grid-template-areas:
+        'nickname nickname'
+        'talk time'
+        'mid mid'
+        'etc etc';
+    }
+  }
+
+  // 내 메시지(프로필 닉네임 없음)
+  &.my_message {
+    flex-direction: row-reverse;
+    .container {
+      justify-items: end; // 오른쪽 정렬
+
+      // 기본: 메시지+시간
+      grid-template-areas: 'time talk';
+
+      // 1. 닉네임
+      &:has(.nickname) {
+        grid-template-areas:
+          'nickname nickname'
+          'time talk';
+
+        .nickname {
+          grid-area: nickname;
+        }
+      }
+      // 2. 중간
+      &:has(.mid) {
+        grid-template-areas:
+          'time talk'
+          'mid mid';
+
+        .mid {
+          grid-area: mid;
+        }
+      }
+
+      // 3. 바텀
+      &:has(.bottom) {
+        grid-template-areas:
+          'time talk'
+          'etc etc';
+        .bottom {
+          grid-area: etc;
+          text-align: right;
+        }
+      }
+
+      // 4. 닉네임 + 하단
+      &:has(.nickname):has(.bottom) {
+        // background-color: green;
+        grid-template-areas:
+          'nickname nickname'
+          'time talk'
+          'etc etc';
+      }
+
+      // 5. 리액션 + 하단
+      &:has(.mid):has(.bottom) {
+        // background-color: plum;
+        grid-template-areas:
+          'time talk'
+          'mid mid'
+          'etc etc';
+
+        .bottom {
+          grid-area: etc;
+          text-align: left;
+        }
+      }
+      // 6. 닉네임 + 리액션 + 하단
+      &:has(.nickname):has(.mid):has(.bottom) {
+        // background-color: aqua;
+        grid-template-areas:
+          'nickname nickname'
+          'time talk'
+          'mid mid'
+          'etc etc';
+      }
+    }
+  }
+}
+
+// 말풍선 (실제 내용)
+.contents {
+  border: 1px solid var(--primary-border);
+  border-radius: $borderRadius * 2;
+  overflow: hidden;
+
+  color: var(--text1);
+  word-break: break-all;
+  display: inline-flex;
+  white-space: pre-wrap;
+  overflow: hidden;
+
+  padding: 0.4em 0.8em;
+
+  .receiver_message & {
+    background-color: var(--background);
+  }
+  .my_message & {
+    background-color: var(--primary-bg1);
+    border-color: transparent;
+  }
+
+  &:has([class*='file']) {
+    padding: 0;
+  }
+  &:has([class*='bubble']) {
+    padding: 0;
+    border: 1px solid transparent;
+    background: none;
+  }
+  &:has([class*='groupImg']) {
+    background: none;
+    border: 0;
+  }
+}
+
+// 닉네임
+.nickname {
+  font-size: $smallText;
+}
+
+/* 읽음여부/시간 --------------------------- */
+.date_unread {
+  display: flex;
+  flex-direction: column;
+
+  .my_message & {
+    align-items: flex-end;
+  }
+}
+
+// 읽음 표시
+.unRead {
+  font-size: 12px;
+  color: var(--primary);
+  font-weight: bold;
+}
+
+//시간표시
+.message_date {
+  font-size: $smallText;
+  white-space: nowrap;
+  color: var(--text3);
+  margin-top: -4px;
+}
+
+/* 하단 --------------------------- */
+.edit {
+  font-size: $smallText;
+  color: var(--text3);
+  margin: 0 2px;
+}
+
+// 애니메이션 효과
+.contents {
+  transition: al 0.3s;
+}
+.layout {
+  [class*='sendbird-msg-hoc__animated'] & .contents {
+    animation: shake 0.5s ease-in-out 2;
+    // 3s linear 1s infinite alternate slidein;
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    border: 1px solid rgba(var(--primary-rgb), 1);
+    outline: 2px solid rgba(var(--primary-rgb), 0.3);
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateY(-10px);
+  }
+  75% {
+    transform: translateY(10px);
+  }
+}

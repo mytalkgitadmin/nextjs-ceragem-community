@@ -1,0 +1,140 @@
+@use "@/styles/var.scss" as *;
+.scheduleWrap {
+  min-width: convertRem(150);
+  max-width: min(80vw, convertRem(400));
+
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.5em;
+  gap: 0.6em;
+
+  .top {
+    border-bottom: 1px solid var(--primary-border);
+    padding: 0.4em 0;
+  }
+
+  .time {
+    font-size: 0.9em;
+    line-height: 1;
+
+    span {
+      color: var(--text2);
+      display: block;
+      margin-top: 1em;
+    }
+  }
+}
+
+.button {
+  background-color: var(--background);
+  [class*="receiver_message"] & {
+    background-color: rgba(var(--primary-rgb), 0.06);
+  }
+  font-size: 0.9em;
+  padding: 0.7em 0;
+  border-radius: $borderRadius;
+
+  svg {
+    height: 1.4em;
+    width: auto;
+    padding-bottom: 1px;
+    path {
+      stroke-width: 1.5px;
+    }
+  }
+}
+
+.titleWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 0.4em;
+  .prefix {
+    flex-shrink: 0;
+    display: block;
+    color: var(--primary);
+    background-color: rgba(var(--primary-rgb), 0.1);
+    border-radius: 4em;
+    width: fit-content;
+    padding: 0.3em 1em;
+    font-size: 0.8em;
+    font-weight: 700;
+  }
+  .title {
+    @include ellipsis(1);
+    height: auto;
+    font-weight: 700;
+  }
+  svg {
+    flex-shrink: 0;
+    height: 1.2em;
+    width: auto;
+    padding-bottom: 1px;
+    path {
+      stroke-width: 1px;
+    }
+  }
+}
+
+.phoneWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: convertRem(4);
+  .number {
+  }
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: convertRem(36);
+  height: convertRem(36);
+  background-color: rgba(var(--primary-rgb), 0.06);
+  border-radius: 50%;
+  transition: all 0.3s;
+  svg {
+    color: var(--primary);
+    width: 50%;
+    height: auto;
+  }
+  // 호버 효과
+  &:hover {
+    background-color: rgba(var(--primary-rgb), 0.15);
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &.success {
+    background-color: rgba(var(--primary-rgb), 1);
+
+    svg {
+      color: var(--primary-text);
+    }
+  }
+}
+
+.success {
+  svg {
+    path {
+      stroke-dasharray: 22;
+      stroke-dashoffset: 22;
+      animation: drawCheck 0.4s ease-out forwards;
+    }
+  }
+}
+
+@keyframes drawCheck {
+  0% {
+    stroke-dashoffset: 22;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}

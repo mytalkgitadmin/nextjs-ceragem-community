@@ -1,0 +1,15 @@
+@use '@/styles/var.scss' as *;
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: convertRem(54);
+  padding: 0 convertRem(12);
+  background-color: var(--background);
+  border-bottom: 1px solid var(--border);
+
+  & > div {
+    display: flex;
+    align-items: center;
+  }
+}

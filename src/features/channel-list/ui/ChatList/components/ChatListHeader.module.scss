@@ -1,0 +1,22 @@
+@use "@/styles/var.scss" as *;
+
+.chat_header {
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+  height: convertRem(54);
+
+  h2 {
+    font-weight: bold;
+    font-size: convertRem(18);
+  }
+
+  & > div {
+    display: flex;
+  }
+
+  padding: 0 convertRem(10) 0 convertRem(20);
+}

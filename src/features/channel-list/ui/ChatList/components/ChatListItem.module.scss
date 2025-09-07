@@ -1,0 +1,130 @@
+@use "@/styles/var.scss" as *;
+
+.item {
+  list-style: none;
+  border: 1px solid var(--background-dark1);
+  background-color: var(--background);
+  padding: convertRem(20);
+  border-radius: convertRem(10);
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+
+  .flexWrap {
+    display: flex;
+    align-items: center;
+    gap: convertRem(10);
+
+    overflow: hidden;
+    width: 100%;
+  }
+}
+
+.texts {
+  flex-grow: 1;
+  width: 100%;
+  overflow: hidden;
+  .title {
+    display: flex;
+    gap: convertRem(4);
+    align-items: center;
+
+    svg {
+      flex-shrink: 0;
+      width: convertRem(14);
+    }
+    .family {
+      color: var(--primary);
+    }
+    .channelTitle {
+      font-weight: 600;
+    }
+    .count {
+      font-size: 0.9em;
+      color: var(--text3);
+      font-weight: 700;
+    }
+  }
+}
+
+.title,
+.channelTitle,
+.lastMsg,
+.date {
+  line-height: 1.2;
+  height: calc(1em * 1.2);
+}
+.channelTitle,
+.lastMsg {
+  word-break: break-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lastMsg {
+  font-size: convertRem(14);
+  color: var(--text3);
+  margin-top: convertRem(4);
+  width: 100%;
+  overflow: hidden;
+
+  svg {
+    height: 1.1em;
+    width: 1.1em;
+    margin: 0 0.2em 0.05em 0;
+  }
+}
+
+.right {
+  align-self: flex-start;
+  flex-shrink: 0;
+  text-align: right;
+
+  .date {
+    font-size: convertRem(12);
+    color: var(--text3);
+  }
+
+  .unread {
+    padding: 0;
+    margin: 0;
+    border-radius: 2em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--error);
+    color: var(--background);
+    min-width: 1.8em;
+
+    height: 1.8em;
+    padding: 0 0.4em;
+    line-height: 1;
+    font-size: convertRem(10);
+  }
+}
+
+.active {
+  background: var(--primary-bg1);
+  border: 1px solid var(--primary-border);
+}
+
+.item.skeleton {
+  .circle,
+  .title,
+  .lastMsg,
+  .date {
+    background-color: var(--background-dark1);
+    border-radius: convertRem(4);
+  }
+  .circle {
+    border-radius: 50%;
+  }
+  .title {
+    width: 50%;
+  }
+  .date {
+    width: convertRem(40);
+  }
+}

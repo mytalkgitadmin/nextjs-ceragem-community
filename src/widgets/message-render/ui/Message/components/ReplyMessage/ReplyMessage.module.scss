@@ -1,0 +1,81 @@
+@use '@/styles/var.scss' as *;
+.messageWrap {
+  .top {
+    font-size: 0.9em;
+    color: var(--text2);
+
+    .sender {
+      display: flex;
+      gap: 0.2em;
+      align-items: center;
+      text-align: left;
+      width: 100%;
+      .right {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 0.3em;
+      }
+      .nickname {
+        font-size: 0.9em;
+        svg {
+          rotate: 180deg;
+          transform: scaleX(-100%);
+          width: 1.2em;
+          height: 1.2em;
+          padding: 0;
+          margin-right: 0.1em;
+        }
+      }
+      .parent {
+        span {
+          @include ellipsis(1);
+
+          display: flex;
+          align-items: center;
+          gap: 0.2em;
+        }
+
+        box-sizing: border-box;
+        width: 100%;
+        background-color: var(--primary-bg2);
+        padding: 0.4em 0.6em;
+        border-radius: $borderRadius;
+
+        [class*='receiver_message'] & {
+          background-color: rgba(var(--primary-rgb), 0.05);
+        }
+        svg {
+          width: 1.2em;
+          height: 1.2em;
+        }
+      }
+    }
+
+    // .parent {
+    //   @include ellipsis;
+    // }
+  }
+  .child {
+    border-top: 1px solid var(--primary-border);
+    width: 100%;
+    padding-top: 0.4em;
+    margin-top: 0.4em;
+  }
+}
+
+.parent {
+  display: flex;
+  align-items: center;
+  gap: 0.2em;
+
+  img {
+    width: auto;
+    height: auto;
+    max-width: convertRem(60);
+    max-height: convertRem(60);
+    // object-fit: cover;
+
+    border-radius: $borderRadius;
+  }
+}

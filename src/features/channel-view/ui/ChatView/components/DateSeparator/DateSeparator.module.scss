@@ -1,0 +1,17 @@
+@use '@/styles/var.scss' as *;
+
+.separator {
+  font-size: convertRem(14);
+  color: var(--text3);
+  background-color: var(--background-dark1);
+
+  text-align: center;
+  margin: 2em auto;
+  width: fit-content;
+  padding: 0 1em;
+  border-radius: 2em;
+  height: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

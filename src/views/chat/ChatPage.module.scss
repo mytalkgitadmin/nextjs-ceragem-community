@@ -1,0 +1,101 @@
+@use '@/styles/var.scss' as *;
+
+$pannelWidth: 320;
+
+.chat {
+  width: 100%;
+  display: flex;
+  height: 100dvh;
+  background: none;
+  overflow: hidden;
+  position: relative;
+
+  & > [class*='chat'] {
+    height: 100%;
+    overflow-y: scroll;
+  }
+
+  .chat_conversation {
+    flex-grow: 1;
+    background: none;
+  }
+}
+
+.skeleton {
+  width: convertRem(320);
+}
+
+.chatListContainer {
+  width: convertRem(320);
+  height: 100%;
+  z-index: 20;
+  padding-top: convertRem(20);
+  background-color: skyblue;
+  background: linear-gradient(
+    to right,
+    var(--background) 80%,
+    var(--background-dark2)
+  );
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  @media screen and (max-width: 640px) {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: convertRem(320);
+
+    &.hidden {
+      transform: translateX(-100%);
+    }
+    &.visible {
+      transform: translateX(0);
+    }
+  }
+
+  @media screen and (min-width: 641px) {
+    position: relative;
+    flex-shrink: 0;
+    &.hidden {
+      transform: translateX(-100%);
+      margin-right: convertRem(-320);
+    }
+    &.visible {
+      transform: translateX(0);
+      margin-right: 0;
+    }
+  }
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  transition: all 0.3s;
+  z-index: 5;
+
+  // 640px 이상에서는 오버레이 숨김
+  @media (min-width: 641px) {
+    display: none;
+  }
+}
+
+.close {
+  position: absolute;
+  top: convertRem(14);
+  right: convertRem(12);
+
+  width: convertRem(36);
+  height: convertRem(36);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  // background-color: red;
+
+  @media (min-width: 641px) {
+    display: none !important;
+  }
+}

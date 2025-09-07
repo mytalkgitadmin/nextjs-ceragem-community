@@ -1,0 +1,30 @@
+@use "@/styles/var.scss" as *;
+
+.reactions {
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+
+  [class*="my_message"] & {
+    justify-content: flex-end;
+  }
+
+  .reaction {
+    list-style: none;
+
+    height: 1.8em;
+    padding: 0 0.6em;
+    color: var(--text2);
+    font-size: 0.8em;
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+
+    background-color: var(--background-dark1);
+    border-radius: $borderRadius * 3;
+
+    img {
+      height: 1.2em;
+    }
+  }
+}
