@@ -19,3 +19,7 @@ export { getProfileThumbnailUrl } from "./lib/get-profile-thumbnail-url";
 export { getEmoticonImageUrl } from "./lib/get-emoticon-image-url";
 // UI Components
 export { SingleAvatar } from "./ui/ProfileAvatar";
+export { default as ProfileCard } from "./ui/ProfileCard";
+export { default as ProfileItem } from "./ui/ProfileItem";
+// API
+export { getProfileApi } from "./api/get-profile";

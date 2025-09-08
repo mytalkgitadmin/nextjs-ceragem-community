@@ -7,7 +7,6 @@ import { createJSONStorage, persist } from "zustand/middleware";
 interface ProfileStoreState {
   userProfile: AccountProfileEntity | null;
   setUserProfile: (profile: AccountProfileEntity) => void;
-  setUserProfileFromApi: (accountProfile: AccountProfileDTO) => void;
 }
 
 export const useProfileStore = create<ProfileStoreState>()(
@@ -15,8 +14,6 @@ export const useProfileStore = create<ProfileStoreState>()(
     (set) => ({
       userProfile: null,
       setUserProfile: (profile) => set({ userProfile: profile }),
-      setUserProfileFromApi: (accountProfile) =>
-        set({ userProfile: profileMapper(accountProfile) }),
     }),
     {
       name: "profile-store",

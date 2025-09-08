@@ -1,5 +1,5 @@
 import { bffRequest } from "@/shared/api";
-import { FriendListParams, FriendListResponse } from "../model/entity-types";
+import { FriendListParams, FriendListResponse } from "../api/contracts-types";
 
 export const getFriendListApi = async (params: FriendListParams) => {
   const endpoint = { url: "/account/friend", method: "GET" as const };

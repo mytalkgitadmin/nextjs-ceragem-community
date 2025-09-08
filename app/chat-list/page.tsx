@@ -1,3 +1,5 @@
+import { ChatListView } from "@/views/chat-list";
+
 export default function ChatListPage() {
-  return <div>ChatListPage</div>;
+  return <ChatListView />;
 }

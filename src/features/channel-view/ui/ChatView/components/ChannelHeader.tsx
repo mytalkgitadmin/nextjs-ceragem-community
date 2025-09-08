@@ -9,7 +9,7 @@ import { getMemberName } from "@/entities/message/lib";
 import { ChannelDrawer } from "@/features/channel-details/ui/ChannelDetails";
 
 import styles from "./ChannelHeader.module.scss";
-import { useMediaQuery } from "@/shared/lib/useMediaQuery";
+import { useMediaQuery } from "@/shared/ui/hooks/useMediaQuery";
 
 export default function ChannelHeader() {
   const { currentChannel: channel } = useGroupChannelContext();

@@ -63,6 +63,8 @@ function DialogContent({
         )}
         {...props}
       >
+        {/* 접근성: DialogTitle 미제공 시 숨김 제목 자동 주입 */}
+        <DialogTitle className="sr-only">Dialog</DialogTitle>
         {children}
         {showCloseButton && (
           <DialogPrimitive.Close

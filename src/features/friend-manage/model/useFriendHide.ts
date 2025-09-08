@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { putFriendHide } from "../api/put-friend-hide";
+import { putFriendHide } from "../../../entities/friend/api/put-friend-hide";
 
 export function useFriendHide() {
   const queryClient = useQueryClient();

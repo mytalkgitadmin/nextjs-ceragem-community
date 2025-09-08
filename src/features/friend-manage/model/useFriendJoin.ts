@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { putFriendJoin } from "../api/put-friend-join";
+import { putFriendJoin } from "../../../entities/friend/api/put-friend-join";
 
 type JoinVariables = {
   friendId: number;

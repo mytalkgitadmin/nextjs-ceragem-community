@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { putFriendBlock } from "../api/put-friend-block";
+import { putFriendBlock } from "../../../entities/friend/api/put-friend-block";
 
 export function useFriendBlock() {
   const queryClient = useQueryClient();

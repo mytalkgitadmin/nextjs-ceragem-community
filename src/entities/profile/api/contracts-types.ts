@@ -22,6 +22,11 @@ export interface UserSendbirdProfileResponse {
   };
 }
 
+export interface UserProfileResponse {
+  result: boolean;
+  resultData: ProfileUserData;
+}
+
 // 프로필 사용자 데이터 응답
 export interface ProfileUserData {
   accountProfile: {

@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { putFriendFavorite } from "../api/put-friend-favorite";
+import { putFriendFavorite } from "../../../entities/friend/api/put-friend-favorite";
 
 type FavoriteVariables = {
   friendId: number;

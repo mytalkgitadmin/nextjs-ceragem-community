@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { putFriendReject } from "../api/put-friend-reject";
+import { putFriendReject } from "../../../entities/friend/api/put-friend-reject";
 
 export function useFriendReject() {
   const queryClient = useQueryClient();

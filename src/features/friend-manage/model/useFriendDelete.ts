@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteFriend } from "../api/delete-friend";
+import { deleteFriend } from "../../../entities/friend/api/delete-friend";
 
 export function useFriendDelete() {
   const queryClient = useQueryClient();

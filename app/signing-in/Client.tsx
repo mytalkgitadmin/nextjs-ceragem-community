@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect } from "react";
-import { useProfileStore } from "@/entities/profile";
+import { useProfileStore, profileMapper } from "@/entities/profile";
+import { useRouter } from "next/navigation";
 
 export default function Client({ to }: { to: string }) {
+  const router = useRouter();
   useEffect(() => {
     fetch("/api/post-login", { method: "POST" })
       .then(async (res) => {
@@ -14,17 +16,17 @@ export default function Client({ to }: { to: string }) {
 
         useProfileStore
           .getState()
-          .setUserProfileFromApi(resData.data.accountProfile);
+          .setUserProfile(profileMapper(resData.data.accountProfile));
 
         setTimeout(() => {
-          window.location.replace(to || "/");
+          router.replace(to || "/");
         }, 4000);
       })
       .catch((err) => {
         console.error(err);
-        window.location.replace("/invalid-state");
+        router.replace("/invalid-state");
       });
-  }, [to]);
+  }, [to, router]);
 
   return null;
 }

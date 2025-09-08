@@ -2,7 +2,6 @@
 
 import { Fragment, useState } from "react";
 
-import { Friend } from "@/entities/friend";
 import {
   useFriendBlock,
   useFriendBlockCancel,
@@ -10,13 +9,9 @@ import {
   useFriendHide,
   useFriendHideCancel,
 } from "@/features/friend-manage/model";
-import { ProfileViewer } from "@/features/profile-update/ui/ProfileViewer";
-import { ProfileCard, ProfileItem } from "@/entities/profile/ui";
-import {
-  AccordionTrigger,
-  AccordionItem,
-  AccordionContent,
-} from "@/shared/ui/accordion";
+import { ProfileDetailDialog } from "@/widgets/profile-detail";
+
+import styles from "../../index.module.scss";
 import {
   ContextMenu,
   ContextMenuContent,
@@ -24,16 +19,18 @@ import {
   ContextMenuSeparator,
   ContextMenuTrigger,
 } from "@/shared/ui/menu";
-
-import styles from "../../index.module.scss";
-import { Button } from "@/shared/ui/button";
-import type { AccountProfileEntity as AccountProfile } from "@/entities/profile/model/entity-types";
-// Member 타입이 필요하다면 실제 선언 위치로 교체하세요. 임시로 any 처리
-type Member = any;
-// auth 제거됨
-
-import { IconButton } from "@/shared/ui/button";
-import { getProfileThumbnailUrl } from "@/entities/profile";
+import {
+  AccordionTrigger,
+  AccordionItem,
+  AccordionContent,
+} from "@/shared/ui/accordion";
+import { IconButton, Button } from "@/shared/ui/button";
+import { FriendEntity } from "@/entities/friend";
+import {
+  getProfileThumbnailUrl,
+  ProfileCard,
+  ProfileItem,
+} from "@/entities/profile";
 
 export default function FriendsList({
   friends,
@@ -41,7 +38,7 @@ export default function FriendsList({
   index,
   horizon,
 }: {
-  friends: Friend[] | Member[] | AccountProfile[];
+  friends: FriendEntity[];
   title?: string;
   index?: number;
   horizon?: boolean;
@@ -83,7 +80,7 @@ export default function FriendsList({
               <Title title={title} length={friends.length} />
             </AccordionTrigger>
           )}
-          {/* <div className={horizon ? styles.horizonWrap : ""}>
+          <div className={horizon ? styles.horizonWrap : ""}>
             {friends.map((friend) => {
               const profileImageUrl = getProfileThumbnailUrl(friend.profile);
               return (
@@ -175,13 +172,13 @@ export default function FriendsList({
               );
             })}
 
-            <ProfileViewer
+            <ProfileDetailDialog
               open={isOpen}
               accountId={accountId}
               profileImageUrl={profileImageUrl}
               onOpenChange={closeViewer}
             />
-          </div> */}
+          </div>
         </AccordionItem>
       </>
     );

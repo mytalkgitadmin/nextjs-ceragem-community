@@ -6,12 +6,6 @@ export type FriendEntity = FriendDTO;
 export type GroupEntity = GroupDTO;
 export type InvitableUserEntity = InvitableUserDTO;
 
-// Re-export contract types for convenience
-export type {
-  FriendListParams,
-  FriendListResponse,
-} from "../api/contracts-types";
-
 // Re-export FriendType enum
 export type { FriendType } from "../api/dto-types";
 
@@ -41,8 +35,3 @@ export interface FriendRequestData {
   groupId: number;
   isSync: boolean;
 }
-
-// Alias types for convenience
-export type Friend = FriendEntity;
-export type Group = GroupEntity;
-export type InvitableUser = InvitableUserEntity;

@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { postFriend } from "../api/post-friend";
+import { postFriend } from "../../../entities/friend/api/post-friend";
 import type { FriendRequestData } from "@/entities/friend";
 
 export function useFriendRequest() {

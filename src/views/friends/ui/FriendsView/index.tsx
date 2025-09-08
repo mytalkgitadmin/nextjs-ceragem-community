@@ -4,10 +4,10 @@ import { Accordion } from "@/shared/ui/accordion";
 import { ProfileItem } from "@/entities/profile/ui";
 import FriendsList from "./components/FriendsList";
 import styles from "./index.module.scss";
-import { useCategorizedFriends } from "@/features/friend-categorize";
+import { useCategorizedFriends } from "@/features/friend-list";
 import { useProfileStore } from "@/entities/profile";
 import { IconButton } from "@/shared/ui/button";
-import { ProtectedLayout } from "@/widgets/protected-layout";
+import { ProtectedLayout } from "@/widgets/layouts";
 
 export default function FriendsPage() {
   const { userProfile } = useProfileStore();

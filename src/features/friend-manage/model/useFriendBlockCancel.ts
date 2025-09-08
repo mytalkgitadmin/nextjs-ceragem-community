@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { putFriendBlockCancel } from "../api/put-friend-block-cancel";
+import { putFriendBlockCancel } from "../../../entities/friend/api/put-friend-block-cancel";
 
 export function useFriendBlockCancel() {
   const queryClient = useQueryClient();

@@ -1,6 +1,11 @@
 @use "@/app/styles/tokens.scss" as *;
 
 .logo {
-  display: inline-flex;
-  align-items: center;
+  a {
+    display: block;
+    border-radius: $borderRadius;
+    img {
+      height: convertRem(48);
+    }
+  }
 }

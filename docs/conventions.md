@@ -140,7 +140,7 @@ import { useProfileStore } from "./model/use-profile-store";
 - 목적 기반 네이밍만 허용
   - 예: `api/`, `model/`, `ui/`, `lib/`, `config/`
 - 내용물/형태/수단 기반 네이밍 금지
-  - 예: `types/`, `constants/`, `hooks/`, `store/`
+  - 예: `types/`, `constants/`, `hooks/`, `store/`, `utils/`
 
 #### Directory
 
