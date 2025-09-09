@@ -1,7 +1,7 @@
 import { Icons } from "@/shared/ui/icon";
 import { memo } from "react";
 
-import styles from "../index.module.scss";
+import styles from "./ProfileDetailDialog.module.scss";
 
 const ProfileError = memo(() => {
   return (

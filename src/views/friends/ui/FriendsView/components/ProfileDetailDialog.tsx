@@ -6,9 +6,9 @@ import { useProfileDetail } from "@/features/profile-detail";
 import { useProfileStore } from "@/entities/profile";
 // import { Viewer } from "@/features/viewer";
 
-import ProfileLoading from "./components/ProfileLoading";
-import ProfileError from "./components/ProfileError";
-import ProfileContents from "./components/ProfileContents";
+import ProfileLoading from "./ProfileLoading";
+import ProfileError from "./ProfileError";
+import ProfileContents from "./ProfileContents";
 
 import styles from "./index.module.scss";
 

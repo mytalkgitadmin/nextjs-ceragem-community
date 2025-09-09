@@ -1,9 +1,7 @@
 import { memo } from "react";
-// import { any } from "../../types/viewer.types";
 
 import ProfileBody from "./ProfileBody";
 
-// import ProfileActions from "@/widgets/Profile/ui/ProfileViewer/ProfileActions/ProfileActions";
 import {
   DialogDescription,
   DialogFooter,
@@ -11,7 +9,6 @@ import {
   DialogTitle,
 } from "@/shared/ui/overlays";
 
-import styles from "../index.module.scss";
 import { ProfileUserData } from "@/entities/profile";
 
 interface ProfileComponentProps {
