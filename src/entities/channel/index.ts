@@ -15,3 +15,5 @@ export type {
   FileSearchResponse,
 } from "./api/contracts-types";
 export * from "./model/enums";
+// Stores
+export { useChannelStore } from "./model/useChannelStore";

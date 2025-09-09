@@ -1,19 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
 import { computeMaxAgeSeconds } from "@/shared/lib/jwt";
+import type { AccountProfileDTO } from "@/entities/profile";
 
 const SEVEN_DAYS_S = 60 * 60 * 24 * 7;
 const NINETY_DAYS_S = 60 * 60 * 24 * 90;
 
-async function exchangeTokens(token: string): Promise<
-  | {
-      data: {
-        accessToken: string;
-        refreshToken: string;
-        accountProfile: Record<string, unknown>;
-      };
-    }
-  | { error: string; status: number }
-> {
+interface LoginResponse {
+  accessToken: string;
+  refreshToken: string;
+  accountProfile: AccountProfileDTO;
+  sendBirdId: string;
+  sessionToken: string;
+}
+
+async function exchangeTokens(
+  token: string
+): Promise<{ data: LoginResponse } | { error: string; status: number }> {
   // 테스트 전용 분기. 실제 교환 로직으로 교체 예정
   if (true) {
     const res = await fetch(
@@ -35,17 +37,9 @@ async function exchangeTokens(token: string): Promise<
     );
 
     const json = await res.json();
-    let accessToken = json.resultData.accessToken as string;
-    accessToken = accessToken.replace("Bearer ", "");
-    let refreshToken = json.resultData.refreshToken as string;
-    refreshToken = refreshToken.replace("Bearer ", "");
-    const accountProfile = json.resultData.accountProfile as Record<
-      string,
-      unknown
-    >;
 
     return {
-      data: { accessToken, refreshToken, accountProfile },
+      data: json.resultData,
     };
   }
 }
@@ -65,7 +59,10 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { accessToken, refreshToken, accountProfile } = result.data;
+  let { accessToken, refreshToken, accountProfile, sendBirdId, sessionToken } =
+    result.data;
+  accessToken = accessToken.replace("Bearer ", ""); // Bearer이 같이 넘어오고 있음
+  refreshToken = refreshToken.replace("Bearer ", ""); // Bearer이 같이 넘어오고 있음
 
   const accessMaxAge = computeMaxAgeSeconds({
     jwt: accessToken,
@@ -76,7 +73,10 @@ export async function POST(req: NextRequest) {
     fallbackSeconds: NINETY_DAYS_S,
   });
 
-  const res = NextResponse.json({ ok: true, data: { accountProfile } });
+  const res = NextResponse.json({
+    ok: true,
+    data: { accountProfile, sendBirdId, sessionToken },
+  });
   res.cookies.set("familytown_rt", refreshToken, {
     path: "/",
     httpOnly: true,

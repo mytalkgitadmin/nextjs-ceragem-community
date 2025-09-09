@@ -1,1 +1,1 @@
-export { default as ChatListViewHeader } from "./ChatListViewHeader";
+export { default as ChatList } from "./ChatList";

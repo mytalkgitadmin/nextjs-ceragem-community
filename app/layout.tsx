@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import ReactQueryProvider from "@/app/ReactQueryProvider";
+import { ReactQueryProvider } from "@/app/providers";
 import { OverlayRoot } from "@/shared/ui/overlays";
 import "@/app/styles/default.css";
 import "@/app/styles/global.scss";

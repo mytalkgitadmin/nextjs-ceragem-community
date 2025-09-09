@@ -4,7 +4,7 @@ import { useState } from "react";
 import { IconButton } from "@/shared/ui/button";
 // import SelectFriends from "@/features/friend/ui/SelectFriends";
 
-import styles from "./ChatListViewHeader.module.scss";
+import styles from "./ChatListHeader.module.scss";
 
 export default function ChatListHeader() {
   const [isOpen, setIsOpen] = useState(false);

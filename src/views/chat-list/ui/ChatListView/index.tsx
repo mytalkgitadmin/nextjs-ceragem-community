@@ -1,9 +1,9 @@
-import { ChatListViewHeader } from "./components";
+import { ChatList } from "./components";
 
 export default function ChatListView() {
   return (
     <div className="pageContainer">
-      <ChatListViewHeader />
+      <ChatList />
     </div>
   );
 }

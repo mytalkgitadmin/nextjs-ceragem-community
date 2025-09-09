@@ -12,11 +12,11 @@ export default function Client({ to }: { to: string }) {
         const resData = await res.json();
         if (!res.ok || !resData.ok) throw new Error("exchange_failed");
 
-        console.log(resData.data);
-
-        useProfileStore
-          .getState()
-          .setUserProfile(profileMapper(resData.data.accountProfile));
+        useProfileStore.getState().updateState({
+          userProfile: profileMapper(resData.data.accountProfile),
+          sendbirdId: resData.data.sendBirdId.trim(), // 앞뒤 공백 제거 후 저장 (Sendbird 제한사항)
+          sessionToken: resData.data.sessionToken,
+        });
 
         setTimeout(() => {
           router.replace(to || "/");

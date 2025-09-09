@@ -1,6 +1,4 @@
 import { LottiePlayer } from "@/shared/ui/media";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error Client component (no types needed)
 import Client from "./Client";
 
 export default async function SigningInPage({
