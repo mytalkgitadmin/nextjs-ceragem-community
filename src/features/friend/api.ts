@@ -22,11 +22,13 @@ import type {
 export type { Friend, Group, InvitableUser, FriendStatus };
 
 // API 요청 파라미터 타입
-export interface FriendListParams extends FriendListRequest {
+export interface FriendListParams {
   friendType: FriendStatus[];
   count?: number;
   isNew?: boolean;
   offset?: number;
+  groupId?: number;
+  isSync?: boolean;
   [key: string]: any; // RequestParams와 호환성을 위한 인덱스 시그니처
 }
 

@@ -2,21 +2,58 @@ import { apiRequest } from "@/shared/api";
 import { AUTH_ENDPOINTS } from "./api/endpoints";
 import { useAuthStore } from "./authStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import {
-  RequestLogin,
-  ResponseLogin,
+import { useRouter } from "next/navigation";
+
+// DTO 및 계약 타입 import
+import type {
+  LoginRequestDTO,
+  LoginResponseDTO,
+  RefreshTokenRequestDTO,
+  RefreshTokenResponseDTO,
+  GetProfileResponseDTO,
+} from "./api/dto-types";
+import type {
+  LoginRequest,
+  LoginResponse,
   RefreshTokenRequest,
   RefreshTokenResponse,
-} from "./model";
-import { useRouter } from "next/navigation";
+  GetProfileResponse,
+} from "./api/contracts-types";
+import {
+  mapLoginResponse,
+  mapRefreshTokenResponse,
+  mapGetProfileResponse,
+} from "./api/dto-mappers";
+
+// 하위 호환성을 위한 기존 타입 re-export
+export type {
+  LoginRequest as RequestLogin,
+  LoginResponse as ResponseLogin,
+  RefreshTokenRequest,
+  RefreshTokenResponse,
+  GetProfileResponse as ResponseGetProfile,
+};
 
 /**
  * 폰번호 로그인 API 요청
- * @param data 로그인 요청 데이터 (nationalNumber: 82, phoneNumber: 전화번호,  password: 비밀번호)
+ * @param data 로그인 요청 데이터 (nationalNumber: 82, phoneNumber: 전화번호, password: 비밀번호)
  * @returns 로그인 응답 데이터를 포함한 Promise
  */
-export const loginApi = (data: RequestLogin): Promise<ResponseLogin> => {
-  return apiRequest<ResponseLogin>(AUTH_ENDPOINTS.LOGIN, data);
+export const loginApi = async (data: LoginRequest): Promise<LoginResponse> => {
+  // DTO로 API 호출
+  const dtoRequest: LoginRequestDTO = {
+    nationalNumber: data.nationalNumber,
+    phoneNumber: data.phoneNumber,
+    password: data.password,
+  };
+
+  const dtoResponse = await apiRequest<LoginResponseDTO>(
+    AUTH_ENDPOINTS.LOGIN,
+    dtoRequest
+  );
+
+  // DTO를 도메인 모델로 변환
+  return mapLoginResponse(dtoResponse);
 };
 
 /**
@@ -60,8 +97,14 @@ export const useLogin = () => {
  * 사용자 프로필 조회 API 요청
  * @returns 사용자 프로필 데이터를 포함한 Promise
  */
-export const getUserProfileApi = () => {
-  return apiRequest(AUTH_ENDPOINTS.GET_MY_PROFILE);
+export const getUserProfileApi = async (): Promise<GetProfileResponse> => {
+  // DTO로 API 호출
+  const dtoResponse = await apiRequest<GetProfileResponseDTO>(
+    AUTH_ENDPOINTS.GET_MY_PROFILE
+  );
+
+  // DTO를 도메인 모델로 변환
+  return mapGetProfileResponse(dtoResponse);
 };
 
 /**
@@ -91,13 +134,21 @@ export const useUserProfile = (options = {}) => {
  * @param data refresh token 요청 데이터
  * @returns 새로운 토큰 정보를 포함한 Promise
  */
-export const refreshTokenApi = (
+export const refreshTokenApi = async (
   data: RefreshTokenRequest
 ): Promise<RefreshTokenResponse> => {
-  return apiRequest<RefreshTokenResponse>(
+  // DTO로 API 호출
+  const dtoRequest: RefreshTokenRequestDTO = {
+    refreshToken: data.refreshToken,
+  };
+
+  const dtoResponse = await apiRequest<RefreshTokenResponseDTO>(
     AUTH_ENDPOINTS.REFRESH_TOKEN,
-    data
+    dtoRequest
   );
+
+  // DTO를 도메인 모델로 변환
+  return mapRefreshTokenResponse(dtoResponse);
 };
 
 /**
