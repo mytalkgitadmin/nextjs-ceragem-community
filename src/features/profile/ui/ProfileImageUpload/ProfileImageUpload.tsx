@@ -12,7 +12,7 @@ import {
 
 const defaultImg = "/assets/profile/bemilyDefaultProfile.webp";
 import FamilyFriendsModal from "../FamilyFriendsModal/FamilyFriendsModal";
-import { ProfileImageUploadProps } from "../../model/fileTypes";
+import { ProfileImageUploadProps } from "../types";
 import styles from "./ProfileImageUpload.module.scss";
 import { getEmoticonImageUrl } from "@/features/viewer/utils/mediaUtils";
 export default function ProfileImageUpload({

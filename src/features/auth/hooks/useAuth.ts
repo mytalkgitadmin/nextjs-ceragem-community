@@ -6,7 +6,7 @@
 import { useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useUserProfile } from "@/features/auth/api";
-import { ResponseLogin } from "@/features/auth/model";
+import { ResponseGetProfile } from "@/features/auth/api";
 import { useAuthStore } from "../authStore";
 
 /**
@@ -36,7 +36,7 @@ export function useAuth() {
     refetch: refetchProfile,
     data: profileData,
   } = useUserProfile({
-    onSuccess: (data: ResponseLogin) => {
+    onSuccess: (data: ResponseGetProfile) => {
       if (data?.resultData?.accountProfile) {
         updateUserProfile(data.resultData.accountProfile);
       } else {
@@ -85,8 +85,8 @@ export function useAuth() {
    * @description API에서 받은 프로필 데이터와 store의 데이터가 다를 때 업데이트
    */
   useEffect(() => {
-    // ResponseLogin 타입으로 타입 단언
-    const typedProfileData = profileData as ResponseLogin | undefined;
+    // ResponseGetProfile 타입으로 타입 단언
+    const typedProfileData = profileData as ResponseGetProfile | undefined;
 
     // result가 true이고 resultData가 존재할 때만 처리
     if (

@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useState } from "react";
 
 import {
   Friend,
@@ -7,30 +7,30 @@ import {
   useFriendFavorite,
   useFriendHide,
   useFriendHideCancel,
-} from '@/features/friend/api';
-import { ProfileViewer } from '@/widgets/Profile';
-import { ProfileCard } from '@/widgets/Profile/ui/ProfileCard';
-import { ProfileItem } from '@/widgets/Profile/ui/ProfileItem';
+} from "@/features/friend/api";
+import { ProfileViewer } from "@/widgets/Profile";
+import { ProfileCard } from "@/widgets/Profile/ui/ProfileCard";
+import { ProfileItem } from "@/widgets/Profile/ui/ProfileItem";
 import {
   AccordionTrigger,
   AccordionItem,
   AccordionContent,
-} from '@/shared/ui/accordion';
+} from "@/shared/ui/accordion";
 import {
   ContextMenu,
   ContextMenuContent,
   ContextMenuItem,
   ContextMenuSeparator,
   ContextMenuTrigger,
-} from '@/shared/ui/context-menu';
+} from "@/shared/ui/context-menu";
 
-import styles from './Friends.module.scss';
-import { Button } from '@/shared/ui/button';
-import { AccountProfile, Member } from '@/features/chat/model';
-import { useAuth } from '@/features/auth';
+import styles from "./FriendsOverview.module.scss";
+import { Button } from "@/shared/ui/button";
+import { AccountProfile, Member } from "@/features/chat/model";
+import { useAuth } from "@/features/auth";
 
-import { IconButton } from '@/shared/ui/IconButton';
-import { getThumbnailUrl } from '@/features/viewer/utils/mediaUtils';
+import { IconButton } from "@/shared/ui/IconButton";
+import { getThumbnailUrl } from "@/features/viewer/utils/mediaUtils";
 
 export default function FriendsList({
   friends,
@@ -46,7 +46,7 @@ export default function FriendsList({
   const { userProfile } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [accountId, setAccountId] = useState(0);
-  const [profileImageUrl, setProfileImageUrl] = useState('');
+  const [profileImageUrl, setProfileImageUrl] = useState("");
   const friendHideCancel = useFriendHideCancel();
   const friendBlockCancel = useFriendBlockCancel();
 
@@ -79,7 +79,7 @@ export default function FriendsList({
               <Title title={title} length={friends.length} />
             </AccordionTrigger>
           )}
-          <div className={horizon ? styles.horizonWrap : ''}>
+          <div className={horizon ? styles.horizonWrap : ""}>
             {friends.map((friend) => {
               const profileImageUrl = getThumbnailUrl(friend.profile);
               return (
@@ -103,7 +103,7 @@ export default function FriendsList({
                       </ContextMenuTrigger>
 
                       <ContextMenuContent className={styles.menu}>
-                        {friend.relationType !== 'REQUESTED' ? (
+                        {friend.relationType !== "REQUESTED" ? (
                           <>
                             <ContextMenuItem>대화하기</ContextMenuItem>
                             <ContextMenuSeparator />
@@ -124,14 +124,14 @@ export default function FriendsList({
                                 favoriteMutation.mutate({
                                   friendId: friend.accountId,
                                   isFavorite:
-                                    friend.relationType === 'FAVORITE'
+                                    friend.relationType === "FAVORITE"
                                       ? false
                                       : true,
                                 })
                               }
                             >
                               즐겨찾기
-                              {friend.relationType === 'FAVORITE' && ' 해제'}
+                              {friend.relationType === "FAVORITE" && " 해제"}
                             </ContextMenuItem>
                             <ContextMenuSeparator />
                             <ContextMenuItem
@@ -187,7 +187,7 @@ export default function FriendsList({
   return (
     <>
       {title && <Title title={title} length={friends.length} />}
-      <div className={horizon ? styles.horizonWrap : 'listWrap'}>
+      <div className={horizon ? styles.horizonWrap : "listWrap"}>
         {friends.map((friend) => {
           return (
             <div className="flex items-center" key={friend.accountId}>
@@ -199,15 +199,15 @@ export default function FriendsList({
                 isMyProfile={friend.accountId === userProfile?.accountId}
               />
 
-              {friend.relationType === 'NONE' && (
+              {friend.relationType === "NONE" && (
                 <IconButton name="user-plus" text="친구 추가" />
               )}
 
-              {friend.relationType === 'DELETE' && (
+              {friend.relationType === "DELETE" && (
                 <IconButton name="user-plus" text="친구 추가" />
               )}
 
-              {friend.relationType === 'HIDE' && (
+              {friend.relationType === "HIDE" && (
                 <Button
                   size="sm"
                   variant="outline"
@@ -216,7 +216,7 @@ export default function FriendsList({
                   해제
                 </Button>
               )}
-              {friend.relationType === 'BLOCK' && (
+              {friend.relationType === "BLOCK" && (
                 <Button
                   size="sm"
                   variant="outline"

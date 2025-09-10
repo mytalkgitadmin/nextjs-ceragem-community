@@ -4,10 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 // DTO와 계약 타입 import
 import type { FriendListResponseDTO } from "./api/dto-types";
-import type {
-  FriendListRequest,
-  FriendListResponse,
-} from "./api/contracts-types";
+import type { FriendListResponse } from "./api/contracts-types";
 import { mapFriendListResponse } from "./api/dto-mappers";
 
 // Entities import
@@ -29,7 +26,13 @@ export interface FriendListParams {
   offset?: number;
   groupId?: number;
   isSync?: boolean;
-  [key: string]: any; // RequestParams와 호환성을 위한 인덱스 시그니처
+  [key: string]:
+    | string
+    | number
+    | boolean
+    | (string | number | boolean)[]
+    | null
+    | undefined; // RequestParams와 호환성을 위한 인덱스 시그니처
 }
 
 export interface FriendRequestData {

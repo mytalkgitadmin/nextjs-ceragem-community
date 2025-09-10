@@ -5,6 +5,7 @@
 // - RelationType: @/entities/friend
 
 import { ApiResponse } from "@/shared/api";
+import type { Member } from "@/entities/chat";
 
 // 하위 호환성을 위한 재export (단계적 마이그레이션용)
 export type {

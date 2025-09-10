@@ -127,3 +127,7 @@ $pad: convertRem(20);
 .horizonWrap {
   @include grid(convertRem(60), convertRem(10), convertRem(10));
 }
+
+.menu {
+  // Context menu styles
+}

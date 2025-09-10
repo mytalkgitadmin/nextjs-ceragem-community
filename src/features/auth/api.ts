@@ -69,7 +69,7 @@ export const useLogin = () => {
 
   return useMutation({
     mutationFn: loginApi,
-    onSuccess: (data: ResponseLogin) => {
+    onSuccess: (data: LoginResponse) => {
       if (data.result) {
         // 로그인 상태 저장
         login({
@@ -124,7 +124,7 @@ export const useUserProfile = (options = {}) => {
     queryKey: ["user", "profile"],
     queryFn: getUserProfileApi,
     enabled: isAuthenticated,
-    ...API_ENDPOINTS.AUTH.GET_MY_PROFILE.queryConfig,
+    ...AUTH_ENDPOINTS.GET_MY_PROFILE.queryConfig,
     ...options,
   });
 };

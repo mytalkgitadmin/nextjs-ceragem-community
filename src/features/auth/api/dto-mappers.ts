@@ -2,11 +2,10 @@
 
 import type { AccountProfile } from "@/entities/profile";
 import type { ApiResponse } from "@/shared/api";
+import { RelationType } from "@/entities/friend";
 import type {
   ApiAccountProfileDTO,
-  LoginResultDTO,
   LoginResponseDTO,
-  RefreshTokenResultDTO,
   RefreshTokenResponseDTO,
   GetProfileResponseDTO,
 } from "./dto-types";
@@ -16,11 +15,22 @@ export const mapApiAccountProfileToAccountProfile = (
   dto: ApiAccountProfileDTO
 ): AccountProfile => ({
   accountId: dto.accountId,
-  accountType: dto.accountType,
   editedName: dto.editedName,
   syncName: dto.syncName,
-  sendbirdId: dto.sendbirdId,
+  relationType: RelationType.NONE, // 기본값 설정
+  nationalNumber: "", // 기본값 - DTO에서 제공되지 않음
+  phoneNumber: "", // 기본값 - DTO에서 제공되지 않음
+  birthday: undefined,
+  solar: null,
+  introduction: "",
+  interests: null,
+  email: "", // 기본값 - DTO에서 제공되지 않음
+  isEmailCertification: false,
   status: dto.status,
+  friendRelationMode: "PUBLIC", // 기본값
+  cardNumber: "", // 기본값
+  agreementMarketing: false,
+  agreementModifiedDate: 0,
   profile: {
     emoticonId: dto.profile.emoticonId,
     groupId: dto.profile.groupId,
@@ -47,6 +57,16 @@ export const mapLoginResponse = (
   sessionToken: string;
 }> => ({
   result: dtoResponse.result,
+  data: {
+    accountProfile: mapApiAccountProfileToAccountProfile(
+      dtoResponse.resultData.accountProfile
+    ),
+    accessToken: dtoResponse.resultData.accessToken,
+    refreshToken: dtoResponse.resultData.refreshToken,
+    sendBirdId: dtoResponse.resultData.sendBirdId,
+    sessionToken: dtoResponse.resultData.sessionToken,
+  }, // ApiResponse 타입 호환성
+  status: 200, // 기본 상태값
   resultData: {
     accountProfile: mapApiAccountProfileToAccountProfile(
       dtoResponse.resultData.accountProfile
@@ -67,6 +87,12 @@ export const mapRefreshTokenResponse = (
   sessionToken: string;
 }> => ({
   result: dtoResponse.result,
+  data: {
+    accessToken: dtoResponse.resultData.accessToken,
+    refreshToken: dtoResponse.resultData.refreshToken,
+    sessionToken: dtoResponse.resultData.sessionToken,
+  }, // ApiResponse 타입 호환성
+  status: 200, // 기본 상태값
   resultData: {
     accessToken: dtoResponse.resultData.accessToken,
     refreshToken: dtoResponse.resultData.refreshToken,
@@ -81,6 +107,12 @@ export const mapGetProfileResponse = (
   accountProfile: AccountProfile;
 }> => ({
   result: dtoResponse.result,
+  data: {
+    accountProfile: mapApiAccountProfileToAccountProfile(
+      dtoResponse.resultData.accountProfile
+    ),
+  }, // ApiResponse 타입 호환성
+  status: 200, // 기본 상태값
   resultData: {
     accountProfile: mapApiAccountProfileToAccountProfile(
       dtoResponse.resultData.accountProfile

@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from "react";
 
-export interface AsyncState<T = any> {
+export interface AsyncState<T = unknown> {
   data: T | null;
   isLoading: boolean;
   isError: boolean;
@@ -21,7 +21,9 @@ export interface UseAsyncStateOptions<T> {
  * @param options 초기 데이터, 성공/실패 콜백 설정
  * @returns AsyncState와 상태 조작 함수들
  */
-export function useAsyncState<T = any>(options: UseAsyncStateOptions<T> = {}) {
+export function useAsyncState<T = unknown>(
+  options: UseAsyncStateOptions<T> = {}
+) {
   const { initialData = null, onSuccess, onError } = options;
 
   const [state, setState] = useState<AsyncState<T>>({
