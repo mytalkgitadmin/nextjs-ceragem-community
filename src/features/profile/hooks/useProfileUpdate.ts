@@ -1,11 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateProfileApi, updateGroupProfile } from '../api';
-import { ProfileImg } from '@/features/chat/model';
+import { ProfileImage } from '@/features/chat/model';
 import useProfileFileUpload from './useProfileFileUpload';
 import { ProfileTextData, UpdateProfileRequest } from '../types';
 
 export interface ExtendedUpdateProfileRequest extends UpdateProfileRequest {
-  profileImage?: ProfileImg;
+  profileImage?: ProfileImage;
   selectedFile?: File | null;
 }
 
@@ -67,7 +67,7 @@ export const useProfileUpdate = () => {
 
   // 이모티콘 프로필 업데이트
   const updateEmoticonMutation = useMutation({
-    mutationFn: (profileImage: ProfileImg) =>
+    mutationFn: (profileImage: ProfileImage) =>
       updateGroupProfile({
         emoticonId: profileImage.emoticonId,
         profileId: profileImage.profileId,

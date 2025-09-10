@@ -1,5 +1,6 @@
 import { useAuth } from "@/features/auth";
-import { Member, Profile } from "@/features/chat/model";
+import { Member } from "@/entities/chat";
+import { Profile } from "@/entities/profile";
 
 const defaultSmallProfile = "/assets/profile/bemilyDefaultProfile.webp";
 import SingleAvatar from "./SingleAvatar";

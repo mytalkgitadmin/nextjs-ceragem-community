@@ -1,5 +1,5 @@
 import { CarouselApi } from '@/shared/ui/carousel';
-import { Profile, ProfileImg } from '../chat/model';
+import { Profile, ProfileImage } from '../chat/model';
 
 export interface ImgMsgInData {
   fileType: string;
@@ -10,7 +10,7 @@ export interface ImgMsgInData {
   shared: boolean;
 }
 
-export interface History extends ProfileImg {
+export interface History extends ProfileImage {
   historyId: null;
 }
 
@@ -24,7 +24,7 @@ export const isImgMsgData = (data: ViewerItemData): data is ImgMsgInData => {
 export const isVideoData = (data: ViewerItemData): data is ImgMsgInData => {
   return 'originalUrl' in data && 'originalFileName' in data;
 };
-export const isProfileImgData = (
+export const isProfileImageData = (
   data: ViewerItemData,
 ): data is History | Profile => {
   return 'profileKind' in data && 'profileOriginal' in data;

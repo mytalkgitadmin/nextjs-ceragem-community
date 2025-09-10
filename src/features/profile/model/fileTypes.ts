@@ -1,6 +1,6 @@
 // src/features/profile/ui/ProfileImageUpload/types.ts
 
-import { ProfileImg } from '@/features/chat/model';
+import { ProfileImage } from '@/features/chat/model';
 
 export interface ProfileImageFile {
   file: File;
@@ -13,7 +13,7 @@ export interface ProfileImageUploadProps {
   onImageChange: (file: File | null) => void; // 이미지 변경 콜백
   disabled?: boolean;
   maxFileSize?: number; // 기본 10MB
-  profileImage: ProfileImg;
+  profileImage: ProfileImage;
   onEmoticonSelect: (emoticonId: number) => void;
   selectedFile?: File | null;
 }

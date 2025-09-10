@@ -1,7 +1,7 @@
 import { BASE_URL } from "@/shared/api/endpoints";
 import {
   isImgMsgData,
-  isProfileImgData,
+  isProfileImageData,
   MediaType,
   ViewerItemData,
 } from "../types";
@@ -35,7 +35,7 @@ const VIDEO_EXTENSIONS = [".mp4", ".webm", ".ogg", ".mov", ".avi", ".mkv"];
 
 export const getMediaType = (item: ViewerItemData): MediaType => {
   // 이모티콘은 항상 이미지로 처리
-  if (isProfileImgData(item) && item.profileKind === "emoticon") {
+  if (isProfileImageData(item) && item.profileKind === "emoticon") {
     return "image";
   }
 
@@ -66,7 +66,7 @@ export const getOriginalUrl = (item: ViewerItemData): string => {
     return `${BASE_URL}${item.originalUrl}`;
   }
 
-  if (isProfileImgData(item)) {
+  if (isProfileImageData(item)) {
     if (item.profileKind === "emoticon") {
       return getEmoticonImageUrl(item.emoticonId);
     }
@@ -102,7 +102,7 @@ export const getThumbnailUrl = (item: ViewerItemData): string => {
   }
 
   // 프로필의 경우 썸네일이 있으면 사용, 없으면 원본 사용
-  if (isProfileImgData(item)) {
+  if (isProfileImageData(item)) {
     if (item.profileKind === "emoticon") {
       return getEmoticonImageUrl(item.emoticonId);
     }
@@ -126,7 +126,7 @@ export const getThumbnailUrl = (item: ViewerItemData): string => {
 
 // === 유틸리티 함수들 ===
 export const isEmoticonProfile = (item: ViewerItemData): boolean => {
-  return isProfileImgData(item) && item.profileKind === "emoticon";
+  return isProfileImageData(item) && item.profileKind === "emoticon";
 };
 
 export const isDownloadable = (item: ViewerItemData): boolean => {

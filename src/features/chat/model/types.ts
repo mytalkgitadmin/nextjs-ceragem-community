@@ -1,68 +1,28 @@
-import { ApiResponse } from '@/shared/api';
+import { ApiResponse } from "@/shared/api";
 
-export interface ProfileImg {
-  profileKind: 'basic' | 'normal' | 'emoticon';
-  profileId: number;
-  emoticonId: number;
-  profileOriginal: string;
-  profileThumbnail: string;
-  profileSmallThumbnail: string;
-}
-
-// 사용자 프로필 관련
-export interface Profile extends ProfileImg {
-  groupId?: number;
-  profileName: string;
-  profileMessage: string | null;
-  lastModifiedDate: string | number | null;
-}
-
-interface MyAddProfile {
-  editedName: string;
-  syncName: string;
-  relationType: RelationType;
-}
-
-interface UserProfileInfo {
-  birthday: string | undefined;
-  solar: boolean | null;
-  introduction: string;
-  interests: string | null;
-}
-
-export interface User extends Profile {
-  groupId: number;
-}
-
-export interface Member extends MyAddProfile, UserProfileInfo {
-  accountId: number;
-  sendbirdId: string;
-  accountType: 'USER' | string;
-  accountStatus: 'NORMAL' | string;
-  profile: Profile;
-  participantType: 'MASTER' | string;
-  joinDate: number;
-}
-
-// 계정 프로필
-export interface AccountProfile extends MyAddProfile, UserProfileInfo {
-  profile: User;
-
-  accountId: number;
-  email: string;
-  isEmailCertification: boolean;
-  status: 'NORMAL' | 'BAN' | string;
-  phoneNumber: string;
-
-  friendRelationMode: 'PUBLIC' | string;
-
-  cardNumber: string;
-  agreementMarketing: boolean;
-  agreementModifiedDate: number;
-}
-
-// 그룹 사용자 프로필
-export interface GroupUserProfile extends Profile, MyAddProfile {}
+// Import entities instead of redefining
+import type {
+  Profile,
+  User,
+  AccountProfile,
+  GroupUserProfile,
+  ProfileImage,
+  EditableProfile,
+  PersonalInfo,
+} from "@/entities/profile";
+import type { Member } from "@/entities/chat";
+// Re-export for backward compatibility
+export type {
+  Profile,
+  User,
+  AccountProfile,
+  GroupUserProfile,
+  ProfileImage,
+  EditableProfile,
+  PersonalInfo,
+  Member,
+};
+export type { RelationType } from "@/entities/friend";
 
 // 채널 응답
 export type ResponseChannel = ApiResponse<Channel[]>;
@@ -71,7 +31,7 @@ export interface Channel {
   channelId: number;
   channelUrl: string;
   channelName: null;
-  channelType: 'GROUP' | string;
+  channelType: "GROUP" | string;
   createdDate: number;
   hasTimer: boolean;
   timerSecond: null;
@@ -88,8 +48,7 @@ export interface ChannelState {
   setCurrentChannelUrl: (url: string | undefined) => void;
 }
 
-import { BaseMessage } from '@sendbird/chat/message';
-import { RelationType } from './enums';
+import { BaseMessage } from "@sendbird/chat/message";
 
 export type UnreadCountState = {
   totalUnreadCount: number;

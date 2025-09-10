@@ -1,10 +1,10 @@
-import { useAuth } from '../../auth';
+import { useAuth } from "../../auth";
 
-import { useCallback, useEffect, useState } from 'react';
-import { FILE_INPUT_CONFIG } from '../../chat/ui/Input/constants';
-import { ProfileImg } from '../../chat/model';
-import { ProfileTextData } from '../types';
-import { useProfileUpdate } from './useProfileUpdate';
+import { useCallback, useEffect, useState } from "react";
+import { FILE_INPUT_CONFIG } from "../../chat/ui/Input/constants";
+import { ProfileImage } from "../../chat/model";
+import { ProfileTextData } from "../types";
+import { useProfileUpdate } from "./useProfileUpdate";
 
 export default function useEditProfile() {
   const { userProfile } = useAuth();
@@ -12,13 +12,14 @@ export default function useEditProfile() {
     useProfileUpdate();
 
   // 프로필 이미지 상태(이모티콘/업로드 파일)
-  const [profileImage, setProfileImage] = useState<ProfileImg>({
+  const [profileImage, setProfileImage] = useState<ProfileImage>({
     emoticonId: 0,
     profileId: 0,
-    profileKind: 'normal',
-    profileOriginal: '',
-    profileSmallThumbnail: '',
-    profileThumbnail: '',
+    profileKind: "normal",
+    profileOrigin: "",
+    profileOriginal: "",
+    profileSmallThumbnail: "",
+    profileThumbnail: "",
   });
 
   // 사용자가 직접 업로드한 이미지 파일
@@ -30,10 +31,11 @@ export default function useEditProfile() {
       setProfileImage({
         emoticonId: userProfile.profile.emoticonId || 0,
         profileId: userProfile.profile.profileId || 0,
-        profileKind: userProfile.profile.profileKind || 'normal',
-        profileOriginal: userProfile.profile.profileOriginal || '',
-        profileSmallThumbnail: userProfile.profile.profileSmallThumbnail || '',
-        profileThumbnail: userProfile.profile.profileThumbnail || '',
+        profileKind: userProfile.profile.profileKind || "normal",
+        profileOrigin: userProfile.profile.profileOrigin || "",
+        profileOriginal: userProfile.profile.profileOriginal || "",
+        profileSmallThumbnail: userProfile.profile.profileSmallThumbnail || "",
+        profileThumbnail: userProfile.profile.profileThumbnail || "",
       });
     }
   }, [userProfile]);
@@ -44,11 +46,11 @@ export default function useEditProfile() {
     }
 
     const emoticonChanged =
-      profileImage.profileKind === 'emoticon' &&
+      profileImage.profileKind === "emoticon" &&
       profileImage.emoticonId !== userProfile?.profile?.emoticonId &&
       profileImage.emoticonId > 0;
 
-    const fileUploaded = profileImage.profileKind === 'normal' && selectedFile;
+    const fileUploaded = profileImage.profileKind === "normal" && selectedFile;
 
     return !!(emoticonChanged || fileUploaded);
   }, [profileImage, selectedFile, userProfile]);
@@ -56,11 +58,11 @@ export default function useEditProfile() {
   // 🎯 파일 유효성 검사
   const validateFile = useCallback((file: File): string | null => {
     if (file.size > FILE_INPUT_CONFIG.LIMIT.MAX_FILE_SIZE) {
-      return '파일 크기가 너무 큽니다. 10MB 이하의 파일을 선택해주세요.';
+      return "파일 크기가 너무 큽니다. 10MB 이하의 파일을 선택해주세요.";
     }
 
-    if (!file.type.startsWith('image/')) {
-      return '이미지 파일만 업로드 가능합니다.';
+    if (!file.type.startsWith("image/")) {
+      return "이미지 파일만 업로드 가능합니다.";
     }
 
     return null;
@@ -80,25 +82,25 @@ export default function useEditProfile() {
       setSelectedFile(file);
       setProfileImage((prev) => ({
         ...prev,
-        profileKind: 'normal',
+        profileKind: "normal",
         emoticonId: 0,
-        profileOriginal: '',
-        profileSmallThumbnail: '',
-        profileThumbnail: '',
+        profileOriginal: "",
+        profileSmallThumbnail: "",
+        profileThumbnail: "",
       }));
     },
-    [validateFile],
+    [validateFile]
   );
 
   const handleEmoticonSelect = useCallback((emoticonId: number) => {
     setSelectedFile(null);
     setProfileImage((prev) => ({
       ...prev,
-      profileKind: 'emoticon',
+      profileKind: "emoticon",
       emoticonId,
-      profileOriginal: '',
-      profileSmallThumbnail: '',
-      profileThumbnail: '',
+      profileOriginal: "",
+      profileSmallThumbnail: "",
+      profileThumbnail: "",
     }));
   }, []);
 
@@ -115,20 +117,20 @@ export default function useEditProfile() {
 
         if (hasImageChange) {
           if (selectedFile) {
-            console.log('🏞️ 이미지!!');
+            console.log("🏞️ 이미지!!");
             await updateImage({
               file: selectedFile,
               profileId: profileImage.profileId,
             });
-          } else if (profileImage.profileKind === 'emoticon') {
-            console.log('😀 이모티콘!!');
+          } else if (profileImage.profileKind === "emoticon") {
+            console.log("😀 이모티콘!!");
             await updateEmoticon(profileImage);
           }
         }
 
         setSelectedFile(null);
       } catch (error) {
-        console.error('프로필 업데이트 실패:', error);
+        console.error("프로필 업데이트 실패:", error);
         throw error;
       }
     },
@@ -139,7 +141,7 @@ export default function useEditProfile() {
       updateText,
       updateImage,
       updateEmoticon,
-    ],
+    ]
   );
 
   const resetState = useCallback(() => {
@@ -148,10 +150,11 @@ export default function useEditProfile() {
       setProfileImage({
         emoticonId: userProfile.profile.emoticonId || 0,
         profileId: userProfile.profile.profileId || 0,
-        profileKind: userProfile.profile.profileKind || 'normal',
-        profileOriginal: userProfile.profile.profileOriginal || '',
-        profileSmallThumbnail: userProfile.profile.profileSmallThumbnail || '',
-        profileThumbnail: userProfile.profile.profileThumbnail || '',
+        profileKind: userProfile.profile.profileKind || "normal",
+        profileOrigin: userProfile.profile.profileOrigin || "",
+        profileOriginal: userProfile.profile.profileOriginal || "",
+        profileSmallThumbnail: userProfile.profile.profileSmallThumbnail || "",
+        profileThumbnail: userProfile.profile.profileThumbnail || "",
       });
     }
   }, [userProfile]);

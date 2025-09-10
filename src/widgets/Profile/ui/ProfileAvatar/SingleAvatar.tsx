@@ -1,6 +1,6 @@
-import { RelationType } from '@/features/chat/model';
-import styles from './SingleAvatar.module.scss';
-import Icons from '@/shared/ui/Icons';
+import { RelationType } from "@/entities/friend";
+import styles from "./SingleAvatar.module.scss";
+import Icons from "@/shared/ui/Icons";
 
 interface SingleAvatarProps {
   imageUrl: string;
@@ -17,8 +17,10 @@ export default function SingleAvatar({
   relationType,
 }: SingleAvatarProps) {
   const defaultProfile = "/assets/profile/bemilyDefaultProfile.webp";
-  
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+
+  const handleImageError = (
+    e: React.SyntheticEvent<HTMLImageElement, Event>
+  ) => {
     const target = e.target as HTMLImageElement;
     if (target.src !== defaultProfile) {
       target.src = defaultProfile;
@@ -29,24 +31,19 @@ export default function SingleAvatar({
     <div className={styles.avatarWrap}>
       <div className={styles.circle} style={{ width: size, height: size }}>
         {imageUrl && (
-          <img 
-            src={imageUrl} 
-            alt="" 
-            width={size} 
+          <img
+            src={imageUrl}
+            alt=""
+            width={size}
             height={size}
             onError={handleImageError}
           />
         )}
         {!imageUrl && (
-          <img 
-            src={defaultProfile} 
-            alt="" 
-            width={size} 
-            height={size}
-          />
+          <img src={defaultProfile} alt="" width={size} height={size} />
         )}
         {relationType &&
-          (relationType === 'NONE' || relationType === 'DELETE') && (
+          (relationType === "NONE" || relationType === "DELETE") && (
             <span className={styles.add}>
               <Icons name="question-mark" />
             </span>

@@ -1,24 +1,12 @@
-import { API_ENDPOINTS, apiRequest } from '@/shared/api';
-import { useMutation } from '@tanstack/react-query';
-import { FileSearchResponse } from '../hooks/useChannelFilePreview';
-
-export enum FileCategoryList {
-  ALBUM = 'ALBUM',
-  BACKUP = 'BACKUP',
-  CALENDAR = 'CALENDAR',
-  CHAT = 'CHAT',
-  COMMON = 'COMMON',
-  FEED = 'FEED',
-  POINT = 'POINT',
-  PROFILE = 'PROFILE',
-  RESOURCE = 'RESOURCE',
-  SMILE_ME = 'SMILE_ME',
-}
+import { API_ENDPOINTS, apiRequest } from "@/shared/api";
+import { useMutation } from "@tanstack/react-query";
+import { FileSearchResponse } from "../hooks/useChannelFilePreview";
+import { FileCategory } from "@/shared/model";
 
 export interface FileSearchParams {
   contentTypeList?: string[];
   extensionList?: string[];
-  fileCategoryList?: FileCategoryList[];
+  fileCategoryList?: FileCategory[];
   fileIdList?: string[];
   fileKindList?: string[];
   fileSubCategoryList?: string[];
@@ -35,7 +23,7 @@ export interface FileSearchParams {
       {
         asc: boolean;
         property: string;
-      },
+      }
     ];
   };
   savedFilePathList?: string[];
@@ -45,7 +33,7 @@ export interface FileSearchParams {
 }
 
 export const searchChannelFiles = (
-  data: FileSearchParams,
+  data: FileSearchParams
 ): Promise<FileSearchResponse> => {
   return apiRequest(API_ENDPOINTS.CHANNEL.POST_FILE_INFO, data);
 };
@@ -55,7 +43,7 @@ export const useChannelFileSearch = () => {
       return searchChannelFiles(data);
     },
     onError: (error) => {
-      console.error('채널 파일 검색 중 오류 발생', error);
+      console.error("채널 파일 검색 중 오류 발생", error);
     },
   });
 };

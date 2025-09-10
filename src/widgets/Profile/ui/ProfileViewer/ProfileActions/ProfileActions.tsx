@@ -2,7 +2,7 @@ import { memo } from "react";
 import Icons from "@/shared/ui/Icons";
 import { Button } from "@/shared/ui/button";
 
-import { RelationType } from "@/features/chat/model";
+import { RelationType } from "@/entities/friend";
 import styles from "./ProfileActions.module.scss";
 import useProfileActions from "./useProfileActions";
 import PrimaryActions from "./PrimaryActions";

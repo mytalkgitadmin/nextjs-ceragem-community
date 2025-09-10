@@ -1,5 +1,5 @@
 import { Button } from "@/shared/ui/button";
-import { RelationType } from "@/features/chat/model";
+import { RelationType } from "@/entities/friend";
 import Icons from "@/shared/ui/Icons";
 import { memo } from "react";
 interface SecondaryActionsProps {

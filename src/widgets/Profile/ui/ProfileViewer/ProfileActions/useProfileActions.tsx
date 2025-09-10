@@ -1,5 +1,5 @@
-import { useCallback } from 'react';
-import { toast } from 'sonner';
+import { useCallback } from "react";
+import { toast } from "sonner";
 
 export interface ApiErrorResponse {
   status: number;
@@ -16,8 +16,8 @@ export interface ApiErrorResponse {
   };
 }
 
-import Icons from '@/shared/ui/Icons';
-import { useUIStore } from '@/shared/store/useUIStore';
+import Icons from "@/shared/ui/Icons";
+import { useUIStore } from "@/shared/store/useUIStore";
 import {
   useFriendBlock,
   useFriendBlockCancel,
@@ -28,11 +28,11 @@ import {
   useFriendJoin,
   useFriendReject,
   useFriendRequest,
-} from '@/features/friend/api';
-import { RelationType } from '@/features/chat/model';
+} from "@/features/friend/api";
+import { RelationType } from "@/entities/friend";
 
-import styles from './ProfileActions.module.scss';
-import { useAuth } from '@/features/auth';
+import styles from "./ProfileActions.module.scss";
+import { useAuth } from "@/features/auth";
 
 interface UseProfileActionsProps {
   friendId: number;
@@ -60,7 +60,7 @@ export default function useProfileActions({
   const handleFavoriteToggle = useCallback(() => {
     favoriteMutation.mutate({
       friendId,
-      isFavorite: relationType !== 'FAVORITE',
+      isFavorite: relationType !== "FAVORITE",
     });
   }, [favoriteMutation, friendId, relationType]);
 
@@ -82,7 +82,7 @@ export default function useProfileActions({
         </div>
       ),
 
-      confirmText: '숨김',
+      confirmText: "숨김",
       onConfirm: () => hideMutation.mutate(friendId),
     });
   }, [openAlertDialog, hideMutation, friendId]);
@@ -90,9 +90,9 @@ export default function useProfileActions({
   // 친구 숨김 해제
   const handleHideCancel = useCallback(() => {
     openAlertDialog({
-      title: '친구 숨김 해제',
-      description: '이 친구의 숨김을 해제하시겠습니까?',
-      confirmText: '해제',
+      title: "친구 숨김 해제",
+      description: "이 친구의 숨김을 해제하시겠습니까?",
+      confirmText: "해제",
       onConfirm: () => hideCancel.mutate(friendId),
     });
   }, [openAlertDialog, hideCancel, friendId]);
@@ -115,15 +115,15 @@ export default function useProfileActions({
           </ul>
         </div>
       ),
-      confirmText: '차단하기',
+      confirmText: "차단하기",
       onConfirm: () => {
         blockMutation.mutate(friendId, {
           onSuccess: () => {
-            toast('친구가 차단되었습니다');
+            toast("친구가 차단되었습니다");
             closeAllModals();
           },
           onError: (error) => {
-            console.error('차단 처리 중 오류:', error);
+            console.error("차단 처리 중 오류:", error);
           },
         });
       },
@@ -133,9 +133,9 @@ export default function useProfileActions({
   // 친구 차단 해제
   const handleBlockCancel = useCallback(() => {
     openAlertDialog({
-      title: '친구 차단 해제',
-      description: '이 친구의 차단을 해제하시겠습니까?',
-      confirmText: '해제',
+      title: "친구 차단 해제",
+      description: "이 친구의 차단을 해제하시겠습니까?",
+      confirmText: "해제",
       onConfirm: () => blockCancel.mutate(friendId),
     });
   }, [openAlertDialog, blockCancel, friendId]);
@@ -157,15 +157,15 @@ export default function useProfileActions({
           </ul>
         </div>
       ),
-      confirmText: '삭제하기',
+      confirmText: "삭제하기",
       onConfirm: () => {
         deleteMutation.mutate(friendId, {
           onSuccess: () => {
-            toast('친구가 삭제되었습니다');
+            toast("친구가 삭제되었습니다");
             closeAllModals();
           },
           onError: (error) => {
-            console.error('차단 처리 중 오류:', error);
+            console.error("차단 처리 중 오류:", error);
           },
         });
       },
@@ -178,21 +178,21 @@ export default function useProfileActions({
       { friendId, groupId },
       {
         onSuccess: () => {
-          toast('친구 요청을 수락했습니다');
+          toast("친구 요청을 수락했습니다");
           closeAllModals();
         },
         onError: (error) => {
-          console.error('차단 처리 중 오류:', error);
-          toast('친구 수락에 실패했습니다');
+          console.error("차단 처리 중 오류:", error);
+          toast("친구 수락에 실패했습니다");
         },
-      },
+      }
     );
   }, [joinMutation, friendId, groupId, closeAllModals]);
 
   // 친구 삭제
   const handleReject = useCallback(() => {
     openAlertDialog({
-      title: '친구 거절',
+      title: "친구 거절",
       description: (
         <div className={styles.alertMsg}>
           <p>이 친구 요청을 거절하시겠습니까?</p>
@@ -202,16 +202,16 @@ export default function useProfileActions({
           </ul>
         </div>
       ),
-      confirmText: '거절하기',
+      confirmText: "거절하기",
       onConfirm: () => {
         rejectMutation.mutate(friendId, {
           onSuccess: () => {
-            toast('친구 요청을 거절했습니다');
+            toast("친구 요청을 거절했습니다");
             closeAllModals();
           },
           onError: (error) => {
-            console.error('차단 처리 중 오류:', error);
-            toast('친구 거절에 실패했습니다');
+            console.error("차단 처리 중 오류:", error);
+            toast("친구 거절에 실패했습니다");
           },
         });
       },
@@ -234,7 +234,7 @@ export default function useProfileActions({
           {
             editedName: editedName,
             friendId: friendId,
-            nationalNumber: '82',
+            nationalNumber: "82",
             phoneNumber: phoneNumber,
             syncName: syncName,
           },
@@ -245,23 +245,23 @@ export default function useProfileActions({
 
       requestMutation.mutate(data, {
         onSuccess: () => {
-          toast('친구 요청을 하였습니다');
+          toast("친구 요청을 하였습니다");
           closeAllModals();
         },
         onError: (error: Error | ApiErrorResponse) => {
           // 102028: "친구가 먼저 나를 초대했어요. '친구 메뉴 > 나를 초대한 친구'에서 수락해주세요."
 
           // [!] 앱확인 후 처리
-          if ('data' in error && error.data?.errorCode === '102028') {
+          if ("data" in error && error.data?.errorCode === "102028") {
             handleAccept();
             return;
           }
-          console.error('친구 요청 처리 중 오류:', error);
-          toast('친구 요청에 실패했습니다');
+          console.error("친구 요청 처리 중 오류:", error);
+          toast("친구 요청에 실패했습니다");
         },
       });
     },
-    [],
+    []
   );
 
   return {

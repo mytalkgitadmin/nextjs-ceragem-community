@@ -1,9 +1,10 @@
-import { Profile, RelationType } from '@/features/chat/model';
+import { Profile } from "@/entities/profile";
+import { RelationType } from "@/entities/friend";
 
-import { SingleAvatar } from '../ProfileAvatar';
-import styles from './ProfileCard.module.scss';
-import { isUpdatedProfile } from '@/shared/lib/dateFormatter';
-import Icons from '@/shared/ui/Icons';
+import { SingleAvatar } from "../ProfileAvatar";
+import styles from "./ProfileCard.module.scss";
+import { isUpdatedProfile } from "@/shared/lib/dateFormatter";
+import Icons from "@/shared/ui/Icons";
 
 // 친구
 export interface ItemProps {
@@ -11,7 +12,7 @@ export interface ItemProps {
 
   editedName?: string;
   syncName?: string;
-  type?: 'friend' | 'talk';
+  type?: "friend" | "talk";
   onClick?: () => void;
   profileImageUrl: string;
   horizon?: boolean;
@@ -25,7 +26,7 @@ export default function ProfileCard({
   editedName,
   syncName,
 
-  type = 'friend',
+  type = "friend",
   isMyProfile = false,
   horizon,
   onClick,
@@ -38,12 +39,12 @@ export default function ProfileCard({
     <>
       <button
         type="button"
-        className={`${styles.profileCard} ${horizon ? styles.horizon : ''}`}
+        className={`${styles.profileCard} ${horizon ? styles.horizon : ""}`}
         onClick={onClick}
       >
         <SingleAvatar
           imageUrl={profileImageUrl}
-          size={type === 'friend' ? 60 : 40}
+          size={type === "friend" ? 60 : 40}
           isMyProfile={isMyProfile}
           isUpdatedProfile={
             profile.lastModifiedDate
@@ -59,12 +60,12 @@ export default function ProfileCard({
                 <Icons name="crown" />
                 <span className="sr-only">방장</span>
               </span>
-            )}{' '}
+            )}{" "}
             {editedName || syncName || profile.profileName}
           </p>
 
           {/* 대화방(talk)에서는 상태메시지 숨김처리 */}
-          {!horizon && type === 'friend' && (
+          {!horizon && type === "friend" && (
             <p className={styles.message}>{profile.profileMessage}</p>
           )}
         </div>

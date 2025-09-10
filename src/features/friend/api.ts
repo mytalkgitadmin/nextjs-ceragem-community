@@ -1,18 +1,7 @@
-import { API_ENDPOINTS, apiRequest, RequestParams } from '@/shared/api';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { API_ENDPOINTS, apiRequest, RequestParams } from "@/shared/api";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-export type FriendType =
-  | 'NORMAL'
-  | 'FAVORITE'
-  | 'ME'
-  | 'BLOCK'
-  | 'DELETE'
-  | 'HIDE'
-  | 'LEAVE'
-  | 'NONE'
-  | 'REJECT'
-  | 'REQUEST'
-  | 'REQUESTED';
+import type { FriendStatus } from "@/entities/friend";
 
 export interface FriendListResponse {
   result: boolean;
@@ -23,18 +12,7 @@ export interface FriendListResponse {
   };
 }
 
-interface Profile {
-  emoticonId: number;
-  groupId: number;
-  lastModifiedDate: string;
-  profileId: number;
-  profileKind: 'normal' | 'basic' | 'emoticon';
-  profileMessage: string;
-  profileName: string;
-  profileOriginal: string;
-  profileSmallThumbnail: string;
-  profileThumbnail: string;
-}
+import type { ApiFriendProfile } from "@/entities/friend";
 
 export interface FriendRequestData {
   friends: Array<{
@@ -48,44 +26,13 @@ export interface FriendRequestData {
   isSync: boolean;
 }
 
-// 친구
-export interface Friend {
-  accountId: number;
-  accountType: 'ADMIN' | 'USER';
-  isNew: boolean;
-  editedName: string;
-  syncName: string;
-  isRequestIgnore: boolean;
-  myGroupId: number;
-  nationalNumber: string;
-  phoneNumber: string;
-  profile: Profile;
-  relationType: FriendType;
-  sendbirdId: string;
-  status: 'BAN' | 'ACTIVE';
-}
+import type { Friend, Group, InvitableUser } from "@/entities/friend";
 
-// 그룹
-export interface Group {
-  isImmutable: boolean;
-  name: string;
-  profile: Profile;
-  sequence: number;
-  type: 'AD' | 'NORMAL';
-}
-
-// 초대 가능한 사용자
-export interface InvitableUser {
-  editedName: string;
-  isRequestIgnore: boolean;
-  myGroupId: number;
-  nationalNumber: string;
-  phoneNumber: string;
-  syncName: string;
-}
+// Re-export for backward compatibility
+export type { Friend, Group, InvitableUser, FriendStatus, ApiFriendProfile };
 
 export interface FriendListParams extends RequestParams {
-  friendType: FriendType[];
+  friendType: FriendStatus[];
   count?: number;
   groupId?: number;
   isNew?: boolean;
@@ -96,7 +43,7 @@ export const getFriendListApi = async (params: FriendListParams) => {
   const response = await apiRequest<FriendListResponse>(
     API_ENDPOINTS.FRIEND.GET_FRIENDS_LIST,
     undefined,
-    params,
+    params
   );
 
   return response.resultData;
@@ -105,7 +52,7 @@ export const getFriendListApi = async (params: FriendListParams) => {
 //  BLOCK, DELETE, FAVORITE, HIDE, LEAVE, ME, NONE, NORMAL, REJECT, REQUEST, REQUESTED
 export const useFriends = (params: FriendListParams) => {
   return useQuery({
-    queryKey: ['user', 'friends', params],
+    queryKey: ["user", "friends", params],
     queryFn: async () => getFriendListApi(params),
     enabled: params.friendType.length > 0,
   });
@@ -118,11 +65,11 @@ export const useFriendFavorite = () => {
     mutationFn: async (data: { friendId: number; isFavorite: boolean }) =>
       await apiRequest<FriendListResponse>(
         API_ENDPOINTS.FRIEND.PUT_FRIEND_FAVORITE,
-        data,
+        data
       ),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['user'],
+        queryKey: ["user"],
       });
     },
   });
@@ -136,11 +83,11 @@ export const useFriendHide = () => {
     mutationFn: async (friendId: number) =>
       await apiRequest<FriendListResponse>(
         API_ENDPOINTS.FRIEND.PUT_FRIEND_HIDE,
-        { friendId },
+        { friendId }
       ),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['user'],
+        queryKey: ["user"],
       });
     },
   });
@@ -153,11 +100,11 @@ export const useFriendHideCancel = () => {
     mutationFn: async (friendId: number) =>
       await apiRequest<FriendListResponse>(
         API_ENDPOINTS.FRIEND.PUT_FRIEND_HIDE_CANCEL,
-        { friendId },
+        { friendId }
       ),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['user'],
+        queryKey: ["user"],
       });
     },
   });
@@ -171,11 +118,11 @@ export const useFriendBlock = () => {
     mutationFn: async (friendId: number) =>
       await apiRequest<FriendListResponse>(
         API_ENDPOINTS.FRIEND.PUT_FRIEND_BLOCK,
-        { friendId },
+        { friendId }
       ),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['user'],
+        queryKey: ["user"],
       });
     },
   });
@@ -188,11 +135,11 @@ export const useFriendBlockCancel = () => {
     mutationFn: async (friendId: number) =>
       await apiRequest<FriendListResponse>(
         API_ENDPOINTS.FRIEND.PUT_FRIEND_BLOCK_CANCEL,
-        { friendId },
+        { friendId }
       ),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['user'],
+        queryKey: ["user"],
       });
     },
   });
@@ -210,11 +157,11 @@ export const useFriendDelete = () => {
         undefined,
         {
           friendId,
-        },
+        }
       ),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['user'],
+        queryKey: ["user"],
       });
     },
   });
@@ -237,12 +184,12 @@ export const useFriendJoin = () => {
         {
           friendId,
           groupId,
-        },
+        }
       );
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['user'],
+        queryKey: ["user"],
       });
     },
   });
@@ -258,11 +205,11 @@ export const useFriendReject = () => {
         API_ENDPOINTS.FRIEND.PUT_FRIEND_REJECT,
         {
           friendId,
-        },
+        }
       ),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['user'],
+        queryKey: ["user"],
       });
     },
   });
@@ -275,11 +222,11 @@ export const useFriendRequest = () => {
     mutationFn: async (data: FriendRequestData) =>
       await apiRequest<FriendListResponse>(
         API_ENDPOINTS.FRIEND.POST_FRIEND,
-        data,
+        data
       ),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['user'],
+        queryKey: ["user"],
       });
     },
   });

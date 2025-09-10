@@ -1,8 +1,9 @@
-import { getThumbnailUrl } from '@/features/viewer/utils/mediaUtils';
-import { ProfileCard } from '../ProfileCard';
-import { ProfileViewer } from '../ProfileViewer';
-import { Profile, RelationType } from '@/features/chat/model';
-import { useUIStore } from '@/shared/store/useUIStore';
+import { getThumbnailUrl } from "@/features/viewer/utils/mediaUtils";
+import { ProfileCard } from "../ProfileCard";
+import { ProfileViewer } from "../ProfileViewer";
+import { Profile } from "@/entities/profile";
+import { RelationType } from "@/entities/friend";
+import { useUIStore } from "@/shared/store/useUIStore";
 
 export default function ProfileItem({
   profile,
@@ -19,7 +20,7 @@ export default function ProfileItem({
   editedName: string;
   syncName: string;
   isMyProfile?: boolean;
-  type?: 'friend' | 'talk';
+  type?: "friend" | "talk";
   isMaster?: boolean;
   relationType?: RelationType;
 }) {

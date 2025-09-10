@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { FileSearchParams, useChannelFileSearch } from "../api/fileSearchApi";
-import { FileCategoryList, FileKind, FileSubCategoryList } from "../model";
+import { FileCategory, FileKind, FileSubCategory } from "../model";
 
 export interface File {
   fileId: string;
@@ -56,14 +56,14 @@ export default function useChannelFilePreview({
     if (!channelUrl) return;
 
     const searchParams: FileSearchParams = {
-      fileCategoryList: [FileCategoryList.CHAT],
+        fileCategoryList: [FileCategory.CHAT],
       fileKindList:
         type === "image"
           ? [FileKind.IMAGE, FileKind.GIF, FileKind.WEBP, FileKind.VIDEO]
           : [FileKind.DOCUMENT, FileKind.AUDIO, FileKind.ZIP, FileKind.ETC],
       isDeleted: false,
       ownerContentIdList: [channelUrl],
-      fileSubCategoryList: [FileSubCategoryList.CHAT_FILE],
+      fileSubCategoryList: [FileSubCategory.CHAT_FILE],
       page: {
         offset: 0,
         pageNo: 0,
