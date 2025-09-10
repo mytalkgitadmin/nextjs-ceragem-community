@@ -37,6 +37,13 @@ const ProfileBody = memo<ProfileBodyProps>(
               src={profileImageUrl}
               alt={`${profileName}의 프로필 이미지`}
               onClick={() => onImageClick(0)}
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                const defaultProfile = "/assets/profile/bemilyDefaultProfile.webp";
+                if (target.src !== defaultProfile) {
+                  target.src = defaultProfile;
+                }
+              }}
             />
 
             {profileMessage && <p className={styles.state}>{profileMessage}</p>}

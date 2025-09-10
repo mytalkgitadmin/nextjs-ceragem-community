@@ -16,10 +16,35 @@ export default function SingleAvatar({
   isUpdatedProfile,
   relationType,
 }: SingleAvatarProps) {
+  const defaultProfile = "/assets/profile/bemilyDefaultProfile.webp";
+  
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    const target = e.target as HTMLImageElement;
+    if (target.src !== defaultProfile) {
+      target.src = defaultProfile;
+    }
+  };
+
   return (
     <div className={styles.avatarWrap}>
       <div className={styles.circle} style={{ width: size, height: size }}>
-        {imageUrl && <img src={imageUrl} alt="" width={size} height={size} />}
+        {imageUrl && (
+          <img 
+            src={imageUrl} 
+            alt="" 
+            width={size} 
+            height={size}
+            onError={handleImageError}
+          />
+        )}
+        {!imageUrl && (
+          <img 
+            src={defaultProfile} 
+            alt="" 
+            width={size} 
+            height={size}
+          />
+        )}
         {relationType &&
           (relationType === 'NONE' || relationType === 'DELETE') && (
             <span className={styles.add}>

@@ -59,12 +59,21 @@ export const getMediaType = (item: ViewerItemData): MediaType => {
 export const getOriginalUrl = (item: ViewerItemData): string => {
   // 이미지 메시지인 경우
   if (isImgMsgData(item)) {
+    // BASE_URL이 비어있으면 기본 이미지 반환
+    if (!BASE_URL) {
+      return defaultSmallProfile;
+    }
     return `${BASE_URL}${item.originalUrl}`;
   }
 
   if (isProfileImgData(item)) {
     if (item.profileKind === "emoticon") {
       return getEmoticonImageUrl(item.emoticonId);
+    }
+
+    // BASE_URL이 비어있으면 기본 이미지 반환
+    if (!BASE_URL) {
+      return defaultSmallProfile;
     }
 
     if (item.profileOriginal) {
@@ -85,6 +94,10 @@ export const getOriginalUrl = (item: ViewerItemData): string => {
 
 export const getThumbnailUrl = (item: ViewerItemData): string => {
   if (isImgMsgData(item) && item.thumbUrl) {
+    // BASE_URL이 비어있으면 기본 이미지 반환
+    if (!BASE_URL) {
+      return defaultSmallProfile;
+    }
     return `${BASE_URL}${item.thumbUrl}`;
   }
 
@@ -92,6 +105,11 @@ export const getThumbnailUrl = (item: ViewerItemData): string => {
   if (isProfileImgData(item)) {
     if (item.profileKind === "emoticon") {
       return getEmoticonImageUrl(item.emoticonId);
+    }
+
+    // BASE_URL이 비어있으면 기본 이미지 반환
+    if (!BASE_URL) {
+      return defaultSmallProfile;
     }
 
     if (item.profileThumbnail) {
