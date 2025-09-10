@@ -1,4 +1,3 @@
-import { LottiePlayer } from "@/shared/ui/media";
 import Client from "./Client";
 
 export default async function SigningInPage({
@@ -25,13 +24,7 @@ export default async function SigningInPage({
         gap: 16,
       }}
     >
-      <LottiePlayer
-        src="/animations/Splash_screen.json"
-        width="100vw"
-        height="100dvh"
-        style={{ position: "fixed", inset: 0 }}
-        preserveAspectRatio="xMidYMid slice"
-      />
+      <div>SigningInPage</div>
       <Client to={toParam || "/"} />
     </div>
   );

@@ -23,4 +23,12 @@ declare module "@sendbird/chat/message" {
     customType?: string;
     [key: string]: any;
   }
+
+  // Provide ReplyType as value and type for editor/type-checking compatibility
+  export const ReplyType: {
+    readonly ALL: "all";
+    readonly NONE: "none";
+    readonly ONLY_REPLY_TO_CHANNEL: "only_reply_to_channel";
+  };
+  export type ReplyType = (typeof ReplyType)[keyof typeof ReplyType];
 }

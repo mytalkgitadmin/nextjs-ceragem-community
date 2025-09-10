@@ -1,1 +1,1 @@
-export { default as FriendsView } from "./ui/FriendsView";
+export { default as FriendsView } from "./FriendsView";

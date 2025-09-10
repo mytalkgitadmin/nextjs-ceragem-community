@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect } from "react";
-import { useProfileStore, profileMapper } from "@/entities/profile";
+import { useAuthStore } from "@/features/auth/authStore";
+import { AccountProfile } from "@/features/chat/model";
+const profileMapper = (dto: AccountProfile) => dto; // TODO: 필요 시 상세 매핑 적용
 import { useRouter } from "next/navigation";
 
 export default function Client({ to }: { to: string }) {
@@ -12,10 +14,15 @@ export default function Client({ to }: { to: string }) {
         const resData = await res.json();
         if (!res.ok || !resData.ok) throw new Error("exchange_failed");
 
-        useProfileStore.getState().updateState({
-          userProfile: profileMapper(resData.data.accountProfile),
-          sendbirdId: resData.data.sendBirdId.trim(), // 앞뒤 공백 제거 후 저장 (Sendbird 제한사항)
+        useAuthStore
+          .getState()
+          .updateUserProfile(profileMapper(resData.data.accountProfile));
+        useAuthStore.getState().login({
+          accessToken: "",
+          refreshToken: "",
           sessionToken: resData.data.sessionToken,
+          sendBirdId: resData.data.sendBirdId.trim(),
+          accountProfile: resData.data.accountProfile,
         });
 
         setTimeout(() => {

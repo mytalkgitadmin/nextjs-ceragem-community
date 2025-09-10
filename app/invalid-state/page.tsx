@@ -1,7 +1,5 @@
 "use client";
 
-import { LottiePlayer } from "@/shared/ui/media";
-
 export default function InvalidStatePage() {
   return (
     <main
@@ -14,11 +12,7 @@ export default function InvalidStatePage() {
         gap: 16,
       }}
     >
-      <LottiePlayer
-        src="/animations/Under_Maintenance.json"
-        width={160}
-        height={160}
-      />
+      <div>InvalidStatePage</div>
     </main>
   );
 }

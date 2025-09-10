@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { LottiePlayer } from "@/shared/ui/media";
 
 export default function NotFound() {
   return (
@@ -13,14 +12,7 @@ export default function NotFound() {
       }}
     >
       <div style={{ textAlign: "center", maxWidth: 560 }}>
-        <LottiePlayer
-          src="/animations/Error_404.json"
-          width={320}
-          height={320}
-          autoplay
-          loop
-          style={{ margin: "0 auto 8px" }}
-        />
+        <div>NotFoundPage</div>
 
         <div style={{ display: "flex", gap: 12, justifyContent: "center" }}>
           <Link

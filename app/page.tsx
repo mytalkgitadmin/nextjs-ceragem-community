@@ -1,9 +1,10 @@
 import { FriendsView } from "@/views/friends";
+import { ProtectedLayout } from "@/widgets/layouts/ProtectedLayout";
 
 export default function HomePage() {
   return (
-    <main style={{ flexGrow: 1 }}>
+    <ProtectedLayout>
       <FriendsView />
-    </main>
+    </ProtectedLayout>
   );
 }

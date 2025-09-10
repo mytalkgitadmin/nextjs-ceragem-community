@@ -1,0 +1,19 @@
+@use "@/app/styles/tokens.scss" as *;
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  height: convertRem(48);
+  padding: 0 1.5em;
+  line-height: 1;
+
+  background-color: var(--primary);
+  color: var(--background);
+  border-radius: $borderRadius;
+
+  &:disabled {
+    background-color: var(--background-dark1);
+  }
+}

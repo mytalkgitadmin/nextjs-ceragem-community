@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { computeMaxAgeSeconds } from "@/shared/lib/jwt";
-import type { AccountProfileDTO } from "@/entities/profile";
+import type { AccountProfile } from "@/features/chat/model";
 
 const SEVEN_DAYS_S = 60 * 60 * 24 * 7;
 const NINETY_DAYS_S = 60 * 60 * 24 * 90;
@@ -8,7 +8,7 @@ const NINETY_DAYS_S = 60 * 60 * 24 * 90;
 interface LoginResponse {
   accessToken: string;
   refreshToken: string;
-  accountProfile: AccountProfileDTO;
+  accountProfile: AccountProfile;
   sendBirdId: string;
   sessionToken: string;
 }
@@ -59,8 +59,11 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  let { accessToken, refreshToken, accountProfile, sendBirdId, sessionToken } =
+  const { accessToken: accessTokenRaw, refreshToken: refreshTokenRaw } =
     result.data;
+  let accessToken = accessTokenRaw;
+  let refreshToken = refreshTokenRaw;
+  const { accountProfile, sendBirdId, sessionToken } = result.data;
   accessToken = accessToken.replace("Bearer ", ""); // Bearer이 같이 넘어오고 있음
   refreshToken = refreshToken.replace("Bearer ", ""); // Bearer이 같이 넘어오고 있음
 

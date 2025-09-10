@@ -1,0 +1,49 @@
+@use "@/app/styles/tokens.scss" as *;
+
+.buttons {
+  position: absolute;
+  top: 16px;
+  right: calc(16px + 36px);
+  display: flex;
+  align-items: center;
+  color: var(--text2);
+}
+
+.buttons :global([data-slot="dialog-close"]),
+.buttons button {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+}
+
+.popover {
+  border: 1px solid var(--border);
+
+  border-radius: $borderRadius;
+  display: flex;
+  flex-direction: column;
+  width: convertRem(100);
+  padding: 0.4em;
+  button {
+    width: 100%;
+    font-size: 0.9em;
+    transition: all 0.3s;
+    &:hover {
+      background: var(--background-dark1);
+    }
+  }
+}
+.alertMsg {
+  ul {
+    // border: 1px solid var(--border);
+    border-radius: $borderRadius;
+    padding: 1em 1.5em;
+    margin-top: 0.5em;
+    background-color: var(--background-dark1);
+    li {
+      list-style: disc;
+      list-style-position: inside;
+      line-height: 2;
+    }
+  }
+}

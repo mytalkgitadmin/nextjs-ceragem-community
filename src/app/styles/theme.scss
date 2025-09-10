@@ -2,7 +2,7 @@
 
 :root {
   @each $name, $value in $light {
-    --#{'' + $name}: #{$value};
+    --app-#{'' + $name}: #{$value};
   }
 }
 
@@ -10,7 +10,7 @@
   :root,
   [data-theme="dark"] {
     @each $name, $value in $dark {
-      --#{'' + $name}: #{$value};
+      --app-#{'' + $name}: #{$value};
     }
   }
 }

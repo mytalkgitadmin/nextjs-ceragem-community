@@ -1,0 +1,72 @@
+@use '@/app/styles.tokens.scss' as *;
+
+.features {
+  display: flex;
+  flex-direction: column;
+  gap: convertRem(60);
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  .mainText {
+    display: flex;
+    justify-content: center;
+    gap: min(10vw, convertRem(200));
+    font-size: fcSize(16, 20);
+    color: var(--text1);
+
+    @media screen and (max-width: 1024px) {
+      flex-direction: column;
+      text-align: center;
+      align-items: center;
+      gap: convertRem(20);
+    }
+    .title {
+      display: flex;
+      align-items: center;
+      gap: convertRem(10);
+      font-size: 4em;
+      font-weight: bold;
+
+      img {
+        height: 1em;
+      }
+    }
+
+    .contents {
+      font-weight: 200;
+      span {
+        display: block;
+      }
+
+      strong {
+        font-weight: 600;
+        display: block;
+        font-size: 2em;
+      }
+    }
+  }
+
+  .btn_group {
+    display: flex;
+    flex-direction: column;
+    gap: convertRem(10);
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--text1);
+      color: var(--background);
+
+      height: convertRem(48);
+      padding: 0 4em;
+      font-size: fcSize(15, 18);
+      border-radius: $borderRadius;
+    }
+    .btn_web {
+      background-color: var(--background);
+      border: 1px solid var(--text3);
+      color: var(--text1);
+    }
+  }
+}

@@ -1,11 +1,13 @@
+"use client";
+
 import "@/styles/sendbird.css";
 import styles from "./ChatPage.module.scss";
 
-import { ChatList } from "@/features/channel-list/ui/ChatList";
-import { ChatView } from "@/features/channel-view/ui/ChatView";
-import { useChatLayoutStore } from "@/features/channel-view/model/useChatLayoutStore";
+import { ChatList } from "@/features/chat/ui/ChatList";
+import { ChatView } from "@/features/chat/ui/ChatView";
+import { useChatLayoutStore } from "@/features/chat/ui/ChatView/store/useChatLayoutStore";
 import { useCallback, useEffect, useRef } from "react";
-import { IconButton } from "@/shared/ui/button";
+import { IconButton } from "@/shared/ui/IconButton";
 
 export default function ChatPage() {
   const { isChatListVisible, closeChatList, initializeChatList } =

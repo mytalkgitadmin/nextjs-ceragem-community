@@ -1,0 +1,36 @@
+@use "@/app/styles/tokens.scss" as *;
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: convertRem(16);
+  margin-top: convertRem(40);
+
+  .formItem {
+    display: flex;
+    flex-direction: column;
+    gap: convertRem(4);
+    position: relative;
+
+    label {
+      font-size: convertRem(14);
+      color: var(--text3);
+    }
+    input {
+      border: 1px solid var(--border);
+      border-radius: $borderRadius;
+      height: convertRem(48);
+    }
+  }
+}
+
+.errorMsg {
+  color: var(--error);
+  font-size: convertRem(14);
+}
+
+.eyeIcon {
+  position: absolute;
+  right: convertRem(6);
+  bottom: convertRem(6);
+}

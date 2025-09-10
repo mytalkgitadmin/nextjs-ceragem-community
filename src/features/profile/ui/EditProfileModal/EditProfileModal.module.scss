@@ -1,0 +1,12 @@
+@use "@/app/styles/tokens.scss" as *;
+.content {
+  .flex {
+    display: flex;
+    align-items: center;
+    gap: convertRem(8);
+  }
+  .birth {
+    flex-grow: 1;
+    justify-content: space-between;
+  }
+}
