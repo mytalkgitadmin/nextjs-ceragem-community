@@ -1,6 +1,7 @@
-import { useCallback, useRef, useState } from 'react';
-import { FileValidationError, ProfileImageFile } from '../model/fileTypes';
-import { showFileUploadError } from '@/features/chat/ui/Input/utils';
+import { useCallback, useRef, useState } from "react";
+import { FileValidationError } from "@/shared/model";
+import { ProfileImageFile } from "../ui/types";
+import { showFileUploadError } from "@/features/chat/ui/Input/utils";
 
 export default function useProfileImageUpload({
   acceptedTypes,
@@ -12,7 +13,7 @@ export default function useProfileImageUpload({
   onImageChange: (file: File | null) => void;
 }) {
   const [selectedImage, setSelectedImage] = useState<ProfileImageFile | null>(
-    null,
+    null
   );
   const [isUploading, setIsUploading] = useState(false);
   const [validationError, setValidationError] =
@@ -22,21 +23,23 @@ export default function useProfileImageUpload({
   const validateFile = (file: File): FileValidationError | null => {
     if (file.size > maxFileSize) {
       return {
-        type: 'SIZE_EXCEEDED',
-        message: `파일 크기 허용량 ${Math.round(maxFileSize / 1024 / 1024)}MB 초과하였습니다`,
+        type: "SIZE_EXCEEDED",
+        message: `파일 크기 허용량 ${Math.round(
+          maxFileSize / 1024 / 1024
+        )}MB 초과하였습니다`,
       };
     }
 
     if (acceptedTypes.length > 0) {
-      const fileExtension = file.name.split('.').pop()?.toLocaleLowerCase();
+      const fileExtension = file.name.split(".").pop()?.toLocaleLowerCase();
       const isValidType = acceptedTypes.some((type) =>
-        type.toLocaleLowerCase().includes(fileExtension || ''),
+        type.toLocaleLowerCase().includes(fileExtension || "")
       );
 
       if (!isValidType) {
         return {
-          type: 'INVALID_TYPE',
-          message: '지원하지 않는 파일 형식입니다.',
+          type: "INVALID_TYPE",
+          message: "지원하지 않는 파일 형식입니다.",
         };
       }
     }
@@ -87,7 +90,7 @@ export default function useProfileImageUpload({
       setSelectedImage(newImage);
       onImageChange?.(file);
 
-      event.target.value = '';
+      event.target.value = "";
     },
     [
       selectedImage,
@@ -95,7 +98,7 @@ export default function useProfileImageUpload({
       maxFileSize,
       onImageChange,
       cleanupPreviewUrl,
-    ],
+    ]
   );
 
   // 이미지 제거
@@ -109,7 +112,7 @@ export default function useProfileImageUpload({
     onImageChange?.(null);
 
     if (fileInputRef.current) {
-      fileInputRef.current.value = '';
+      fileInputRef.current.value = "";
     }
   }, [selectedImage, onImageChange, cleanupPreviewUrl]);
 

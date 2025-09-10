@@ -1,4 +1,5 @@
-import { API_ENDPOINTS, apiRequest } from "@/shared/api";
+import { apiRequest } from "@/shared/api";
+import { AUTH_ENDPOINTS } from "./api/endpoints";
 import { useAuthStore } from "./authStore";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -15,7 +16,7 @@ import { useRouter } from "next/navigation";
  * @returns 로그인 응답 데이터를 포함한 Promise
  */
 export const loginApi = (data: RequestLogin): Promise<ResponseLogin> => {
-  return apiRequest<ResponseLogin>(API_ENDPOINTS.AUTH.LOGIN, data);
+  return apiRequest<ResponseLogin>(AUTH_ENDPOINTS.LOGIN, data);
 };
 
 /**
@@ -60,7 +61,7 @@ export const useLogin = () => {
  * @returns 사용자 프로필 데이터를 포함한 Promise
  */
 export const getUserProfileApi = () => {
-  return apiRequest(API_ENDPOINTS.AUTH.GET_MY_PROFILE);
+  return apiRequest(AUTH_ENDPOINTS.GET_MY_PROFILE);
 };
 
 /**
@@ -94,7 +95,7 @@ export const refreshTokenApi = (
   data: RefreshTokenRequest
 ): Promise<RefreshTokenResponse> => {
   return apiRequest<RefreshTokenResponse>(
-    API_ENDPOINTS.AUTH.REFRESH_TOKEN,
+    AUTH_ENDPOINTS.REFRESH_TOKEN,
     data
   );
 };

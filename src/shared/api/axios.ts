@@ -1,7 +1,27 @@
 import qs from "qs";
 import axios, { AxiosInstance } from "axios";
 import { API_ENDPOINTS } from "./endpoints";
-import { useAuthStore } from "@/features/auth/authStore";
+
+// 토큰 관련 인터페이스 (의존성 역전)
+interface TokenManager {
+  getAccessToken(): string | null;
+  getRefreshToken(): string | null;
+  updateTokens(tokens: {
+    accessToken: string;
+    refreshToken: string;
+    sessionToken?: string;
+  }): void;
+  logout(): void;
+  setTokenRefreshPromise(promise: Promise<boolean> | null): void;
+  getTokenRefreshPromise(): Promise<boolean> | null;
+}
+
+// 전역 토큰 매니저 (features/auth에서 주입)
+let tokenManager: TokenManager | null = null;
+
+export const setTokenManager = (manager: TokenManager) => {
+  tokenManager = manager;
+};
 
 /**
  * 기본 axios 인스턴스 생성
@@ -33,8 +53,7 @@ export const axiosInstance = axios.create({
  */
 const getAuthToken = (): string | null => {
   try {
-    const authStore = useAuthStore.getState();
-    return authStore.accessToken;
+    return tokenManager?.getAccessToken() || null;
   } catch (error) {
     console.error("토큰 접근 오류:", error);
     return null;
@@ -47,18 +66,24 @@ const getAuthToken = (): string | null => {
  */
 const refreshToken = async (): Promise<boolean> => {
   try {
-    const authStore = useAuthStore.getState();
-    const { refreshToken, accessToken } = authStore.getStoredTokens();
+    if (!tokenManager) {
+      console.error("TokenManager가 초기화되지 않았습니다");
+      return false;
+    }
 
-    if (!refreshToken) {
+    const refreshTokenValue = tokenManager.getRefreshToken();
+    const accessToken = tokenManager.getAccessToken();
+
+    if (!refreshTokenValue) {
       console.error("Refresh token이 없습니다");
-      authStore.logout();
+      tokenManager.logout();
       return false;
     }
 
     // 이미 토큰 갱신 중인 경우 해당 Promise를 반환
-    if (authStore.tokenRefreshPromise) {
-      return await authStore.tokenRefreshPromise;
+    const existingPromise = tokenManager.getTokenRefreshPromise();
+    if (existingPromise) {
+      return await existingPromise;
     }
 
     // 새로운 토큰 갱신 Promise 생성
@@ -68,13 +93,13 @@ const refreshToken = async (): Promise<boolean> => {
           API_ENDPOINTS.AUTH.REFRESH_TOKEN.url,
           {
             expiredAccessToken: accessToken || "",
-            refreshToken,
+            refreshToken: refreshTokenValue,
           }
         );
 
         if (response.data) {
           // 새로운 토큰으로 상태 업데이트
-          authStore.updateTokens({
+          tokenManager.updateTokens({
             accessToken: response.data.accessToken,
             refreshToken: response.data.refreshToken,
             sessionToken: response.data.sessionToken,
@@ -86,21 +111,21 @@ const refreshToken = async (): Promise<boolean> => {
         }
       } catch (error) {
         console.error("토큰 갱신 실패: ", error);
-        authStore.logout();
+        tokenManager.logout();
         return false;
       } finally {
         // Promise 완료 후 정리
-        authStore.setTokenRefreshPromise(null);
+        tokenManager.setTokenRefreshPromise(null);
       }
     })();
 
     // Promise를 store에 저장하여 중복 갱신 방지
-    authStore.setTokenRefreshPromise(refreshPromise);
+    tokenManager.setTokenRefreshPromise(refreshPromise);
 
     return await refreshPromise;
   } catch (error) {
     console.error("토큰 갱신 프로세스 오류:", error);
-    useAuthStore.getState().logout();
+    tokenManager?.logout();
     return false;
   }
 };
@@ -152,7 +177,7 @@ axiosInstance.interceptors.response.use(
       error.response.data?.path === API_ENDPOINTS.AUTH.REFRESH_TOKEN.url
     ) {
       console.error("🔴 토큰 갱신 API 실패");
-      useAuthStore.getState().logout();
+      tokenManager?.logout();
       return Promise.reject(error);
     }
 
@@ -165,7 +190,7 @@ axiosInstance.interceptors.response.use(
     // 2번까지만 재시도
     if (originalRequest._retryCount > 2) {
       console.error("🔴 특정 요청 재시도 한도 초과:", originalRequest.url);
-      useAuthStore.getState().logout();
+      tokenManager?.logout();
       return Promise.reject(error);
     }
 
@@ -173,7 +198,7 @@ axiosInstance.interceptors.response.use(
 
     // 토큰 갱신 엔드포인트인 경우 갱신 시도하지 않음
     if (originalRequest.url?.includes(API_ENDPOINTS.AUTH.REFRESH_TOKEN.url)) {
-      useAuthStore.getState().logout();
+      tokenManager?.logout();
       return Promise.reject(error);
     }
     // 토큰 갱신 시도
@@ -193,11 +218,11 @@ axiosInstance.interceptors.response.use(
 
       // 토큰 갱신 실패 시 로그아웃'
       console.error("🔴 토큰 갱신 실패");
-      useAuthStore.getState().logout();
+      tokenManager?.logout();
       return Promise.reject(error);
     } catch (refreshError) {
       console.error("토큰 갱신 중 오류:", refreshError);
-      useAuthStore.getState().logout();
+      tokenManager?.logout();
       return Promise.reject(refreshError);
     }
   }

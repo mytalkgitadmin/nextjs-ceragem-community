@@ -1,4 +1,13 @@
+// ⚠️  DEPRECATED: 이 파일의 상태들은 도메인별로 분리되었습니다.
+// 새로운 store들을 사용해주세요:
+// - Profile Modal: @/features/profile/store/useProfileModalStore
+// - Channel Drawer: @/features/chat/store/useChannelDrawerStore  
+// - Alert Dialog: @/shared/store/useAlertStore
+
 import { create } from 'zustand';
+import { useProfileModalStore } from '@/features/profile/store/useProfileModalStore';
+import { useChannelDrawerStore } from '@/features/chat/store/useChannelDrawerStore';
+import { useAlertStore } from './useAlertStore';
 
 interface UIState {
   // 프로필 모달 상태
@@ -42,82 +51,36 @@ interface UIState {
   closeAllModals: () => void;
 }
 
-export const useUIStore = create<UIState>((set) => ({
-  profileModal: {
-    isOpen: false,
-    accountId: null,
-  },
-  channelDrawer: {
-    isOpen: false,
-  },
-  alertDialog: {
-    isOpen: false,
-    title: '',
-    description: '',
-    confirmText: '확인',
-    onConfirm: null,
-  },
+// 하위 호환성을 위한 통합 훅 (단계적 마이그레이션용)
+export const useUIStore = (): UIState => {
+  const profileModal = useProfileModalStore((state) => state.profileModal);
+  const openProfileModal = useProfileModalStore((state) => state.openProfileModal);
+  const closeProfileModal = useProfileModalStore((state) => state.closeProfileModal);
 
-  // 프로필 모달 액션
-  openProfileModal: (accountId: number) =>
-    set(() => ({
-      profileModal: { isOpen: true, accountId },
-    })),
+  const channelDrawer = useChannelDrawerStore((state) => state.channelDrawer);
+  const openChannelDrawer = useChannelDrawerStore((state) => state.openChannelDrawer);
+  const closeChannelDrawer = useChannelDrawerStore((state) => state.closeChannelDrawer);
 
-  closeProfileModal: () =>
-    set(() => ({
-      profileModal: { isOpen: false, accountId: null },
-    })),
+  const alertDialog = useAlertStore((state) => state.alertDialog);
+  const openAlertDialog = useAlertStore((state) => state.openAlertDialog);
+  const closeAlertDialog = useAlertStore((state) => state.closeAlertDialog);
 
-  // 채널 드로어 액션
-  openChannelDrawer: () =>
-    set((state) => ({
-      channelDrawer: { ...state.channelDrawer, isOpen: true },
-    })),
+  const closeAllModals = () => {
+    closeProfileModal();
+    closeChannelDrawer();
+    closeAlertDialog();
+  };
 
-  closeChannelDrawer: () =>
-    set((state) => ({
-      channelDrawer: { ...state.channelDrawer, isOpen: false },
-    })),
-
-  openAlertDialog: (config: {
-    title: string | React.ReactNode;
-    description: string | React.ReactNode;
-    confirmText?: string;
-    onConfirm: () => void;
-  }) =>
-    set(() => ({
-      alertDialog: {
-        isOpen: true, // true로 변경!
-        title: config.title || '',
-        description: config.description || '',
-        confirmText: config.confirmText || '확인',
-        onConfirm: config.onConfirm,
-      },
-    })),
-
-  closeAlertDialog: () =>
-    set(() => ({
-      alertDialog: {
-        isOpen: false,
-        title: '',
-        description: '',
-        confirmText: '확인',
-        onConfirm: null,
-      },
-    })),
-
-  // 모든 모달/드로어 닫기
-  closeAllModals: () =>
-    set(() => ({
-      profileModal: { isOpen: false, accountId: null },
-      channelDrawer: { isOpen: false },
-      alertDialog: {
-        isOpen: false,
-        title: '',
-        description: '',
-        confirmText: '확인',
-        onConfirm: null,
-      },
-    })),
-}));
+  return {
+    profileModal,
+    channelDrawer,
+    alertDialog,
+    openProfileModal,
+    closeProfileModal,
+    openChannelDrawer,
+    closeChannelDrawer,
+    openAlertDialog,
+    closeAlertDialog,
+    closeAllModals,
+  };
+};

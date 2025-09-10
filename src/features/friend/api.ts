@@ -1,18 +1,34 @@
-import { API_ENDPOINTS, apiRequest, RequestParams } from "@/shared/api";
+import { apiRequest } from "@/shared/api";
+import { FRIEND_ENDPOINTS } from "./api/endpoints";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-import type { FriendStatus } from "@/entities/friend";
+// DTO와 계약 타입 import
+import type { FriendListResponseDTO } from "./api/dto-types";
+import type {
+  FriendListRequest,
+  FriendListResponse,
+} from "./api/contracts-types";
+import { mapFriendListResponse } from "./api/dto-mappers";
 
-export interface FriendListResponse {
-  result: boolean;
-  resultData: {
-    friends: Friend[];
-    groups: Group[];
-    invitableUsers: InvitableUser[];
-  };
+// Entities import
+import type {
+  Friend,
+  Group,
+  InvitableUser,
+  FriendStatus,
+} from "@/entities/friend";
+
+// Re-export for backward compatibility
+export type { Friend, Group, InvitableUser, FriendStatus };
+
+// API 요청 파라미터 타입
+export interface FriendListParams extends FriendListRequest {
+  friendType: FriendStatus[];
+  count?: number;
+  isNew?: boolean;
+  offset?: number;
+  [key: string]: any; // RequestParams와 호환성을 위한 인덱스 시그니처
 }
-
-import type { ApiFriendProfile } from "@/entities/friend";
 
 export interface FriendRequestData {
   friends: Array<{
@@ -26,27 +42,18 @@ export interface FriendRequestData {
   isSync: boolean;
 }
 
-import type { Friend, Group, InvitableUser } from "@/entities/friend";
-
-// Re-export for backward compatibility
-export type { Friend, Group, InvitableUser, FriendStatus, ApiFriendProfile };
-
-export interface FriendListParams extends RequestParams {
-  friendType: FriendStatus[];
-  count?: number;
-  groupId?: number;
-  isNew?: boolean;
-  offset?: number;
-}
-
 export const getFriendListApi = async (params: FriendListParams) => {
-  const response = await apiRequest<FriendListResponse>(
-    API_ENDPOINTS.FRIEND.GET_FRIENDS_LIST,
+  // DTO로 API 호출
+  const dtoResponse = await apiRequest<FriendListResponseDTO>(
+    FRIEND_ENDPOINTS.GET_FRIENDS_LIST,
     undefined,
     params
   );
 
-  return response.resultData;
+  // DTO를 도메인 모델로 변환
+  const domainResponse = mapFriendListResponse(dtoResponse);
+
+  return domainResponse.resultData;
 };
 
 //  BLOCK, DELETE, FAVORITE, HIDE, LEAVE, ME, NONE, NORMAL, REJECT, REQUEST, REQUESTED
@@ -62,11 +69,14 @@ export const useFriendFavorite = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (data: { friendId: number; isFavorite: boolean }) =>
-      await apiRequest<FriendListResponse>(
-        API_ENDPOINTS.FRIEND.PUT_FRIEND_FAVORITE,
+    mutationFn: async (data: { friendId: number; isFavorite: boolean }) => {
+      // DTO 응답을 받지만 도메인 모델 변환은 필요시에만
+      const dtoResponse = await apiRequest<FriendListResponseDTO>(
+        FRIEND_ENDPOINTS.PUT_FRIEND_FAVORITE,
         data
-      ),
+      );
+      return mapFriendListResponse(dtoResponse);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["user"],
@@ -81,8 +91,8 @@ export const useFriendHide = () => {
 
   return useMutation({
     mutationFn: async (friendId: number) =>
-      await apiRequest<FriendListResponse>(
-        API_ENDPOINTS.FRIEND.PUT_FRIEND_HIDE,
+      await apiRequest<FriendListResponseDTO>(
+        FRIEND_ENDPOINTS.PUT_FRIEND_HIDE,
         { friendId }
       ),
     onSuccess: () => {
@@ -98,8 +108,8 @@ export const useFriendHideCancel = () => {
 
   return useMutation({
     mutationFn: async (friendId: number) =>
-      await apiRequest<FriendListResponse>(
-        API_ENDPOINTS.FRIEND.PUT_FRIEND_HIDE_CANCEL,
+      await apiRequest<FriendListResponseDTO>(
+        FRIEND_ENDPOINTS.PUT_FRIEND_HIDE_CANCEL,
         { friendId }
       ),
     onSuccess: () => {
@@ -116,8 +126,8 @@ export const useFriendBlock = () => {
 
   return useMutation({
     mutationFn: async (friendId: number) =>
-      await apiRequest<FriendListResponse>(
-        API_ENDPOINTS.FRIEND.PUT_FRIEND_BLOCK,
+      await apiRequest<FriendListResponseDTO>(
+        FRIEND_ENDPOINTS.PUT_FRIEND_BLOCK,
         { friendId }
       ),
     onSuccess: () => {
@@ -133,8 +143,8 @@ export const useFriendBlockCancel = () => {
 
   return useMutation({
     mutationFn: async (friendId: number) =>
-      await apiRequest<FriendListResponse>(
-        API_ENDPOINTS.FRIEND.PUT_FRIEND_BLOCK_CANCEL,
+      await apiRequest<FriendListResponseDTO>(
+        FRIEND_ENDPOINTS.PUT_FRIEND_BLOCK_CANCEL,
         { friendId }
       ),
     onSuccess: () => {
@@ -151,8 +161,8 @@ export const useFriendDelete = () => {
 
   return useMutation({
     mutationFn: async (friendId: number) =>
-      await apiRequest<FriendListResponse>(
-        API_ENDPOINTS.FRIEND.DELETE_FRIEND,
+      await apiRequest<FriendListResponseDTO>(
+        FRIEND_ENDPOINTS.DELETE_FRIEND,
         undefined,
         undefined,
         {
@@ -179,8 +189,8 @@ export const useFriendJoin = () => {
       friendId: number;
       groupId: number;
     }) => {
-      await apiRequest<FriendListResponse>(
-        API_ENDPOINTS.FRIEND.PUT_FRIEND_JOIN,
+      await apiRequest<FriendListResponseDTO>(
+        FRIEND_ENDPOINTS.PUT_FRIEND_JOIN,
         {
           friendId,
           groupId,
@@ -201,8 +211,8 @@ export const useFriendReject = () => {
 
   return useMutation({
     mutationFn: async (friendId: number) =>
-      await apiRequest<FriendListResponse>(
-        API_ENDPOINTS.FRIEND.PUT_FRIEND_REJECT,
+      await apiRequest<FriendListResponseDTO>(
+        FRIEND_ENDPOINTS.PUT_FRIEND_REJECT,
         {
           friendId,
         }
@@ -220,8 +230,8 @@ export const useFriendRequest = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (data: FriendRequestData) =>
-      await apiRequest<FriendListResponse>(
-        API_ENDPOINTS.FRIEND.POST_FRIEND,
+      await apiRequest<FriendListResponseDTO>(
+        FRIEND_ENDPOINTS.POST_FRIEND,
         data
       ),
     onSuccess: () => {

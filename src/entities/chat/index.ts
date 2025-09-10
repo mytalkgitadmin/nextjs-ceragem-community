@@ -8,3 +8,6 @@ export {
   MessageInDataType,
   MessageControlType,
 } from "./model/entity-enums";
+
+// File-related enums
+export { ChatFileCategory, ChatFileSubCategory } from "./model/file-enums";

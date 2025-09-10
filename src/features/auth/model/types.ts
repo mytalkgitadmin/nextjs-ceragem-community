@@ -1,5 +1,5 @@
-import { AccountProfile } from '@/features/chat/model';
-import { ApiResponse } from '@/shared/api';
+import { AccountProfile } from "@/entities/profile";
+import { ApiResponse } from "@/shared/api";
 
 // 로그인 요청
 export interface RequestLogin {
@@ -66,4 +66,9 @@ export interface AuthState {
     sessionToken: string | null;
     userId: string | null;
   };
+
+  // TokenManager 인터페이스 구현을 위한 메서드들
+  getAccessToken: () => string | null;
+  getRefreshToken: () => string | null;
+  getTokenRefreshPromise: () => Promise<boolean> | null;
 }

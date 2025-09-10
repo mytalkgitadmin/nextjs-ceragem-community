@@ -10,10 +10,8 @@ export {
   MessageControlType,
 } from "@/entities/chat";
 
-// Import shared enums for backward compatibility
-export {
-  FileCategory,
-  FileKind,
-  FileSubCategory,
-  PreviewType,
-} from "@/shared/model";
+// Import Chat-specific file enums for backward compatibility
+export { ChatFileCategory, ChatFileSubCategory } from "@/entities/chat";
+
+// Import core file types for backward compatibility
+export { FileKind, PreviewType } from "@/shared/model";

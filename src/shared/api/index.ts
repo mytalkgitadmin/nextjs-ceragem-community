@@ -1,6 +1,10 @@
 export { API_ENDPOINTS, BASE_API_URL } from "./endpoints";
 export type { Endpoint, ApiResponse, RequestParams } from "./model";
-export { axiosInstance, createFileUploadInstance } from "./axios";
+export {
+  axiosInstance,
+  createFileUploadInstance,
+  setTokenManager,
+} from "./axios";
 
 export {
   apiRequest,

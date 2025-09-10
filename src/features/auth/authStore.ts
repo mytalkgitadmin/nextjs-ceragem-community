@@ -3,9 +3,10 @@
  * 인증 관련 상태 관리를 위한 Zustand 스토어
  * 로그인 상태, 토큰, 사용자 정보 등을 중앙에서 관리
  */
-import { create } from 'zustand';
-import { createJSONStorage, persist } from 'zustand/middleware';
-import { AuthState } from './model';
+import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
+import { AuthState } from "./model";
+import { setTokenManager } from "@/shared/api";
 
 /**
  * 인증 상태 스토어
@@ -26,7 +27,7 @@ import { AuthState } from './model';
 export const useAuthStore = create<AuthState>()(
   persist(
     (set, get) => ({
-      returnUrl: '/',
+      returnUrl: "/",
       isAuthenticated: false,
       accessToken: null,
       refreshToken: null,
@@ -41,7 +42,7 @@ export const useAuthStore = create<AuthState>()(
        */
       login: (authData) => {
         set({
-          returnUrl: '/',
+          returnUrl: "/",
           isAuthenticated: true,
           accessToken: authData.accessToken,
           refreshToken: authData.refreshToken,
@@ -70,7 +71,7 @@ export const useAuthStore = create<AuthState>()(
        */
       logout: () => {
         set({
-          returnUrl: '/',
+          returnUrl: "/",
           isAuthenticated: false,
           accessToken: null,
           refreshToken: null,
@@ -113,10 +114,31 @@ export const useAuthStore = create<AuthState>()(
         sessionToken: get().sessionToken,
         userId: get().userId,
       }),
+
+      // TokenManager 인터페이스 구현을 위한 메서드들
+      getAccessToken: () => get().accessToken,
+      getRefreshToken: () => get().refreshToken,
+      getTokenRefreshPromise: () => get().tokenRefreshPromise,
     }),
     {
-      name: 'auth-storage',
+      name: "auth-storage",
       storage: createJSONStorage(() => localStorage),
-    },
-  ),
+    }
+  )
 );
+
+// TokenManager 주입
+setTokenManager({
+  getAccessToken: () => useAuthStore.getState().accessToken,
+  getRefreshToken: () => useAuthStore.getState().refreshToken,
+  updateTokens: (tokens) =>
+    useAuthStore.getState().updateTokens({
+      accessToken: tokens.accessToken,
+      refreshToken: tokens.refreshToken,
+      sessionToken: tokens.sessionToken || "",
+    }),
+  logout: () => useAuthStore.getState().logout(),
+  setTokenRefreshPromise: (promise) =>
+    useAuthStore.getState().setTokenRefreshPromise(promise),
+  getTokenRefreshPromise: () => useAuthStore.getState().tokenRefreshPromise,
+});

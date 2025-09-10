@@ -1,12 +1,12 @@
 "use client";
 import Link from "next/link";
-import { useAuthStore } from "@/features/auth/authStore";
+import { useAuth } from "@/features/auth";
 import { HeadingLogo } from "@/shared/ui/HeadingLogo";
 
 import styles from "./DefaultHeader.module.scss";
 
 export default function DefaultHeader() {
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated } = useAuth();
   return (
     <header className={styles.header}>
       <div className="max-width">

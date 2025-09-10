@@ -1,57 +1,29 @@
-// 파일 종류
-export enum FileKind {
-  AUDIO = "AUDIO",
-  DOCUMENT = "DOCUMENT",
-  ETC = "ETC",
-  GIF = "GIF",
-  IMAGE = "IMAGE",
-  VIDEO = "VIDEO",
-  WEBP = "WEBP",
-  ZIP = "ZIP",
-}
+// ⚠️  DEPRECATED: 이 파일은 더 이상 사용되지 않습니다.
+// 새로운 파일들을 사용해주세요:
+// - 공통 파일 타입: @/shared/model/core-file-types
+// - Chat 파일 타입: @/entities/chat
+// - Profile 파일 타입: @/entities/profile
 
-// 파일 카테고리
-export enum FileCategory {
-  ALBUM = "ALBUM",
-  BACKUP = "BACKUP",
-  CALENDAR = "CALENDAR",
-  CHAT = "CHAT",
-  COMMON = "COMMON",
-  FEED = "FEED",
-  POINT = "POINT",
-  PROFILE = "PROFILE",
-  RESOURCE = "RESOURCE",
-  SMILE_ME = "SMILE_ME",
-}
+// 하위 호환성을 위한 재export (단계적 마이그레이션용)
+export {
+  FileKind,
+  CoreFileCategory as FileCategory,
+  CoreFileSubCategory as FileSubCategory,
+  PreviewType,
+} from "./core-file-types";
 
-// 파일 하위 카테고리
-export enum FileSubCategory {
-  ALBUM_MEDIA = "ALBUM_MEDIA",
-  ALBUM_THUMBNAIL = "ALBUM_THUMBNAIL",
-  BACKUP = "BACKUP",
-  CHAT_FILE = "CHAT_FILE",
-  CHAT_MEDIA = "CHAT_MEDIA",
-  CHAT_THUMBNAIL = "CHAT_THUMBNAIL",
-  COMMON_IMAGE = "COMMON_IMAGE",
-  COMMON_NOTICE = "COMMON_NOTICE",
-  DDAY_BACKGROUND = "DDAY_BACKGROUND",
-  DDAY_BACKGROUND_THUMBNAIL = "DDAY_BACKGROUND_THUMBNAIL",
-  DDAY_BG_DEFAULT = "DDAY_BG_DEFAULT",
-  DDAY_BG_DEFAULT_THM = "DDAY_BG_DEFAULT_THM",
-  FEED = "FEED",
-  POINT_MISSIONS = "POINT_MISSIONS",
-  POINT_PRODUCTS = "POINT_PRODUCTS",
-  PROFILE_ORIGIN = "PROFILE_ORIGIN",
-  PROFILE_SMALL_THUMBNAIL = "PROFILE_SMALL_THUMBNAIL",
-  PROFILE_THUMBNAIL = "PROFILE_THUMBNAIL",
-  RESOURCE = "RESOURCE",
-  SMILE_ME = "SMILE_ME",
-}
+// 도메인별 enum 재export
+export { ChatFileCategory, ChatFileSubCategory } from "@/entities/chat";
 
-// 미리보기 타입
-export enum PreviewType {
-  IMAGE = "IMAGE",
-  VIDEO = "VIDEO",
-  ALBUM = "ALBUM",
-  UNKNOWN = "UNKNOWN",
-}
+export {
+  ProfileFileCategory,
+  ProfileFileSubCategory,
+} from "@/entities/profile";
+
+// Feature 도메인별 enum 재export
+export { PointFileCategory, PointFileSubCategory } from "@/features/points";
+
+export {
+  SmileMeFileCategory,
+  SmileMeFileSubCategory,
+} from "@/features/smile-me";

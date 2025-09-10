@@ -1,17 +1,12 @@
+// ⚠️  DEPRECATED: 이 파일의 타입들은 entities로 이동되었습니다.
+// 새로운 import 경로를 사용해주세요:
+// - Profile 관련: @/entities/profile
+// - Member: @/entities/chat
+// - RelationType: @/entities/friend
+
 import { ApiResponse } from "@/shared/api";
 
-// Import entities instead of redefining
-import type {
-  Profile,
-  User,
-  AccountProfile,
-  GroupUserProfile,
-  ProfileImage,
-  EditableProfile,
-  PersonalInfo,
-} from "@/entities/profile";
-import type { Member } from "@/entities/chat";
-// Re-export for backward compatibility
+// 하위 호환성을 위한 재export (단계적 마이그레이션용)
 export type {
   Profile,
   User,
@@ -20,8 +15,9 @@ export type {
   ProfileImage,
   EditableProfile,
   PersonalInfo,
-  Member,
-};
+} from "@/entities/profile";
+
+export type { Member } from "@/entities/chat";
 export type { RelationType } from "@/entities/friend";
 
 // 채널 응답

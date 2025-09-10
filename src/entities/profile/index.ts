@@ -11,3 +11,9 @@ export type {
 
 // Entity enums
 export { ProfileModalEnum } from "./model/entity-enums";
+
+// File-related enums
+export {
+  ProfileFileCategory,
+  ProfileFileSubCategory,
+} from "./model/file-enums";

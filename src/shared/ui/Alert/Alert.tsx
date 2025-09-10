@@ -1,3 +1,5 @@
+// Pure Alert component - shared/ui should not depend on stores
+
 import {
   AlertDialog,
   AlertDialogContent,
@@ -8,35 +10,63 @@ import {
   AlertDialogCancel,
   AlertDialogAction,
 } from '@/shared/ui/alert-dialog';
-import { useUIStore } from '@/shared/store/useUIStore';
 
 import styles from './Alert.module.scss';
 
-export default function Alert() {
-  const { alertDialog, closeAlertDialog } = useUIStore();
+export interface AlertProps {
+  isOpen: boolean;
+  title: string | React.ReactNode;
+  description: string | React.ReactNode;
+  confirmText?: string;
+  onConfirm?: () => void;
+  onCancel?: () => void;
+  onOpenChange?: (open: boolean) => void;
+}
 
+export default function Alert({
+  isOpen,
+  title,
+  description,
+  confirmText = "확인",
+  onConfirm,
+  onCancel,
+  onOpenChange,
+}: AlertProps) {
   const handleConfirm = () => {
-    if (alertDialog.onConfirm) {
-      alertDialog.onConfirm();
+    if (onConfirm) {
+      onConfirm();
     }
-    closeAlertDialog();
+    if (onOpenChange) {
+      onOpenChange(false);
+    }
   };
 
   const handleCancel = () => {
-    closeAlertDialog();
+    if (onCancel) {
+      onCancel();
+    }
+    if (onOpenChange) {
+      onOpenChange(false);
+    }
+  };
+
+  const handleOpenChange = (open: boolean) => {
+    if (!open) {
+      handleCancel();
+    }
+    if (onOpenChange) {
+      onOpenChange(open);
+    }
   };
 
   return (
-    <AlertDialog
-      open={alertDialog.isOpen}
-      onOpenChange={(open) => !open && handleCancel()}
-    >
+    <AlertDialog open={isOpen} onOpenChange={handleOpenChange}>
       <AlertDialogContent className={styles.alertContent}>
         {/* header */}
         <AlertDialogHeader>
-          <AlertDialogTitle>{alertDialog.title}</AlertDialogTitle>
+          <AlertDialogTitle>{title}</AlertDialogTitle>
           <AlertDialogDescription className={styles.alertDesc}>
-            {alertDialog.description}
+            {description}
           </AlertDialogDescription>
         </AlertDialogHeader>
 
@@ -44,7 +74,7 @@ export default function Alert() {
         <AlertDialogFooter>
           <AlertDialogCancel onClick={handleCancel}>취소</AlertDialogCancel>
           <AlertDialogAction onClick={handleConfirm}>
-            {alertDialog.confirmText}
+            {confirmText}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
