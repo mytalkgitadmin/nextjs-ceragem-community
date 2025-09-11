@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useAuthStore } from "@/features/auth/authStore";
-import { AccountProfile } from "@/features/chat/model";
+import { AccountProfile } from "@/entities/profile";
 const profileMapper = (dto: AccountProfile) => dto; // TODO: 필요 시 상세 매핑 적용
 import { useRouter } from "next/navigation";
 

@@ -1,4 +1,4 @@
-@use '@/app/styles.tokens.scss' as *;
+@use "@/app/styles/tokens.scss" as *;
 
 $pannelWidth: 320;
 
@@ -10,7 +10,7 @@ $pannelWidth: 320;
   overflow: hidden;
   position: relative;
 
-  & > [class*='chat'] {
+  & > [class*="chat"] {
     height: 100%;
     overflow-y: scroll;
   }

@@ -30,7 +30,7 @@ export default function FriendsOverview() {
         <div className={styles.myProfile}>
           <div className={styles.myProfileInner}>
             <div className={styles.edit}>
-              <IconButton size="sm" />
+              <IconButton name="edit" text="편집" size={24} />
             </div>
             <ProfileItem
               profile={userProfile.profile}

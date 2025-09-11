@@ -1,5 +1,5 @@
-import { Member } from '@/features/chat/model';
-import { compareByName } from '@/shared/lib/sortUtils';
+import { Member } from "@/entities/chat";
+import { compareByName } from "@/shared/lib/sortUtils";
 
 /**
  * 멤버 이름을 가져오는 함수
@@ -9,7 +9,7 @@ import { compareByName } from '@/shared/lib/sortUtils';
  */
 export const getMemberName = (member: Member): string => {
   return (
-    member?.editedName || member?.syncName || member?.profile?.profileName || ''
+    member?.editedName || member?.syncName || member?.profile?.profileName || ""
   );
 };
 
@@ -20,17 +20,17 @@ export const getMemberName = (member: Member): string => {
  * @returns 생성된 채널명
  */
 export const generateChannelName = (members: Member[]): string => {
-  let result = '';
+  let result = "";
 
   for (let i = 0; i < members.length; i++) {
     if (i > 0) {
-      result += ', ';
+      result += ", ";
     }
-    result += getMemberName(members[i]) || '';
+    result += getMemberName(members[i]) || "";
 
     // 길이가 50자를 넘으면 생략 표시 후 중단
     if (i < members.length - 1 && result.length >= 50) {
-      result += '...';
+      result += "...";
       break;
     }
   }
@@ -45,15 +45,15 @@ export const generateChannelName = (members: Member[]): string => {
  */
 const getMemberPriority = (member: Member, channelType?: string): number => {
   // DIRECT 채널의 경우: 나 → 상대방
-  if (channelType === 'DIRECT') {
-    if (member.relationType === 'ME') return 1;
+  if (channelType === "DIRECT") {
+    if (member.relationType === "ME") return 1;
     return 2;
   }
 
   // GROUP/FAMILY 채널의 경우: 방장 → 나 → 일반 멤버 → 기타
-  if (member.participantType === 'MASTER') return 1;
-  if (member.relationType === 'ME') return 2;
-  if (member.relationType === 'NORMAL') return 3;
+  if (member.participantType === "MASTER") return 1;
+  if (member.relationType === "ME") return 2;
+  if (member.relationType === "NORMAL") return 3;
   return 4;
 };
 
@@ -65,7 +65,7 @@ const getMemberPriority = (member: Member, channelType?: string): number => {
  */
 export function sortMembersByPriority(
   members: Member[],
-  channelType?: string,
+  channelType?: string
 ): Member[] {
   if (!members || members.length === 0) return members;
 
@@ -86,7 +86,7 @@ export function sortMembersByPriority(
       return compareByName(aName, bName);
     });
   } catch (error) {
-    console.error('멤버 목록 정렬 중 오류 발생:', error);
+    console.error("멤버 목록 정렬 중 오류 발생:", error);
     return members;
   }
 }

@@ -2,7 +2,7 @@ import { useAuth } from "../../auth";
 
 import { useCallback, useEffect, useState } from "react";
 import { FILE_INPUT_CONFIG } from "../../chat/ui/Input/constants";
-import { ProfileImage } from "../../chat/model";
+import { ProfileImage } from "@/entities/profile";
 import { ProfileTextData } from "../types";
 import { useProfileUpdate } from "./useProfileUpdate";
 

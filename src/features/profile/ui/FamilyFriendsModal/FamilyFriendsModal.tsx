@@ -1,5 +1,5 @@
-import { memo, useState } from 'react';
-import Icons from '@/shared/ui/Icons';
+import { memo, useState } from "react";
+import Icons from "@/shared/ui/Icons";
 import {
   Dialog,
   DialogClose,
@@ -8,11 +8,11 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/shared/ui/dialog';
-import { Button } from '@/shared/ui/button';
-import { getEmoticonImageUrl } from '@/features/viewer/utils/mediaUtils';
+} from "@/shared/ui/dialog";
+import { Button } from "@/shared/ui/button";
+import { getEmoticonImageUrl } from "@/shared/lib/media";
 
-import styles from './FamilyFriendsModal.module.scss';
+import styles from "./FamilyFriendsModal.module.scss";
 
 interface FamilyFriendsModalProps {
   open: boolean;
@@ -24,7 +24,7 @@ interface FamilyFriendsModalProps {
 const FamilyFriendsModal = memo<FamilyFriendsModalProps>(
   ({ open, onOpenChange, id, onEmoticonSelect }) => {
     const [selectedEmoticonId, setSelectedEmoticonId] = useState<number | null>(
-      id,
+      id
     );
 
     const EMOTICON_COUNT = 15;
@@ -34,7 +34,7 @@ const FamilyFriendsModal = memo<FamilyFriendsModalProps>(
     };
 
     const handleSelectEmoticon = () => {
-      console.log('selectedEmoticonId', selectedEmoticonId);
+      console.log("selectedEmoticonId", selectedEmoticonId);
       if (selectedEmoticonId === null) return;
 
       onEmoticonSelect(selectedEmoticonId);
@@ -93,7 +93,7 @@ const FamilyFriendsModal = memo<FamilyFriendsModalProps>(
         </DialogContent>
       </Dialog>
     );
-  },
+  }
 );
 
 interface EmoticonButtonProps {
@@ -109,7 +109,7 @@ const EmoticonButton = ({
   return (
     <button
       type="button"
-      className={isSelected ? styles.selected : ''}
+      className={isSelected ? styles.selected : ""}
       onClick={onClick}
     >
       <img
@@ -121,6 +121,6 @@ const EmoticonButton = ({
   );
 };
 
-FamilyFriendsModal.displayName = 'FamilyFriendsModal';
+FamilyFriendsModal.displayName = "FamilyFriendsModal";
 
 export default FamilyFriendsModal;

@@ -1,19 +1,20 @@
-import { AccountProfile, Member } from '@/features/chat/model';
-import styles from './ChatMembersList.module.scss';
-import { ProfileItem } from '@/widgets/Profile/ui/ProfileItem';
-import { useAuth } from '@/features/auth';
-import { IconButton } from '@/shared/ui/IconButton';
+import { AccountProfile } from "@/entities/profile";
+import { Member } from "@/entities/chat";
+import styles from "./ChatMembersList.module.scss";
+import { ProfileItem } from "@/widgets/Profile/ui/ProfileItem";
+import { useAuth } from "@/features/auth";
+import { IconButton } from "@/shared/ui/IconButton";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
   DropdownMenuItem,
-} from '@/shared/ui/dropdown-menu';
-import { Button } from '@/shared/ui/button';
-import { useFriendBlockCancel, useFriendHideCancel } from '../api';
+} from "@/shared/ui/dropdown-menu";
+import { Button } from "@/shared/ui/button";
+import { useFriendBlockCancel, useFriendHideCancel } from "../api";
 
 const isMember = (member: Member | AccountProfile): member is Member => {
-  return 'participantType' in member;
+  return "participantType" in member;
 };
 
 export default function ChatMembersList({
@@ -21,26 +22,26 @@ export default function ChatMembersList({
   channelCustomType,
 }: {
   members: Member[] | AccountProfile[];
-  channelCustomType: 'GROUP' | 'MY' | 'DIRECT';
+  channelCustomType: "GROUP" | "MY" | "DIRECT";
 }) {
   const { userProfile } = useAuth();
   const friendHideCancel = useFriendHideCancel();
   const friendBlockCancel = useFriendBlockCancel();
 
   const master = members.find(
-    (member) => isMember(member) && member.participantType === 'MASTER',
+    (member) => isMember(member) && member.participantType === "MASTER"
   );
   const isMyGroup =
-    channelCustomType === 'GROUP' &&
+    channelCustomType === "GROUP" &&
     master?.accountId === userProfile?.accountId;
 
   return (
     <div className={styles.wrap}>
       {members.map((member) => {
         const isMaster =
-          channelCustomType === 'GROUP' &&
+          channelCustomType === "GROUP" &&
           isMember(member) &&
-          member.participantType === 'MASTER';
+          member.participantType === "MASTER";
         return (
           <div className="flex items-center" key={member.accountId}>
             <ProfileItem
@@ -54,8 +55,8 @@ export default function ChatMembersList({
               isMaster={isMaster}
             />
 
-            {(member.relationType === 'NONE' ||
-              member.relationType === 'DELETE') && (
+            {(member.relationType === "NONE" ||
+              member.relationType === "DELETE") && (
               <IconButton name="user-plus" text="친구 추가" />
             )}
 
@@ -71,7 +72,7 @@ export default function ChatMembersList({
               </DropdownMenu>
             )}
 
-            {member.relationType === 'HIDE' && (
+            {member.relationType === "HIDE" && (
               <Button
                 size="sm"
                 variant="outline"
@@ -80,7 +81,7 @@ export default function ChatMembersList({
                 해제
               </Button>
             )}
-            {member.relationType === 'BLOCK' && (
+            {member.relationType === "BLOCK" && (
               <Button
                 size="sm"
                 variant="outline"

@@ -14,7 +14,7 @@ const defaultImg = "/assets/profile/bemilyDefaultProfile.webp";
 import FamilyFriendsModal from "../FamilyFriendsModal/FamilyFriendsModal";
 import { ProfileImageUploadProps } from "../types";
 import styles from "./ProfileImageUpload.module.scss";
-import { getEmoticonImageUrl } from "@/features/viewer/utils/mediaUtils";
+import { getEmoticonImageUrl } from "@/shared/lib/media";
 export default function ProfileImageUpload({
   currentImage,
   onImageChange,
@@ -37,6 +37,7 @@ export default function ProfileImageUpload({
 
     // 이모티콘이 선택된 경우
     if (
+      profileImage &&
       profileImage.profileKind === "emoticon" &&
       profileImage.emoticonId > 0
     ) {
@@ -45,7 +46,9 @@ export default function ProfileImageUpload({
 
     //기존 프로필
     if (currentImage) {
-      return currentImage;
+      return typeof currentImage === "string"
+        ? currentImage
+        : currentImage.preview;
     }
 
     //  기존 이미지 표시
@@ -70,7 +73,7 @@ export default function ProfileImageUpload({
   };
 
   const displayImage = getDisplayImage();
-  const currentEmoticonId = profileImage.emoticonId || 0;
+  const currentEmoticonId = profileImage?.emoticonId || 0;
 
   return (
     <div>
@@ -112,7 +115,7 @@ export default function ProfileImageUpload({
           open={isOpen}
           onOpenChange={setIsOpen}
           id={currentEmoticonId}
-          onEmoticonSelect={onEmoticonSelect}
+          onEmoticonSelect={onEmoticonSelect || (() => {})}
         />
       </div>
     </div>

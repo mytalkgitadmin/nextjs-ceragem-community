@@ -1,6 +1,6 @@
-import { memo } from 'react';
+import { memo } from "react";
 
-import { getThumbnailUrl } from '@/features/viewer/utils/mediaUtils';
+import { getThumbnailUrl } from "@/shared/lib/media";
 import {
   Dialog,
   DialogContent,
@@ -9,17 +9,17 @@ import {
   DialogDescription,
   DialogFooter,
   DialogClose,
-} from '@/shared/ui/dialog';
+} from "@/shared/ui/dialog";
 
-import { useProfileForm } from '../../hooks/useProfileForm';
+import { useProfileForm } from "../../hooks/useProfileForm";
 
-import { ProfileImageUpload } from '../ProfileImageUpload';
+import { ProfileImageUpload } from "../ProfileImageUpload";
 
-import FormFields from './FormFields';
-import { Button } from '@/shared/ui/button';
+import FormFields from "./FormFields";
+import { Button } from "@/shared/ui/button";
 
-import styles from './EditProfileModal.module.scss';
-import useEditProfile from '../../hooks/useEditProfile';
+import styles from "./EditProfileModal.module.scss";
+import useEditProfile from "../../hooks/useEditProfile";
 
 interface EditProfileModalProps {
   open: boolean;
@@ -67,8 +67,8 @@ const EditProfileModal = memo<EditProfileModalProps>(
         await updateProfile(textData);
         onOpenChange(false);
       } catch (error) {
-        console.error('프로필 업데이트 실패:', error);
-        alert('프로필 업데이트에 실패했습니다. 다시 시도해주세요.');
+        console.error("프로필 업데이트 실패:", error);
+        alert("프로필 업데이트에 실패했습니다. 다시 시도해주세요.");
       }
     };
 
@@ -119,14 +119,14 @@ const EditProfileModal = memo<EditProfileModalProps>(
               </Button>
             </DialogClose>
             <Button onClick={handleSubmit} disabled={isLoading}>
-              {isLoading ? '저장 중...' : '저장'}
+              {isLoading ? "저장 중..." : "저장"}
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
     );
-  },
+  }
 );
 
-EditProfileModal.displayName = 'EditProfileModal';
+EditProfileModal.displayName = "EditProfileModal";
 export default EditProfileModal;

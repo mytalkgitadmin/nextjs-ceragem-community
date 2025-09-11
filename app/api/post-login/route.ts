@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { computeMaxAgeSeconds } from "@/shared/lib/jwt";
-import type { AccountProfile } from "@/features/chat/model";
+import type { AccountProfile } from "@/entities/profile";
 
 const SEVEN_DAYS_S = 60 * 60 * 24 * 7;
 const NINETY_DAYS_S = 60 * 60 * 24 * 90;

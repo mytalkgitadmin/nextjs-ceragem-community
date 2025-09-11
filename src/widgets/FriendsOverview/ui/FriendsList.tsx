@@ -26,7 +26,8 @@ import {
 
 import styles from "./FriendsOverview.module.scss";
 import { Button } from "@/shared/ui/button";
-import { AccountProfile, Member } from "@/features/chat/model";
+import { AccountProfile } from "@/entities/profile";
+import { Member } from "@/entities/chat";
 import { useAuth } from "@/features/auth";
 
 import { IconButton } from "@/shared/ui/IconButton";

@@ -1,25 +1,8 @@
-// ⚠️  DEPRECATED: 이 파일의 타입들은 entities로 이동되었습니다.
-// 새로운 import 경로를 사용해주세요:
-// - Profile 관련: @/entities/profile
-// - Member: @/entities/chat
-// - RelationType: @/entities/friend
+// Chat Feature Model Types
+// 채팅 도메인 전용 타입들만 포함
 
 import { ApiResponse } from "@/shared/api";
 import type { Member } from "@/entities/chat";
-
-// 하위 호환성을 위한 재export (단계적 마이그레이션용)
-export type {
-  Profile,
-  User,
-  AccountProfile,
-  GroupUserProfile,
-  ProfileImage,
-  EditableProfile,
-  PersonalInfo,
-} from "@/entities/profile";
-
-export type { Member } from "@/entities/chat";
-export type { RelationType } from "@/entities/friend";
 
 // 채널 응답
 export type ResponseChannel = ApiResponse<Channel[]>;

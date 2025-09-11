@@ -1,5 +1,5 @@
-import { AccountProfile } from '../chat/model';
-import { History } from '../viewer/types';
+import { AccountProfile } from "@/entities/profile";
+import { History } from "../viewer/types";
 
 export interface UserSendbirdProfileResponse {
   result: boolean;
@@ -64,7 +64,7 @@ export interface UpdateProfileResponse {
 export interface GroupProfileParams {
   emoticonId?: number;
   profileId?: number;
-  profileKind: 'basic' | 'normal' | 'emoticon';
+  profileKind: "basic" | "normal" | "emoticon";
   profileOriginal?: string | null;
   profileSmallThumbnail?: string | null;
   profileThumbnail?: string | null;
@@ -74,7 +74,7 @@ export interface UpdateGroupProfileResponse {
   result: boolean;
   resultData: {
     profileId: number;
-    profileKind: 'basic' | 'normal' | 'emoticon';
+    profileKind: "basic" | "normal" | "emoticon";
     emoticonId?: number;
     profileOriginal?: string | null;
     profileThumbnail?: string | null;

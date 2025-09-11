@@ -31,7 +31,7 @@ import styles from "./SelectFriends.module.scss";
 import useFriendSearch from "../hooks/useFriendSearch";
 import FriendSearchInput from "./FriendSearchInput";
 import useCreateChat from "@/features/chat/hooks/useCreateChat";
-import { getThumbnailUrl } from "@/features/viewer/utils/mediaUtils";
+import { getThumbnailUrl } from "@/shared/lib/media";
 
 export interface SelectFriendsProps {
   open: boolean;

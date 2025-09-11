@@ -1,11 +1,11 @@
-import { Profile } from "@/features/chat/model";
+import { Profile } from "@/entities/profile";
 import { useSendbirdProfile } from "@/features/profile/api";
 
 import { ProfileViewer } from "@/widgets/Profile";
 import { SingleAvatar } from "@/widgets/Profile/ui/ProfileAvatar";
 import { memo, useState } from "react";
 const defaultSmallProfile = "/assets/profile/bemilyDefaultProfile.webp";
-import { getThumbnailUrl } from "@/features/viewer/utils/mediaUtils";
+import { getThumbnailUrl } from "@/shared/lib/media";
 const MessageAvatar = memo(({ sendbirdId }: { sendbirdId: string }) => {
   const { data } = useSendbirdProfile(sendbirdId);
   const [isOpen, setIsOpen] = useState(false);

@@ -36,8 +36,8 @@ export default function useCreateChat({
         {
           onSuccess: (data) => {
             closeAllModals();
-            setCurrentChannelUrl?.(data.channelUrl);
-            onSuccess?.(data.channelUrl);
+            setCurrentChannelUrl?.(data.data.channelUrl);
+            onSuccess?.(data.data.channelUrl);
             router.push("/chat");
           },
           onError: (error) => {

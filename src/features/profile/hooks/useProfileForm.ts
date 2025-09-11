@@ -1,7 +1,7 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback } from "react";
 
-import { AccountProfile } from '@/features/chat/model';
-import { ProfileFormData } from '../types';
+import { AccountProfile } from "@/entities/profile";
+import { ProfileFormData } from "../types";
 
 interface UseProfileFormProps {
   initialData: AccountProfile | null; // userProfile 타입
@@ -12,13 +12,13 @@ interface UseProfileFormProps {
  */
 export const useProfileForm = ({ initialData }: UseProfileFormProps) => {
   const [formData, setFormData] = useState<ProfileFormData>({
-    profileName: initialData?.editedName || '',
-    profileMessage: initialData?.profile?.profileMessage || '',
-    interests: initialData?.interests || '',
+    profileName: initialData?.editedName || "",
+    profileMessage: initialData?.profile?.profileMessage || "",
+    interests: initialData?.interests || "",
     birthday: initialData?.birthday
       ? new Date(parseInt(initialData.birthday))
       : undefined,
-    introduction: initialData?.introduction || '',
+    introduction: initialData?.introduction || "",
     solar: initialData?.solar || false,
   });
 
@@ -28,14 +28,14 @@ export const useProfileForm = ({ initialData }: UseProfileFormProps) => {
   const handleInputChange = useCallback(
     (
       field: keyof ProfileFormData,
-      value: ProfileFormData[keyof ProfileFormData],
+      value: ProfileFormData[keyof ProfileFormData]
     ) => {
       setFormData((prev: ProfileFormData) => ({
         ...prev,
         [field]: value,
       }));
     },
-    [],
+    []
   );
 
   // 생일 선택 핸들러

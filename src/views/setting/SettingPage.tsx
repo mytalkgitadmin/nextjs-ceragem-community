@@ -1,15 +1,15 @@
-import Icons from '@/shared/ui/Icons';
-import { useAuth } from '@/features/auth';
-import { Button } from '@/shared/ui/button';
-import { ProfileItem } from '@/widgets/Profile/ui/ProfileItem';
+import Icons from "@/shared/ui/Icons";
+import { useAuth } from "@/features/auth";
+import { Button } from "@/shared/ui/button";
+import { ProfileItem } from "@/widgets/Profile/ui/ProfileItem";
 
-import FriendsList from '../friends/FriendsList';
-import styles from './SettingPage.module.scss';
-import { useCategorizedFriends } from '@/features/friend/hooks/useCategorizedFriends';
-import { Switch } from '@/shared/ui/switch';
-import { Label } from '@/shared/ui/label';
-import { Input } from '@/shared/ui/input';
-import { Separator } from '@/shared/ui/separator';
+import FriendsList from "@/widgets/FriendsOverview/ui/FriendsList";
+import styles from "./SettingPage.module.scss";
+import { useCategorizedFriends } from "@/features/friend/hooks/useCategorizedFriends";
+import { Switch } from "@/shared/ui/switch";
+import { Label } from "@/shared/ui/label";
+import { Input } from "@/shared/ui/input";
+import { Separator } from "@/shared/ui/separator";
 
 export default function SettingPage() {
   const { userProfile, handleLogout } = useAuth();
@@ -74,14 +74,14 @@ export default function SettingPage() {
             <Switch
               id="airplane-mode"
               checked={
-                userProfile.friendRelationMode === 'PRIVATE' ? true : false
+                userProfile.friendRelationMode === "PRIVATE" ? true : false
               }
               disabled
             />
             <Label htmlFor="airplane-mode">
-              {userProfile.friendRelationMode === 'PRIVATE'
-                ? '프라이빗 모드'
-                : ''}
+              {userProfile.friendRelationMode === "PRIVATE"
+                ? "프라이빗 모드"
+                : ""}
             </Label>
           </div>
         </div>
