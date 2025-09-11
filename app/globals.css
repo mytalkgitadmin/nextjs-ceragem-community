@@ -2,13 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Ant Design 커스텀 스타일 */
-.ant-collapse-content-box {
-  padding: 0 !important;
-}
+/* Pretendard 폰트 */
+@layer base {
+  @font-face {
+    font-family: "Pretendard Variable";
+    src: url("/fonts/PretendardVariable.woff2") format("woff2");
+    font-weight: 45 920;
+    font-style: normal;
+    font-display: swap;
+  }
 
-.ant-tabs-nav {
-  margin-bottom: 0 !important;
+  html {
+    font-family:
+      "Pretendard Variable",
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      sans-serif;
+  }
+
+  body {
+    font-feature-settings:
+      "rlig" 1,
+      "calt" 1;
+  }
 }
 
 /* 전역 스타일 */

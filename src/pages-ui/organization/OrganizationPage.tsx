@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { OrganizationHeader } from "./OrganizationHeader";
 import {
-  OrganizationHeader,
   OrganizationTabNav,
-  OrganizationTab,
   type OrganizationTabType,
-} from "./ui";
+} from "./OrganizationTabNav";
+import { OrganizationTab } from "./OrganizationTab";
 
 export function OrganizationPage() {
   const [activeTab, setActiveTab] =

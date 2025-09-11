@@ -1,7 +1,6 @@
 "use client";
 
-import { Input } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 export interface SearchInputProps {
   placeholder?: string;
@@ -18,16 +17,24 @@ export function SearchInput({
   onSearch,
   className = "",
 }: SearchInputProps) {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      onSearch?.(e.currentTarget.value);
+    }
+  };
+
   return (
-    <div className={`w-full ${className}`}>
-      <Input
+    <div className={`relative w-full ${className}`}>
+      <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+        <MagnifyingGlassIcon className="w-5 h-5 text-gray-400" />
+      </div>
+      <input
+        type="text"
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange?.(e.target.value)}
-        onPressEnter={(e) => onSearch?.((e.target as HTMLInputElement).value)}
-        prefix={<SearchOutlined className="text-gray-400" />}
-        className="rounded-full border-gray-300 hover:border-blue-400 focus:border-blue-500"
-        size="large"
+        onKeyPress={handleKeyPress}
+        className="w-full pl-11 pr-4 py-3 bg-white border border-gray-300 rounded-full text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-400 transition-colors duration-200"
       />
     </div>
   );
