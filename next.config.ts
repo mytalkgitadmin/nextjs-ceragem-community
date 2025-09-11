@@ -4,6 +4,9 @@ import path from "path";
 const nextConfig: NextConfig = {
   /* config options here */
 
+  // Ant Design 최적화를 위한 transpile 설정
+  transpilePackages: ["antd", "@ant-design/icons"],
+
   // 대상: Sass 컴파일러 (빌드 단계에서 SCSS → CSS 변환)
   // 역할: SCSS 내부의 @use / @import 경로를 찾을 때 어디서부터 탐색할지 알려줌.
   // 예: @use "@/app/styles/tokens.scss" → <root>/src/app/styles/tokens.scss 로 해석 가능

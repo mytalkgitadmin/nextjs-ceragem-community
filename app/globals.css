@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Ant Design 커스텀 스타일 */
+.ant-collapse-content-box {
+  padding: 0 !important;
+}
+
+.ant-tabs-nav {
+  margin-bottom: 0 !important;
+}
+
+/* 전역 스타일 */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#__next,
+main {
+  height: 100%;
+}

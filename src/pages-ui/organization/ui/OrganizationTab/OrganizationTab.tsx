@@ -1,6 +1,9 @@
+"use client";
+
 import { useState } from "react";
-import { SearchInput, UserCard, CollapsibleSection } from "@/shared/ui";
-import type { Friend } from "@/domains/friends";
+import { SearchInput, CollapsibleSection } from "@/shared-ui";
+import { MyProfileCard } from "@/domains-ui/profile";
+import { UserCard } from "@/domains-ui/organization";
 
 export interface OrganizationTabProps {
   onMessageClick?: (userId: string) => void;
@@ -11,11 +14,15 @@ export function OrganizationTab({ onMessageClick }: OrganizationTabProps) {
 
   // 목업 데이터
   const mockData = {
-    featured: {
-      id: "featured-1",
+    myProfile: {
+      id: "my-profile",
       name: "김세라",
+      position: "팀장",
+      department: "본사 마케팅팀",
+      statusMessage:
+        "세라젬과 함께하는 건강한 하루! 새로운 V9 제품 출시를 준비하고 있습니다 💪",
       badgeText: "본사",
-      badgeColor: "error" as const,
+      badgeColor: "success" as const,
     },
     departments: {
       headquarters: {
@@ -111,14 +118,18 @@ export function OrganizationTab({ onMessageClick }: OrganizationTabProps) {
         />
       </div>
 
-      {/* 대표 멤버 */}
-      <div className="p-4 bg-white border-b border-gray-200">
-        <UserCard
-          id={mockData.featured.id}
-          name={mockData.featured.name}
-          badgeText={mockData.featured.badgeText}
-          badgeColor={mockData.featured.badgeColor}
+      {/* 내 프로필 */}
+      <div className="p-4 bg-gray-50">
+        <MyProfileCard
+          id={mockData.myProfile.id}
+          name={mockData.myProfile.name}
+          position={mockData.myProfile.position}
+          department={mockData.myProfile.department}
+          statusMessage={mockData.myProfile.statusMessage}
+          badgeText={mockData.myProfile.badgeText}
+          badgeColor={mockData.myProfile.badgeColor}
           onMessageClick={onMessageClick}
+          onEditClick={() => console.log("프로필 편집 클릭")}
         />
       </div>
 

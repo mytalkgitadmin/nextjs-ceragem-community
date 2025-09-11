@@ -48,7 +48,6 @@ export function OrganizationPage() {
   return (
     <div className="flex flex-col h-screen bg-gray-50">
       <OrganizationHeader
-        pgid="CERA_MEM_10000"
         userName="세라젬"
         onChatClick={handleChatClick}
         onSettingsClick={handleSettingsClick}

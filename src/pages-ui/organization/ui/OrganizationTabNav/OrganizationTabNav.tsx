@@ -1,3 +1,5 @@
+"use client";
+
 import { Tabs } from "antd";
 
 export type OrganizationTabType = "organization" | "customers" | "family";
