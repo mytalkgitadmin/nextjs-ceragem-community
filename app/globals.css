@@ -9,10 +9,10 @@
     src: url("/fonts/PretendardVariable.woff2") format("woff2");
     font-weight: 45 920;
     font-style: normal;
-    font-display: swap;
+    font-display: optional; /* swap에서 optional로 변경 - 깜빡임 방지 */
   }
 
-  html {
+  body {
     font-family:
       "Pretendard Variable",
       system-ui,
@@ -21,9 +21,6 @@
       "Segoe UI",
       Roboto,
       sans-serif;
-  }
-
-  body {
     font-feature-settings:
       "rlig" 1,
       "calt" 1;

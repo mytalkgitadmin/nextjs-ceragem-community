@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
 import "./globals.css"; // Tailwind CSS + 전역 스타일
+import { Providers } from "./providers";
 
 export const metadata: Metadata = {
   title: "Ceragem Community",
@@ -13,7 +15,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className="antialiased font-pretendard bg-gray-50">{children}</body>
+      <head></head>
+      <body className="antialiased bg-gray-50">
+        <AntdRegistry>
+          <Providers>{children}</Providers>
+        </AntdRegistry>
+      </body>
     </html>
   );
 }
