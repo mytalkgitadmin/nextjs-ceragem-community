@@ -1,13 +1,8 @@
 import type { Metadata } from "next";
-import { ReactQueryProvider, SendbirdProviderWithAuth } from "@/app/providers";
-// import { OverlayRoot } from "@/shared/ui/overlays";
-import "@/app/styles/default.css";
-import "@/app/styles/global.scss";
-import "@/app/styles/sendbird.css";
 
 export const metadata: Metadata = {
-  title: "FETA",
-  description: "FETA Web",
+  title: "Ceragem Community",
+  description: "Ceragem Community Web",
 };
 
 export default function RootLayout({
@@ -17,14 +12,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className="antialiased">
-        <ReactQueryProvider>
-          <SendbirdProviderWithAuth>
-            {children}
-            {/* <OverlayRnoot /> */}
-          </SendbirdProviderWithAuth>
-        </ReactQueryProvider>
-      </body>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }
