@@ -7,13 +7,18 @@ import {
   type OrganizationTabType,
 } from "./OrganizationTabNav";
 import { OrganizationTab } from "./OrganizationTab";
+import { useFriends } from "@/domains/friend/queries";
+import { useRouter } from "next/navigation";
 
 export function OrganizationPage() {
+  const router = useRouter();
+  const {} = useFriends(); //TODO: 친구 목록 조회
+
   const [activeTab, setActiveTab] =
     useState<OrganizationTabType>("organization");
 
   const handleChatClick = () => {
-    console.log("채팅 버튼 클릭");
+    router.push("/chat-list");
   };
 
   const handleSettingsClick = () => {
@@ -48,7 +53,7 @@ export function OrganizationPage() {
   return (
     <div className="flex flex-col h-screen bg-gray-50">
       <OrganizationHeader
-        userName="세라젬"
+        title="세라젬 패밀리"
         onChatClick={handleChatClick}
         onSettingsClick={handleSettingsClick}
       />

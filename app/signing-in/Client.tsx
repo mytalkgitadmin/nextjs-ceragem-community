@@ -1,25 +1,14 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useAuth } from "@/domains/auth/hooks";
 
 export default function Client({ to }: { to: string }) {
-  const router = useRouter();
-  useEffect(() => {
-    fetch("/api/auth/login", { method: "POST" })
-      .then(async (res) => {
-        const resData = await res.json();
-        if (!res.ok || !resData.ok) throw new Error("exchange_failed");
+  const { login } = useAuth();
 
-        setTimeout(() => {
-          router.replace(to || "/");
-        }, 4000);
-      })
-      .catch((err) => {
-        console.error(err);
-        router.replace("/invalid-state");
-      });
-  }, [to, router]);
+  useEffect(() => {
+    login(to);
+  }, [to]);
 
   return null;
 }

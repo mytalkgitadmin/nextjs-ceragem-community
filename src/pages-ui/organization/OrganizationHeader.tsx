@@ -4,13 +4,13 @@ import { Button } from "antd";
 import { MessageOutlined, SettingOutlined } from "@ant-design/icons";
 
 export interface OrganizationHeaderProps {
-  userName: string;
+  title: string;
   onChatClick?: () => void;
   onSettingsClick?: () => void;
 }
 
 export function OrganizationHeader({
-  userName,
+  title,
   onChatClick,
   onSettingsClick,
 }: OrganizationHeaderProps) {
@@ -18,9 +18,7 @@ export function OrganizationHeader({
     <div className="bg-white border-b border-gray-200 px-4 py-3">
       {/* 제목과 버튼들 */}
       <div className="flex items-center justify-between">
-        <h1 className="text-lg font-semibold text-gray-900">
-          {userName} 패밀리
-        </h1>
+        <h1 className="text-lg font-semibold text-gray-900">{title}</h1>
 
         <div className="flex items-center space-x-2">
           <Button

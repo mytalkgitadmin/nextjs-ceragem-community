@@ -2,6 +2,7 @@
 
 import { Avatar, Badge, Button } from "antd";
 import { MessageOutlined, MoreOutlined, EditOutlined } from "@ant-design/icons";
+import { useProfileStore } from "@/domains/profile/stores";
 
 export interface MyProfileCardProps {
   id: string;
@@ -30,6 +31,8 @@ export function MyProfileCard({
   onEditClick,
   className = "",
 }: MyProfileCardProps) {
+  const { email, editedName, nationalNumber, phoneNumber } = useProfileStore();
+
   return (
     <div className={`relative overflow-hidden ${className}`}>
       {/* 그라데이션 배경 */}
@@ -50,7 +53,7 @@ export function MyProfileCard({
                   src={profileImage}
                   className="border-4 border-white/20 shadow-lg"
                 >
-                  {name.charAt(0)}
+                  {editedName.charAt(0)}
                 </Avatar>
                 {/* 온라인 상태 표시 */}
                 <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-400 border-3 border-white rounded-full"></div>
@@ -59,7 +62,7 @@ export function MyProfileCard({
               {/* 프로필 텍스트 */}
               <div className="text-white">
                 <div className="flex items-center space-x-2 mb-1">
-                  <h3 className="text-xl font-bold">{name}</h3>
+                  <h3 className="text-xl font-bold">{editedName}</h3>
                   {badgeText && (
                     <Badge
                       status={badgeColor}

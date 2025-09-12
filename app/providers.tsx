@@ -3,6 +3,15 @@
 import { ConfigProvider } from "antd";
 import koKR from "antd/locale/ko_KR";
 import { ReactNode } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 0,
+    },
+  },
+});
 
 export function Providers({ children }: { children: ReactNode }) {
   return (
@@ -15,7 +24,7 @@ export function Providers({ children }: { children: ReactNode }) {
         },
       }}
     >
-      {children}
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </ConfigProvider>
   );
 }

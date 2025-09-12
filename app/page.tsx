@@ -1,3 +1,5 @@
-export default function HomePage() {
-  return <div>Hello World</div>;
+import { OrganizationPage } from "@/pages-ui/organization";
+
+export default function Home() {
+  return <OrganizationPage />;
 }
