@@ -3,26 +3,26 @@
 import { Header } from "@/shared-ui";
 import { useRouter } from "next/navigation";
 
-export interface OrganizationHeaderProps {}
+export interface ChatListHeaderProps {}
 
-export function OrganizationHeader({}: OrganizationHeaderProps) {
+export function ChatListHeader({}: ChatListHeaderProps) {
   const router = useRouter();
-
-  const onChatClick = () => {
-    router.push("/chat-list");
-  };
 
   const onSettingsClick = () => {
     router.push("/settings");
   };
 
+  const onOrganizationClick = () => {
+    router.push("/organization");
+  };
+
   return (
     <Header
-      title="세라젬 패밀리"
-      showChat={true}
+      title="세리젬 패밀리"
       showSettings={true}
-      onChatClick={onChatClick}
+      showOrganization={true}
       onSettingsClick={onSettingsClick}
+      onOrganizationClick={onOrganizationClick}
     />
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { Tabs } from "antd";
+import { TabNavigation, type TabItem } from "@/shared-ui";
 
 export type OrganizationTabType = "organization" | "customers" | "family";
 
@@ -15,33 +15,27 @@ export function OrganizationTabNav({
   onTabChange,
   className = "",
 }: OrganizationTabNavProps) {
-  const tabItems = [
+  const tabs: TabItem[] = [
     {
-      key: "organization" as OrganizationTabType,
+      key: "organization",
       label: "조직도",
     },
     {
-      key: "customers" as OrganizationTabType,
+      key: "customers",
       label: "고객",
     },
     {
-      key: "family" as OrganizationTabType,
+      key: "family",
       label: "세라젬 패밀리",
     },
   ];
 
   return (
-    <div className={`bg-white border-b border-gray-200 ${className}`}>
-      <Tabs
-        activeKey={activeTab}
-        onChange={(key) => onTabChange(key as OrganizationTabType)}
-        items={tabItems}
-        className="px-4"
-        tabBarStyle={{
-          marginBottom: 0,
-          borderBottom: "none",
-        }}
-      />
-    </div>
+    <TabNavigation
+      tabs={tabs}
+      activeKey={activeTab}
+      onTabChange={(tabId) => onTabChange(tabId as OrganizationTabType)}
+      className={className}
+    />
   );
 }

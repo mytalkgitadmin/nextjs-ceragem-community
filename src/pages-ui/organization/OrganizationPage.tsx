@@ -10,20 +10,13 @@ import { OrganizationTab } from "./OrganizationTab";
 import { useFriends } from "@/domains/friend/queries";
 import { useRouter } from "next/navigation";
 
-export function OrganizationPage() {
-  const router = useRouter();
+export interface OrganizationPageProps {}
+
+export function OrganizationPage({}: OrganizationPageProps) {
   const {} = useFriends(); //TODO: 친구 목록 조회
 
   const [activeTab, setActiveTab] =
     useState<OrganizationTabType>("organization");
-
-  const handleChatClick = () => {
-    router.push("/chat-list");
-  };
-
-  const handleSettingsClick = () => {
-    console.log("설정 버튼 클릭");
-  };
 
   const handleMessageClick = (userId: string) => {
     console.log("메시지 클릭:", userId);
@@ -51,16 +44,14 @@ export function OrganizationPage() {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gray-50">
-      <OrganizationHeader
-        title="세라젬 패밀리"
-        onChatClick={handleChatClick}
-        onSettingsClick={handleSettingsClick}
-      />
+    <>
+      {/* Header */}
+      <OrganizationHeader />
 
+      {/* Tab Navigation */}
       <OrganizationTabNav activeTab={activeTab} onTabChange={setActiveTab} />
 
       {renderTabContent()}
-    </div>
+    </>
   );
 }

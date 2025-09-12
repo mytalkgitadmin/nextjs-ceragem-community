@@ -21,3 +21,6 @@
 //     const response = await client.get("/auth/me");
 //     return response.data;
 //   },
+
+// TODO: Auth queries will be implemented here
+export {};

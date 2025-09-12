@@ -18,7 +18,9 @@ export default function RootLayout({
       <head></head>
       <body className="antialiased bg-gray-50">
         <AntdRegistry>
-          <Providers>{children}</Providers>
+          <Providers>
+            <div className="flex flex-col h-screen bg-gray-50">{children}</div>
+          </Providers>
         </AntdRegistry>
       </body>
     </html>
