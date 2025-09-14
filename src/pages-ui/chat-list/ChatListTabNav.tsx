@@ -21,11 +21,13 @@ export function ChatListTabNav({
   ];
 
   return (
-    <TabNavigation
-      tabs={tabs}
-      activeKey={activeTab}
-      onTabChange={(tabId) => onTabChange(tabId as ChatListTabType)}
-      className={className}
-    />
+    <div className="px-4 border-b border-gray-200">
+      <TabNavigation
+        tabs={tabs}
+        activeKey={activeTab}
+        onTabChange={(tabId) => onTabChange(tabId as ChatListTabType)}
+        className={className}
+      />
+    </div>
   );
 }

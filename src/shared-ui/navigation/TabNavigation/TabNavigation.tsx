@@ -21,9 +21,7 @@ export function TabNavigation({
   className = "",
 }: TabNavigationProps) {
   return (
-    <div
-      className={`flex items-center justify-between px-4 py-3 bg-white border-b border-gray-200 ${className}`}
-    >
+    <div className={`flex items-center justify-between bg-white ${className}`}>
       <Tabs
         activeKey={activeKey}
         onChange={(key) => onTabChange(key)}
