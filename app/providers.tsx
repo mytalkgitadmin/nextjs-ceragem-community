@@ -4,6 +4,7 @@ import { ConfigProvider } from "antd";
 import koKR from "antd/locale/ko_KR";
 import { ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { DrawerProvider, DrawerManager } from "@/drawer-system";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -24,7 +25,13 @@ export function Providers({ children }: { children: ReactNode }) {
         },
       }}
     >
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+      <QueryClientProvider client={queryClient}>
+        <DrawerProvider>
+          {children}
+          {/* 글로벌 Drawer 렌더링 매니저 */}
+          <DrawerManager />
+        </DrawerProvider>
+      </QueryClientProvider>
     </ConfigProvider>
   );
 }
