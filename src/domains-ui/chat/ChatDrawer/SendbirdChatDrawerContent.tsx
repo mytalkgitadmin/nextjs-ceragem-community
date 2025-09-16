@@ -7,7 +7,7 @@ import { DateSeparator } from "./DateSeparator";
 import { Message } from "./Message";
 import { ScrollController } from "./ScrollController";
 import { SendbirdMessageInput } from "./SendbirdMessageInput";
-import { useMessageActions } from "./hooks/useMessageActions";
+import { useMessageActions } from "./hooks";
 // import { ChannelHeader } from "./ChannelHeader";
 // import "./sendbird-overrides.css";
 
