@@ -14,6 +14,7 @@ export type {
   MessageItemProps,
   MessageInputProps,
   MessageListProps,
-  roleVariantMap,
-} from "./ChatDrawer";
+} from "./types";
+export { roleVariantMap } from "./types";
+export * from "./hooks";
 export type { SendbirdChatDrawerContentProps } from "./SendbirdChatDrawerContent";

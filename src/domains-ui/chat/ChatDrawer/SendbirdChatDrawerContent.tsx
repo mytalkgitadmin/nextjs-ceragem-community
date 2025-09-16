@@ -7,6 +7,7 @@ import { DateSeparator } from "./DateSeparator";
 import { Message } from "./Message";
 import { ScrollController } from "./ScrollController";
 import { SendbirdMessageInput } from "./SendbirdMessageInput";
+import { useMessageActions } from "./hooks";
 import { ChannelHeader } from "./ChannelHeader";
 // import "./sendbird-overrides.css";
 
@@ -22,6 +23,7 @@ export function SendbirdChatDrawerContent({
   onBackClick,
 }: SendbirdChatDrawerContentProps) {
   const channelUrl = channel?.url || "";
+  const { handleSendMessage } = useMessageActions();
 
   return (
     <div className="h-full w-full flex flex-col min-h-0 bg-white">
@@ -58,9 +60,7 @@ export function SendbirdChatDrawerContent({
                 <ScrollController />
                 <SendbirdMessageInput
                   placeholder="메시지를 입력하세요..."
-                  onSendMessage={(message) => {
-                    console.log("메시지 전송:", message);
-                  }}
+                  onSendMessage={handleSendMessage}
                 />
               </>
             )}

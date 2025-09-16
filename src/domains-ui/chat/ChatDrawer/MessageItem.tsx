@@ -1,5 +1,5 @@
 import { Avatar, Badge } from "@/shared-ui";
-import { MessageItemProps, roleVariantMap } from "./ChatDrawer";
+import { MessageItemProps, roleVariantMap } from "./types";
 
 export function MessageItem({ message, chatAvatar }: MessageItemProps) {
   return (

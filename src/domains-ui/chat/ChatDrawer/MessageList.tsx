@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { MessageListProps } from "./ChatDrawer";
+import { MessageListProps } from "./types";
 import { MessageItem } from "./MessageItem";
 
 export function MessageList({ messages, chatInfo }: MessageListProps) {
