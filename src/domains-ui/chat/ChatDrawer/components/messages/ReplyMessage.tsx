@@ -1,5 +1,4 @@
 import { ReplyMessageData } from "../../types/messageTypes";
-import { getMessageTypeIcon } from "../../utils/messageTypeUtils";
 
 interface ReplyMessageProps {
   data: ReplyMessageData;
@@ -31,9 +30,6 @@ export function ReplyMessage({ data, isMine }: ReplyMessageProps) {
           `}
         >
           <div className="flex items-center mb-1">
-            <span className="text-xs mr-1">
-              {getMessageTypeIcon(parentMessage.messageType)}
-            </span>
             <span className="text-xs font-medium opacity-75">
               {parentMessage.senderName}
             </span>

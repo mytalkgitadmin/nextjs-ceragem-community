@@ -1,4 +1,4 @@
-import { BaseMessage, UserMessage, FileMessage, AdminMessage } from '@sendbird/chat/message';
+import { BaseMessage } from '@sendbird/chat/message';
 import { MESSAGE_TYPES, MessageType, FILE_TYPE_MAPPING } from '../constants/messageTypes';
 
 // 텍스트 길이 임계값 (2000자)
@@ -14,12 +14,28 @@ export function getMessageType(message: BaseMessage): MessageType {
   }
 
   // 파일 메시지
-  if (message.messageType === 'file' && message instanceof FileMessage) {
-    return getFileMessageType(message.type, message.name);
+  if (message.messageType === 'file') {
+    // 커스텀 데이터 확인
+    try {
+      if ((message as any).data) {
+        const customData = JSON.parse((message as any).data);
+        if (customData?.resource?.[0]?.fileType) {
+          const fileType = customData.resource[0].fileType;
+          if (fileType === 'image') return MESSAGE_TYPES.IMAGE;
+          if (fileType === 'video') return MESSAGE_TYPES.VIDEO;
+          return MESSAGE_TYPES.FILE;
+        }
+      }
+    } catch (error) {
+      console.warn('파일 타입 감지 중 데이터 파싱 실패:', error);
+    }
+
+    // 기본 Sendbird 파일 타입 감지
+    return getFileMessageType((message as any).type, (message as any).name);
   }
 
   // 사용자 메시지
-  if (message.messageType === 'user' && message instanceof UserMessage) {
+  if (message.messageType === 'user') {
     // 커스텀 데이터에서 타입 확인
     if (message.data) {
       try {
@@ -33,12 +49,13 @@ export function getMessageType(message: BaseMessage): MessageType {
     }
 
     // 답장 메시지 확인
-    if (message.parentMessage) {
+    if ((message as any).parentMessage) {
       return MESSAGE_TYPES.REPLY;
     }
 
     // 텍스트 길이로 판단
-    return message.message.length >= LONG_TEXT_THRESHOLD
+    const messageText = (message as any).message || '';
+    return messageText.length >= LONG_TEXT_THRESHOLD
       ? MESSAGE_TYPES.TEXT_LONG
       : MESSAGE_TYPES.TEXT;
   }
@@ -103,50 +120,26 @@ export function getMessageTypeDisplayText(messageType: MessageType): string {
   }
 }
 
-/**
- * 메시지 타입별 아이콘 반환
- */
-export function getMessageTypeIcon(messageType: MessageType): string {
-  switch (messageType) {
-    case MESSAGE_TYPES.TEXT:
-    case MESSAGE_TYPES.TEXT_LONG:
-      return '💬';
-    case MESSAGE_TYPES.FILE:
-      return '📎';
-    case MESSAGE_TYPES.IMAGE:
-      return '🖼️';
-    case MESSAGE_TYPES.VIDEO:
-      return '🎥';
-    case MESSAGE_TYPES.CONTACT:
-      return '👤';
-    case MESSAGE_TYPES.NOTICE:
-      return '📢';
-    case MESSAGE_TYPES.REPLY:
-      return '↩️';
-    case MESSAGE_TYPES.ADMIN:
-      return '⚙️';
-    default:
-      return '💬';
-  }
-}
 
 /**
  * 메시지가 미디어 타입인지 확인
  */
 export function isMediaMessage(messageType: MessageType): boolean {
-  return [MESSAGE_TYPES.IMAGE, MESSAGE_TYPES.VIDEO].includes(messageType);
+  return messageType === MESSAGE_TYPES.IMAGE || messageType === MESSAGE_TYPES.VIDEO;
 }
 
 /**
  * 메시지가 파일 타입인지 확인
  */
 export function isFileMessage(messageType: MessageType): boolean {
-  return [MESSAGE_TYPES.FILE, MESSAGE_TYPES.IMAGE, MESSAGE_TYPES.VIDEO].includes(messageType);
+  return messageType === MESSAGE_TYPES.FILE ||
+         messageType === MESSAGE_TYPES.IMAGE ||
+         messageType === MESSAGE_TYPES.VIDEO;
 }
 
 /**
  * 메시지가 커스텀 타입인지 확인
  */
 export function isCustomMessage(messageType: MessageType): boolean {
-  return [MESSAGE_TYPES.CONTACT, MESSAGE_TYPES.NOTICE].includes(messageType);
+  return messageType === MESSAGE_TYPES.CONTACT || messageType === MESSAGE_TYPES.NOTICE;
 }
