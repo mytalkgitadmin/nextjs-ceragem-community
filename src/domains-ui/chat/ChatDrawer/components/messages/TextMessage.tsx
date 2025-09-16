@@ -8,9 +8,6 @@ interface TextMessageProps {
 export function TextMessage({ data, isMine }: TextMessageProps) {
   const { content, isLongText } = data;
 
-  // 긴 텍스트인 경우 미리보기용 텍스트 생성 (500자 제한)
-  const previewContent = isLongText ? content.substring(0, 500) : content;
-
   return (
     <div className={`max-w-xs md:max-w-md ${isMine ? "ml-auto" : "mr-auto"}`}>
       <div
@@ -24,8 +21,19 @@ export function TextMessage({ data, isMine }: TextMessageProps) {
         `}
       >
         {/* 메시지 내용 */}
-        <div className="whitespace-pre-wrap text-sm leading-relaxed">
-          {previewContent}
+        <div
+          className={`
+            text-sm leading-relaxed
+            ${isLongText ? "overflow-hidden" : "whitespace-pre-wrap"}
+          `}
+          style={isLongText ? {
+            display: '-webkit-box',
+            WebkitLineClamp: 10,
+            WebkitBoxOrient: 'vertical',
+            whiteSpace: 'pre-wrap'
+          } : {}}
+        >
+          {content}
         </div>
 
         {/* 긴 텍스트 전체보기 버튼 */}
