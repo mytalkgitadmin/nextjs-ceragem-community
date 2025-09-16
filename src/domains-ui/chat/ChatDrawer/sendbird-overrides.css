@@ -1,0 +1,55 @@
+/* Sendbird 메시지 영역 높이 수정 */
+
+/* GroupChannel 컴포넌트가 flex container에서 전체 높이를 차지하도록 설정 */
+.sendbird-group-channel {
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 0 !important;
+}
+
+/* GroupChannel의 루트 컨테이너 */
+.sendbird-group-channel > div {
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 0 !important;
+}
+
+/* 메시지 영역이 가용 공간을 전부 사용하도록 설정 */
+.sendbird-conversation__messages {
+  flex: 1 1 0% !important;
+  min-height: 0 !important;
+  height: auto !important;
+  overflow: hidden !important;
+}
+
+/* 메시지 리스트 컨테이너 */
+.sendbird-conversation__messages-list {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+}
+
+/* 스크롤 컨테이너 */
+.sendbird-conversation__scroll-container {
+  flex: 1 1 0% !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+}
+
+/* 전체 conversation 컨테이너 */
+.sendbird-conversation {
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 0 !important;
+}
+
+/* 메시지 패딩 영역 */
+.sendbird-conversation__messages-padding {
+  min-height: 0 !important;
+  flex: 1 1 0% !important;
+}

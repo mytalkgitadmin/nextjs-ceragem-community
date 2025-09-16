@@ -134,7 +134,7 @@ export function Drawer({
           fixed inset-y-0 right-0 ${width} w-full bg-white shadow-xl
           transform transition-transform duration-300 ease-out
           ${isAnimating ? "translate-x-0" : "translate-x-full"}
-          ${className}
+          ${className} flex flex-col
         `}
       >
         {/* Header */}
