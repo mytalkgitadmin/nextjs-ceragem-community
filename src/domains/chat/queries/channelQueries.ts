@@ -3,17 +3,13 @@ import { getChannelList } from "../api/channel";
 
 export const channelQueryKeys = {
   all: ["channel"] as const,
-  channelList: (channelUrl?: string) => [
-    ...channelQueryKeys.all,
-    "channelList",
-    channelUrl,
-  ],
+  channelList: () => [...channelQueryKeys.all, "channelList"],
 } as const;
 
-export const useChannelList = (channelUrl: string) => {
+export const useChannelList = () => {
   return useQuery({
-    queryKey: channelQueryKeys.channelList(channelUrl),
-    queryFn: () => getChannelList(channelUrl),
-    enabled: !!channelUrl,
+    queryKey: channelQueryKeys.channelList(),
+    queryFn: () => getChannelList(),
+    enabled: true,
   });
 };

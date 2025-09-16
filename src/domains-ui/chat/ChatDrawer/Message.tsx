@@ -18,11 +18,6 @@ export function Message({ messageContent }: MessageProps) {
     return null;
   }
 
-  // 디버깅: 메시지 객체 구조 확인
-  console.log("Message object:", message);
-  console.log("Message type:", message.messageType);
-  console.log("Message content:", message.message);
-
   const isMyMessage = sendBirdId === message.sender?.userId;
   const showProfile = !isMyMessage && chainTop;
   const showSenderName = !isMyMessage && chainTop;

@@ -7,7 +7,7 @@ import { DateSeparator } from "./DateSeparator";
 import { Message } from "./Message";
 import { ScrollController } from "./ScrollController";
 import { SendbirdMessageInput } from "./SendbirdMessageInput";
-// import { ChannelHeader } from "./ChannelHeader";
+import { ChannelHeader } from "./ChannelHeader";
 // import "./sendbird-overrides.css";
 
 export interface SendbirdChatDrawerContentProps {
@@ -33,16 +33,17 @@ export function SendbirdChatDrawerContent({
             isMultipleFilesMessageEnabled={true} // 다중 파일 메시지 기능 활성화
             replyType="QUOTE_REPLY" // 'NONE' | 'QUOTE_REPLY' | 'THREAD'
             // 채널 헤더
-            // renderChannelHeader={
-            //   showHeader
-            //     ? () => (
-            //         <ChannelHeader
-            //           showBackButton={true}
-            //           onBackClick={onBackClick}
-            //         />
-            //       )
-            //     : undefined
-            // }
+            renderChannelHeader={
+              showHeader
+                ? () => (
+                    <ChannelHeader
+                      showBackButton={true}
+                      onBackClick={onBackClick}
+                    />
+                  )
+                : undefined
+            }
+            // renderChannelHeader={() => <></>}
             // 날짜 구분선
             renderCustomSeparator={({ message }) => (
               <DateSeparator createdAt={message.createdAt} />

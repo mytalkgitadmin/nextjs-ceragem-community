@@ -1,3 +1,1 @@
-export * from "./ChatDrawer";
-
 export { SendbirdChannelList } from "./SendbirdChannelList";
