@@ -47,43 +47,19 @@ export const roleVariantMap: Record<
   지점장: "primary",
 };
 
-// Dummy data
-const dummyMessages: ChatMessage[] = [
-  {
-    id: "1",
-    senderId: "user1",
-    senderName: "김세라",
-    senderRole: "본사",
-    content:
-      "안녕하세요 고객님!\n세라젬에 궁금하신 사항은 편하게 말씀해주세요~",
-    timestamp: "오전 11:24",
-    isMine: false,
-  },
-  {
-    id: "2",
-    senderId: "me",
-    senderName: "나",
-    content:
-      "안녕하세요\n이번에 세라젬 신상품은 언제쯤 출시 되나요?\n또한 렌탈 하게 되면 매월 고정적으로 지출되는 금액과\n이사 시 유의사항이 궁금합니다!",
-    timestamp: "오전 11:26",
-    isMine: true,
-  },
-];
 
 export function ChatDrawerContent({
   chatInfo,
   messages = [],
   onSendMessage,
 }: ChatDrawerContentProps) {
-  const currentMessages = messages.length > 0 ? messages : dummyMessages;
-
   const handleSendMessage = (message: string) => {
     onSendMessage?.(message);
   };
 
   return (
     <div className="h-full w-full flex flex-col min-h-0">
-      <MessageList messages={currentMessages} chatInfo={chatInfo} />
+      <MessageList messages={messages} chatInfo={chatInfo} />
       <MessageInput onSendMessage={handleSendMessage} />
     </div>
   );
