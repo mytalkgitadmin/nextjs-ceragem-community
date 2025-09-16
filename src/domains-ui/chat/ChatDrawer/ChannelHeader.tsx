@@ -28,7 +28,7 @@ export function ChannelHeader({
         <div className="flex items-center space-x-3">
           {showBackButton && (
             <button
-              onClick={onBackClick || closeDrawer}
+              onClick={onBackClick || (() => closeDrawer(""))}
               className="p-2 hover:bg-gray-100 rounded-full transition-colors"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -77,7 +77,7 @@ export function ChannelHeader({
     if (memberCount <= 2) {
       // 1:1 채팅의 경우 온라인 상태 표시
       const otherMember = channel.members?.find(
-        (member) => !member.isCurrentUser
+        (member) => member.userId !== (channel as any).currentUser?.userId
       );
       if (otherMember) {
         return otherMember.connectionStatus === "online"
@@ -97,7 +97,7 @@ export function ChannelHeader({
     // 1:1 채팅의 경우 상대방 프로필 이미지 사용
     if (channel.memberCount === 2) {
       const otherMember = channel.members?.find(
-        (member) => !member.isCurrentUser
+        (member) => member.userId !== (channel as any).currentUser?.userId
       );
       return otherMember?.profileUrl || "";
     }
@@ -118,7 +118,7 @@ export function ChannelHeader({
       <div className="flex items-center space-x-3 flex-1 min-w-0">
         {showBackButton && (
           <button
-            onClick={onBackClick || closeDrawer}
+            onClick={onBackClick || (() => closeDrawer(""))}
             className="flex-shrink-0 p-2 hover:bg-gray-100 rounded-full transition-colors"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">

@@ -37,7 +37,10 @@ export function ScrollController({ className = "" }: ScrollControllerProps) {
       document.querySelector(".message-list");
 
     if (element) {
-      messageListRef.current = element as HTMLDivElement;
+      const currentRef = messageListRef.current;
+      if (currentRef !== element) {
+        (messageListRef as any).current = element as HTMLDivElement;
+      }
       element.addEventListener("scroll", handleScroll);
 
       return () => {
