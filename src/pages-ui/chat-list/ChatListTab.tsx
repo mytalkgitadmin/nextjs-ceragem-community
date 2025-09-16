@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import "./sendbird.css";
 import { GroupChannelListProvider } from "@sendbird/uikit-react/GroupChannelList/context";
 import GroupChannelListUI from "@sendbird/uikit-react/GroupChannelList/components/GroupChannelListUI";
-import { CustomChannelPreview } from "./components/CustomChannelPreview";
-import { useChatDrawerActions } from "./hooks/useChatDrawerActions";
+import { CustomChannelPreview } from "./components";
+import { useChatDrawerActions } from "./hooks";
 
 export function ChatListTab() {
   const [mounted, setMounted] = useState(false);

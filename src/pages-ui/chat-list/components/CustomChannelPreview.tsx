@@ -1,7 +1,7 @@
 "use client";
 
 import { GroupChannel } from "@sendbird/chat/groupChannel";
-import { useChannelName } from "../hooks/useChannelName";
+import { useChannelName } from "../hooks";
 
 interface CustomChannelPreviewProps {
   channel: GroupChannel;
