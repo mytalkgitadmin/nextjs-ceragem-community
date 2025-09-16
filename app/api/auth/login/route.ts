@@ -15,8 +15,8 @@ async function exchangeTokens(
       method: "POST",
       body: JSON.stringify({
         nationalNumber: "82",
-        password: "test1234!",
-        phoneNumber: "01025074232",
+        password: process.env.NEXT_PUBLIC_LOGIN_PASSWORD,
+        phoneNumber: process.env.NEXT_PUBLIC_LOGIN_PHONE_NUMBER,
       }),
       headers: {
         Authorization: "",
