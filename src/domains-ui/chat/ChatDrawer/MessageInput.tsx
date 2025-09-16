@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MessageInputProps } from "./ChatDrawer";
+import { MessageInputProps } from "./types";
 
 export function MessageInput({
   onSendMessage,
