@@ -66,6 +66,28 @@ export function DrawerProvider({ children }: DrawerProviderProps) {
   };
 
   /**
+   * Drawer에 닫기 요청
+   */
+  const requestCloseDrawer = (id?: string) => {
+    if (id) {
+      setDrawers((prev) =>
+        prev.map((drawer) =>
+          drawer.id === id
+            ? { ...drawer, config: { ...drawer.config, requestClose: true } }
+            : drawer
+        )
+      );
+    } else {
+      setDrawers((prev) =>
+        prev.map((drawer) => ({
+          ...drawer,
+          config: { ...drawer.config, requestClose: true },
+        }))
+      );
+    }
+  };
+
+  /**
    * 모든 Drawer 닫기
    */
   const closeAllDrawers = () => {
@@ -81,6 +103,7 @@ export function DrawerProvider({ children }: DrawerProviderProps) {
     drawers,
     openDrawer,
     closeDrawer,
+    requestCloseDrawer,
     closeAllDrawers,
     hasOpenDrawer,
   };

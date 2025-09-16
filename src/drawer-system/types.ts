@@ -33,6 +33,10 @@ export interface DrawerConfig {
    */
   className?: string;
   /**
+   * 닫기 요청 플래그
+   */
+  requestClose?: boolean;
+  /**
    * Drawer 닫기 시 콜백
    */
   onClose?: () => void;
@@ -80,6 +84,10 @@ export interface DrawerContextState {
    * 현재 drawer가 열려있는지 확인
    */
   hasOpenDrawer: boolean;
+  /**
+   * drawer에 닫기 요청 (ID 없으면 가장 최근 drawer에 요청)
+   */
+  requestCloseDrawer: (id?: string) => void;
 }
 
 /**

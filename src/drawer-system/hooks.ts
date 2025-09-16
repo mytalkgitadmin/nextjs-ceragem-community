@@ -28,6 +28,13 @@ export function useDrawer() {
     context.closeAllDrawers();
   }, [context]);
 
+  const requestCloseDrawer = useCallback(
+    (id?: string) => {
+      context.requestCloseDrawer(id);
+    },
+    [context]
+  );
+
   return {
     /**
      * drawer 열기
@@ -53,6 +60,11 @@ export function useDrawer() {
      * drawer가 열려있는지 확인
      */
     hasOpenDrawer: context.hasOpenDrawer,
+    /**
+     * drawer에 닫기 요청
+     * @param id drawer ID (없으면 가장 최근 drawer 닫기)
+     */
+    requestCloseDrawer,
   };
 }
 

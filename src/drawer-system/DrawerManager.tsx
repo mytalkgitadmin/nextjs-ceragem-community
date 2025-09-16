@@ -51,6 +51,7 @@ export function DrawerManager() {
           disableBackdropClick = false,
           disableEscapeKeyDown = false,
           className = "",
+          requestClose = false,
           onClose,
         } = config;
 
@@ -70,6 +71,7 @@ export function DrawerManager() {
             disableEscapeKeyDown={disableEscapeKeyDown}
             className={className}
             zIndex={50 + index} // 나중에 열린 drawer가 더 위에 오도록
+            requestClose={requestClose}
           >
             {content}
           </Drawer>

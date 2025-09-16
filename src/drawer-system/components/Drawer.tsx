@@ -47,6 +47,10 @@ export interface DrawerProps {
    * Z-index 값 (여러 drawer 스택을 위해)
    */
   zIndex?: number;
+  /**
+   * 닫기 요청 플래그
+   */
+  requestClose?: boolean;
 }
 
 export function Drawer({
@@ -61,6 +65,7 @@ export function Drawer({
   disableEscapeKeyDown = false,
   className = "",
   zIndex = 50,
+  requestClose = false,
 }: DrawerProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -108,6 +113,12 @@ export function Drawer({
       };
     }
   }, [isOpen, isClosing, disableEscapeKeyDown]);
+
+  useEffect(() => {
+    if (requestClose) {
+      handleClose();
+    }
+  }, [requestClose]);
 
   if (!isVisible) return null;
 

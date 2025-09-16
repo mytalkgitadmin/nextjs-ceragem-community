@@ -79,7 +79,7 @@ export const useChannelName = (channel: GroupChannel) => {
       default:
         return name;
     }
-  }, [channel]);
+  }, [channel, filteredMembers]);
 
   return channelName;
 };
