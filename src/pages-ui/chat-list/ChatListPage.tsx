@@ -36,7 +36,7 @@ export function ChatListPage({}: ChatListPageProps) {
       <ChatListTabNav activeTab={activeTab} onTabChange={setActiveTab} />
 
       {/* Chat List / Announcement List */}
-      {/* {renderTabContent()} */}
+      {renderTabContent()}
     </>
   );
 }

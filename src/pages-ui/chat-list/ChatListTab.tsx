@@ -1,13 +1,23 @@
 "use client";
 
+import { useState, useEffect, useMemo } from "react";
+import "./sendbird.css";
 import { GroupChannelListProvider } from "@sendbird/uikit-react/GroupChannelList/context";
 import GroupChannelListUI from "@sendbird/uikit-react/GroupChannelList/components/GroupChannelListUI";
 import { useDrawer } from "@/drawer-system";
 import { GroupChannel } from "@sendbird/chat/groupChannel";
 import { SendbirdChatDrawerContent } from "@/domains-ui";
+import { useChannelData } from "@/domains/chat/hooks";
+import {
+  sortMembersByPriority,
+  getMemberName,
+  generateChannelName,
+} from "./utils";
 
 export function ChatListTab() {
   const { openDrawer } = useDrawer();
+
+  const [mounted, setMounted] = useState(false);
 
   const handleChannelSelect = (channel: GroupChannel) => {
     // Sendbird 채널을 사용하여 ChatDrawer 열기
@@ -50,19 +60,31 @@ export function ChatListTab() {
           </button>
         </div>
       ),
-      onClose: () => {
-        console.log("채팅방 닫기:", channel.name);
-      },
+      // onClose: () => {
+      //   console.log("채팅방 닫기:", channel.name);
+      // },
     });
   };
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
 
   return (
     <div className="h-full">
       <GroupChannelListProvider
         onChannelSelect={handleChannelSelect}
         onChannelCreated={() => {}}
+        disableAutoSelect={true}
+        channelListQueryParams={{
+          // 운영 PRIVATE 제외
+          customTypesFilter: ["DIRECT", "MY", "GROUP"], // 'PRIVATE', 'DIRECT', 'MY', 'GROUP'
+        }}
       >
         <GroupChannelListUI
+          renderHeader={() => <></>}
           renderChannelPreview={(props) => <CustomChannelPreview {...props} />}
           renderPlaceHolderError={() => (
             <div className="flex flex-col items-center justify-center h-64 text-gray-500">
@@ -117,13 +139,88 @@ export function ChatListTab() {
 }
 
 // 커스텀 채널 미리보기 컴포넌트
-function CustomChannelPreview({ channel, onClick, isSelected }: any) {
+function CustomChannelPreview({ channel, isSelected }: any) {
   const lastMessage = channel.lastMessage;
   const unreadCount = channel.unreadMessageCount;
 
+  const DEFAULT_CHANNEL_NAMES = [
+    "메모 채널",
+    "그룹 채널",
+    "가족 채널",
+    "1:1 채널",
+    "Private 채널",
+  ];
+
+  const includesMyProfile = false;
+
+  const channelData = useChannelData(channel.url);
+  console.log(channelData);
+
+  // 활성 멤버 필터링 (나 포함 여부 )
+  const filteredMembers = useMemo(() => {
+    if (!channelData?.members) return [];
+
+    const filtered = includesMyProfile
+      ? channelData.members.filter(
+          (member: any) =>
+            member.accountStatus !== "EXIT" &&
+            member.participantType !== "KICKED"
+        )
+      : channelData.members.filter(
+          (member: any) =>
+            member.relationType !== "ME" &&
+            member.accountStatus !== "EXIT" &&
+            member.participantType !== "KICKED"
+        );
+    return filtered;
+  }, [channelData, includesMyProfile]);
+
+  const channelName = useMemo(() => {
+    const { customType, name } = channel;
+
+    // 커스텀 채널명이 설정된 경우
+    if (!DEFAULT_CHANNEL_NAMES.includes(name)) {
+      return name;
+    }
+
+    // 채널 타입별로 이름과 멤버 리스트 결정
+    switch (customType) {
+      case "MY":
+        return "MY 메모";
+
+      case "DIRECT":
+        if (!filteredMembers || filteredMembers.length === 0) {
+          return "대화 상대 없음";
+        } else {
+          // DIRECT 채널에서는 나 → 상대방 순서로 정렬
+          const sortedMembers = sortMembersByPriority(
+            filteredMembers,
+            "DIRECT"
+          );
+          return getMemberName(filteredMembers[0]);
+        }
+
+      case "GROUP":
+      case "FAMILY":
+        if (!filteredMembers || filteredMembers.length === 0) {
+          return "대화 상대 없음";
+        } else {
+          // GROUP/FAMILY 채널에서는 방장 → 나 → 일반 멤버 순서로 정렬
+          const sortedMembers = sortMembersByPriority(
+            filteredMembers,
+            customType
+          );
+          const channelName = generateChannelName(sortedMembers);
+
+          return channelName;
+        }
+      default:
+        return name;
+    }
+  }, [channel]);
+
   return (
     <div
-      onClick={onClick}
       className={`
         flex items-center px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors duration-200
         ${isSelected ? "bg-blue-50 border-r-2 border-blue-500" : ""}
@@ -135,12 +232,12 @@ function CustomChannelPreview({ channel, onClick, isSelected }: any) {
           {channel.coverUrl ? (
             <img
               src={channel.coverUrl}
-              alt={channel.name}
+              alt={channelName}
               className="w-12 h-12 rounded-full object-cover"
             />
           ) : (
             <span className="text-gray-600 text-sm font-medium">
-              {channel.name?.charAt(0) || "#"}
+              {channelName?.charAt(0) || "#"}
             </span>
           )}
         </div>
@@ -158,7 +255,7 @@ function CustomChannelPreview({ channel, onClick, isSelected }: any) {
         {/* 이름과 배지들 */}
         <div className="flex items-center space-x-2 mb-1">
           <h3 className="text-sm font-medium text-gray-900 truncate">
-            {channel.name || "이름 없는 채팅방"}
+            {channelName || "이름 없는 채팅방"}
           </h3>
         </div>
 

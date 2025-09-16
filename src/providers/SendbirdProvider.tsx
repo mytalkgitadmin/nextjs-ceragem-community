@@ -45,6 +45,10 @@ export function SendbirdProviderWrapper({
     return <div>{children}</div>;
   }
 
+  console.log("sendBirdId", sendBirdId);
+  console.log("sessionToken", sessionToken);
+  console.log("appId", appId);
+
   return (
     <SendbirdProvider
       appId={appId}
@@ -69,6 +73,30 @@ export function SendbirdProviderWrapper({
       }}
       sdkInitParams={{
         localCacheEnabled: true,
+      }}
+      uikitOptions={{
+        groupChannelList: {
+          enableTypingIndicator: false, // 타이핑 상태 표시 활성화
+          enableMessageReceiptStatus: true, // 메시지 읽음 상태 표시 활성화
+        },
+
+        groupChannel: {
+          enableOgtag: true,
+          // enableTypingIndicator: false, // 타이핑 상태 표시 활성화
+          enableReactions: true,
+          // enableReactionsSupergroup: true,
+          // enableMention: true,
+          threadReplySelectType: "thread", // 'thread' | 'parent'
+          // enableVoiceMessage: false,
+          // // input: ChannelInputConfig
+          // // typingIndicatorTypes: Set<'text' | 'bubble'>
+          // enableFeedback: true,
+          // enableSuggestedReplies: true,
+          // showSuggestedRepliesFor: 'all_messages', // 'all_messages' | 'last_message_only'
+          // suggestedRepliesDirection: 'horizontal', //'vertical' | 'horizontal'
+          // enableMarkdownForUserMessage: true, //사용자 메시지에서 마크다운 문법 지원 활성화
+          // enableFormTypeMessage: true, // 폼 타입 메시지 기능 활성화
+        },
       }}
     >
       {children}

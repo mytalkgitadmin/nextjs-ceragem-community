@@ -5,10 +5,10 @@ import { UIProviders } from "./UIProviders";
 
 export function Providers({ children }: { children: ReactNode }) {
   return (
-    <UIProviders>
-      <QueryProvider>
-        <SendbirdProviderWrapper>{children}</SendbirdProviderWrapper>
-      </QueryProvider>
-    </UIProviders>
+    <QueryProvider>
+      <SendbirdProviderWrapper>
+        <UIProviders>{children}</UIProviders>
+      </SendbirdProviderWrapper>
+    </QueryProvider>
   );
 }

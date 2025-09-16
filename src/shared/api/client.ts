@@ -9,7 +9,9 @@ export const axiosApi = axios.create({
   headers: {
     "Content-Type": "application/json;charset=UTF-8",
     "Accept-Language": "ko-KR,ko;",
+    "X-DOMAIN-SERVICE": "FETA",
   },
+  timeout: 10000, // 10초 타임아웃
 });
 
 axiosApi.interceptors.request.use(

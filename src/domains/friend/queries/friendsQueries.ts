@@ -1,7 +1,7 @@
 // React Query Queries API
 
 import { useQuery } from "@tanstack/react-query";
-import { getFriend } from "../api/getFriend";
+import { getFriend } from "../api/friend";
 
 // // Query Keys
 // export const authKeys = {
