@@ -8,6 +8,9 @@ interface TextMessageProps {
 export function TextMessage({ data, isMine }: TextMessageProps) {
   const { content, isLongText } = data;
 
+  const isEdited = content.startsWith("✍🏻 ");
+  const displayContent = isEdited ? content.slice(3) : content;
+
   return (
     <div className={`max-w-xs md:max-w-md ${isMine ? "ml-auto" : "mr-auto"}`}>
       <div
@@ -37,7 +40,7 @@ export function TextMessage({ data, isMine }: TextMessageProps) {
               : {}
           }
         >
-          {content}
+          {displayContent}
         </div>
 
         {/* 긴 텍스트 전체보기 버튼 */}
@@ -50,7 +53,7 @@ export function TextMessage({ data, isMine }: TextMessageProps) {
                 console.log("전체보기 클릭");
               }}
             >
-              전체보기({content.length.toLocaleString()}자)
+              전체보기({displayContent.length.toLocaleString()}자)
             </button>
           </div>
         )}

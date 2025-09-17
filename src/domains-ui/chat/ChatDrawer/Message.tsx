@@ -19,6 +19,8 @@ export function Message({ messageContent }: MessageProps) {
     return null;
   }
 
+  const isEdited = message.message.startsWith("✍🏻 ");
+
   const isMyMessage = sendBirdId === message.sender?.userId;
   const showProfile = !isMyMessage && chainTop;
   const showSenderName = !isMyMessage && chainTop;
@@ -33,8 +35,8 @@ export function Message({ messageContent }: MessageProps) {
     return `${ampm} ${displayHours}:${minutes.toString().padStart(2, "0")}`;
   }, []);
 
-  const formattedTime = useMemo(() =>
-    formatTime(message.createdAt),
+  const formattedTime = useMemo(
+    () => formatTime(message.createdAt),
     [formatTime, message.createdAt]
   );
 
@@ -95,11 +97,16 @@ export function Message({ messageContent }: MessageProps) {
 
           {/* 메시지 전송 시간 */}
           <div className="flex-shrink-0">
-            <span className="text-xs text-gray-500">
-              {formattedTime}
-            </span>
+            <span className="text-xs text-gray-500">{formattedTime}</span>
           </div>
         </div>
+
+        {/* 편집됨 표시 - 메시지와 같은 정렬 */}
+        {isEdited && (
+          <div className={`mt-1 ${isMyMessage ? "text-right" : "text-left"}`}>
+            <span className="text-xs text-gray-500">편집됨</span>
+          </div>
+        )}
       </div>
     </div>
   );
