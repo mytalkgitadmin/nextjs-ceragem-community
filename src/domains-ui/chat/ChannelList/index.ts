@@ -1,0 +1,1 @@
+export { SendbirdChannelList } from "./ChannelList";

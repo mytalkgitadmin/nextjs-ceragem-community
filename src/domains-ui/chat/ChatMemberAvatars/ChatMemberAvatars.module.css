@@ -1,0 +1,42 @@
+/* Single Chat Avatars */
+.single_chat_container {
+  margin-right: 12px;
+}
+
+.single_avatar {
+  margin-right: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Group Chat Avatars */
+.group_chat_container {
+  margin-right: 12px;
+}
+
+.group_avatar_list {
+  /* AvatarGroup 스타일 */
+}
+
+.group_avatar {
+  border: 2px solid white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Legacy classes for backward compatibility */
+.chat_list_avatar {
+  margin-right: 12px;
+}
+
+.chat_avatar {
+  border: 2px solid white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chat_list_group_avatar_wrap {
+  margin-right: 12px;
+}
+
+.none {
+  margin-right: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
