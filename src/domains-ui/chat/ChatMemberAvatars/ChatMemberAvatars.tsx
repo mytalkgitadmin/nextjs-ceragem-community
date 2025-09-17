@@ -1,52 +1,22 @@
 import React from "react";
+import { GroupChannel } from "@sendbird/chat/groupChannel";
 import { SingleChatAvatar } from "./SingleChatAvatar";
 import { GroupChatAvatars } from "./GroupChatAvatars";
 
 export interface ChatMemberAvatarsProps {
-  memberCount: number;
+  isGroup: boolean;
   members: any[];
-  channelInfo?: any;
-  channel?: any;
-  profileImg: (profile: any, size: string, status?: string) => string;
-  bemilyProfileList?: string[];
-  className?: string;
 }
 
-const CHAT_TYPE_THRESHOLD = 2;
-
 export const ChatMemberAvatars: React.FC<ChatMemberAvatarsProps> = ({
-  memberCount,
   members,
-  channelInfo,
-  channel,
-  profileImg,
-  bemilyProfileList,
-  className,
+  isGroup,
 }) => {
-  const isSingleOrDualChat = memberCount <= CHAT_TYPE_THRESHOLD;
-
-  if (isSingleOrDualChat) {
-    return (
-      <SingleChatAvatar
-        members={members}
-        memberCount={memberCount}
-        profileImg={profileImg}
-        bemilyProfileList={bemilyProfileList}
-        className={className}
-      />
-    );
+  if (!isGroup) {
+    return <SingleChatAvatar members={members} />;
   }
 
-  return (
-    <GroupChatAvatars
-      members={members}
-      channelInfo={channelInfo}
-      channel={channel}
-      memberCount={memberCount}
-      profileImg={profileImg}
-      className={className}
-    />
-  );
+  return <GroupChatAvatars members={members} />;
 };
 
 ChatMemberAvatars.displayName = "ChatMemberAvatars";

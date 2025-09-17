@@ -1,1 +1,1 @@
-export { useScroll } from "./useScroll";
+export { useInfiniteScroll } from "./useInfiniteScroll";

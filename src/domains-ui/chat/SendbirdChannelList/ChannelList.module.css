@@ -1,0 +1,138 @@
+.channel_last_message {
+  font-size: 14px;
+  color: #666;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1.4;
+}
+
+.channel_info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.channel_time {
+  font-size: 12px;
+  color: #999;
+  white-space: nowrap;
+}
+
+.channel_badges {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.member_count {
+  font-size: 12px;
+  color: #666;
+  white-space: nowrap;
+}
+
+.unread_count {
+  background-color: #ff4757;
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 3px 7px;
+  border-radius: 12px;
+  min-width: 20px;
+  text-align: center;
+  line-height: 1;
+}
+
+/* 무한 스크롤 관련 스타일 */
+.load_more_trigger {
+  height: 1px;
+  width: 100%;
+  pointer-events: none;
+}
+
+.loading_more {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.error_state {
+  padding: 20px;
+  text-align: center;
+  background-color: #fff5f5;
+  border: 1px solid #fed7d7;
+  border-radius: 8px;
+  margin: 10px 16px;
+}
+
+.error_message {
+  color: #e53e3e;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.retry_button {
+  background-color: #3182ce;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.retry_button:hover {
+  background-color: #2c5aa0;
+}
+
+.retry_button:active {
+  background-color: #2a4f8f;
+}
+
+.no_more_data {
+  padding: 20px;
+  text-align: center;
+  color: #999;
+  font-size: 14px;
+  background-color: #fafafa;
+  border-top: 1px solid #f0f0f0;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .channel_item {
+    padding: 12px 16px;
+    gap: 10px;
+  }
+
+  .channel_name {
+    font-size: 15px;
+  }
+
+  .channel_last_message {
+    font-size: 13px;
+  }
+
+  .channel_time {
+    font-size: 11px;
+  }
+
+  .member_count {
+    font-size: 11px;
+  }
+
+  .unread_count {
+    font-size: 10px;
+    padding: 2px 6px;
+    min-width: 18px;
+  }
+
+  .error_state {
+    margin: 8px 12px;
+    padding: 16px;
+  }
+}

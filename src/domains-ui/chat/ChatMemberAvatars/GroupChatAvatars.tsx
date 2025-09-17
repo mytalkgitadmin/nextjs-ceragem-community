@@ -1,25 +1,17 @@
 import React from "react";
 import { Avatar, AvatarGroup } from "@/shared-ui/display";
 import styles from "./ChatMemberAvatars.module.css";
+import { memberProfileShortImg } from "@/domains/chat/utils/memberProfile";
 
 interface GroupChatAvatarsProps {
   members: any[];
-  channelInfo?: any;
-  channel?: any;
-  memberCount: number;
-  profileImg: (profile: any, size: string, status?: string) => string;
-  className?: string;
 }
 
 export const GroupChatAvatars: React.FC<GroupChatAvatarsProps> = ({
   members,
-  channelInfo,
-  channel,
-  memberCount,
-  profileImg,
-  className,
 }) => {
-  const renderChannelInfoAvatars = () => (
+  const memberCount = members.length;
+  const renderMemberAvatars = () => (
     <AvatarGroup
       maxCount={4}
       size={44}
@@ -35,7 +27,7 @@ export const GroupChatAvatars: React.FC<GroupChatAvatarsProps> = ({
         return (
           <Avatar
             key={`member_${member.accountId}_${index}`}
-            src={profileImg(member.profile, "short", member.accountStatus)}
+            src={memberProfileShortImg(member, "short")}
             className={styles.group_avatar}
           />
         );
@@ -43,26 +35,9 @@ export const GroupChatAvatars: React.FC<GroupChatAvatarsProps> = ({
     </AvatarGroup>
   );
 
-  const renderChannelAvatars = () => (
-    <AvatarGroup
-      maxCount={4}
-      size={44}
-      prefixCls="preview_avatar"
-      className={styles.group_avatar_list}
-    >
-      {channel?.members.map((member: any, index: number) => (
-        <Avatar
-          key={`member_${member.accountId}_${index}`}
-          src={profileImg(undefined, "short", member.accountStatus)}
-          className={styles.group_avatar}
-        />
-      ))}
-    </AvatarGroup>
-  );
-
   return (
-    <div className={`${styles.group_chat_container} ${className || ""}`}>
-      {channelInfo ? renderChannelInfoAvatars() : renderChannelAvatars()}
+    <div className={`${styles.group_chat_container}`}>
+      {renderMemberAvatars()}
     </div>
   );
 };

@@ -1,27 +1,41 @@
 import { GroupChannel } from "@sendbird/chat/groupChannel";
 import { useChannelInfo } from "./useChannelInfo";
-import { useActiveMembers } from "./useActiveMembers";
+import { isEmpty } from "lodash-es";
 import { useMemo } from "react";
 import {
-  generateChannelNameByType,
-  isDefaultChannelName,
+  getGroupChannelName,
+  getDirectChannelName,
 } from "../utils/channelNames";
 
 export const useChannelName = (channel: GroupChannel) => {
-  const channelUrl = channel.url || "";
-
-  const channelInfo = useChannelInfo(channelUrl);
-  const activeMembers = useActiveMembers(channelInfo, false);
+  const channelInfo = useChannelInfo(channel.url);
 
   const channelName = useMemo(() => {
-    if (!isDefaultChannelName(channel.name)) {
-      // 커스텀 채널명이 설정된 경우
+    if (!channelInfo) {
       return channel.name;
     }
 
-    // 채널 타입별로 채널명 생성
-    return generateChannelNameByType(channel.customType, activeMembers);
-  }, [channel.customType, channel.name, activeMembers]);
+    if (!isEmpty(channelInfo.channelName)) {
+      // 커스텀 채널명이 설정된 경우
+      return channelInfo.channelName;
+    }
+
+    // 채널 타입별 처리
+    switch (channelInfo.channelType) {
+      case "MY":
+        return "MY 메모";
+
+      case "DIRECT":
+        return getDirectChannelName(channelInfo.members);
+
+      case "GROUP":
+      case "FAMILY":
+        return getGroupChannelName(channelInfo.members);
+
+      default:
+        return channel.name;
+    }
+  }, [channel.customType, channel.name, channelInfo]);
 
   return channelName;
 };

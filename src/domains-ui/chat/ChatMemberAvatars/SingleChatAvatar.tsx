@@ -1,29 +1,24 @@
 import React from "react";
 import { Avatar } from "@/shared-ui/display";
 import styles from "./ChatMemberAvatars.module.css";
+import { memberProfileShortImg } from "@/domains/chat/utils/memberProfile";
 
 interface SingleChatAvatarProps {
   members: any[];
-  memberCount: number;
-  profileImg: (profile: any, size: string, status?: string) => string;
-  bemilyProfileList?: string[];
-  className?: string;
 }
 
 export const SingleChatAvatar: React.FC<SingleChatAvatarProps> = ({
   members,
-  memberCount,
-  profileImg,
-  bemilyProfileList = [],
-  className,
 }) => {
+  const memberCount = members.length;
+
   const renderMemberAvatar = (member: any, index: number) => {
     // 1명일 때는 기본 프로필 사용
     if (memberCount === 1) {
       return (
         <Avatar
           key={`mem_${member.accountId}_${index}`}
-          src={bemilyProfileList[0]}
+          src={"/assets/profile/bemily_profile000.png"}
           size={64}
           className={styles.single_avatar}
         />
@@ -38,7 +33,7 @@ export const SingleChatAvatar: React.FC<SingleChatAvatarProps> = ({
     return (
       <Avatar
         key={`member_${member.accountId}_${index}`}
-        src={profileImg(member.profile, "short", member.accountStatus)}
+        src={memberProfileShortImg(member, "short")}
         size={64}
         className={styles.single_avatar}
       />
@@ -46,7 +41,7 @@ export const SingleChatAvatar: React.FC<SingleChatAvatarProps> = ({
   };
 
   return (
-    <div className={`${styles.single_chat_container} ${className || ""}`}>
+    <div className={`${styles.single_chat_container}`}>
       {members?.map(renderMemberAvatar)}
     </div>
   );
