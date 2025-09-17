@@ -13,7 +13,7 @@ export const memberProfileShortImg = (member: any, size: string) => {
   const memberProfile = member.profile;
   const memberStatus = member.accountStatus;
 
-  let img = "/assets/profile/bemily_profile000.png";
+  let img = "/assets/profile/bemily_default_profile.webp";
 
   if (memberStatus && memberStatus === "EXIT") {
     return (img = "/assets/profile/exit_profile.png");
@@ -39,7 +39,7 @@ export const memberProfileShortImg = (member: any, size: string) => {
     if (memberProfile?.profileName === NICKNAME_NONE) {
       img = "/assets/profile/exit_profile.png";
     } else {
-      img = "/assets/profile/bemily_profile000.png";
+      img = "/assets/profile/bemily_default_profile.webp";
     }
   }
   return img;

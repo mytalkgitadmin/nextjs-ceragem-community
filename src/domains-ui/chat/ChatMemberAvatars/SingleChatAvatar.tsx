@@ -18,7 +18,7 @@ export const SingleChatAvatar: React.FC<SingleChatAvatarProps> = ({
       return (
         <Avatar
           key={`mem_${member.accountId}_${index}`}
-          src={"/assets/profile/bemily_profile000.png"}
+          src={"/assets/profile/bemily_default_profile.webp"}
           size={64}
           className={styles.single_avatar}
         />
