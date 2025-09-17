@@ -1,7 +1,8 @@
+import { memo } from "react";
 import { Avatar, Badge } from "@/shared-ui";
 import { MessageItemProps, roleVariantMap } from "./types";
 
-export function MessageItem({ message, chatAvatar }: MessageItemProps) {
+export const MessageItem = memo(function MessageItem({ message, chatAvatar }: MessageItemProps) {
   return (
     <div
       className={`flex w-full ${message.isMine ? "justify-end" : "justify-start"}`}
@@ -42,4 +43,4 @@ export function MessageItem({ message, chatAvatar }: MessageItemProps) {
       </div>
     </div>
   );
-}
+});

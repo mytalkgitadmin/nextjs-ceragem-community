@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { BaseMessage } from "@sendbird/chat/message";
 import { getMessageType } from "../utils/messageTypeUtils";
 import { MESSAGE_TYPES } from "../constants/messageTypes";
@@ -23,13 +24,13 @@ export function MessageRenderer({
 }: MessageRendererProps) {
   const messageType = getMessageType(message);
 
-  // 메시지 데이터 생성 (기본 구조)
-  const baseData = {
+  // 메시지 데이터 생성 (기본 구조) - 메모이제이션 적용
+  const baseData = useMemo(() => ({
     timestamp: message.createdAt,
     senderId: message.sender?.userId || "",
     senderName: senderName,
     channelUrl: message.channelUrl,
-  };
+  }), [message.createdAt, message.sender?.userId, senderName, message.channelUrl]);
 
   // 메시지 타입에 따른 컴포넌트 렌더링
   switch (messageType) {

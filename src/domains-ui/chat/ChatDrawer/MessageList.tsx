@@ -1,10 +1,13 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useMemo } from "react";
 import { MessageListProps } from "./types";
 import { MessageItem } from "./MessageItem";
 
 export function MessageList({ messages, chatInfo }: MessageListProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messageListRef = useRef<HTMLDivElement>(null);
+
+  // chatAvatar 메모이제이션으로 불필요한 리렌더링 방지
+  const chatAvatar = useMemo(() => chatInfo.avatar || "", [chatInfo.avatar]);
 
   // 자동 스크롤 기능
   const scrollToBottom = () => {
@@ -36,7 +39,7 @@ export function MessageList({ messages, chatInfo }: MessageListProps) {
             <MessageItem
               key={message.id}
               message={message}
-              chatAvatar={chatInfo.avatar || ""}
+              chatAvatar={chatAvatar}
             />
           ))}
           {/* 스크롤 하단 참조 요소 */}
