@@ -45,10 +45,6 @@ export function SendbirdProviderWrapper({
     return <div>{children}</div>;
   }
 
-  console.log("sendBirdId", sendBirdId);
-  console.log("sessionToken", sessionToken);
-  console.log("appId", appId);
-
   return (
     <SendbirdProvider
       appId={appId}
