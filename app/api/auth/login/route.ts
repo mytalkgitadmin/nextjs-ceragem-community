@@ -22,7 +22,7 @@ async function exchangeTokens(
         Authorization: "",
         "Content-Type": "application/json;charset=UTF-8",
         "Accept-Language": "ko-KR,ko;",
-        "X-DOMAIN-SERVICE": "FETA",
+        "X-DOMAIN-SERVICE": "FAMILY_TOWN",
       },
     });
 
