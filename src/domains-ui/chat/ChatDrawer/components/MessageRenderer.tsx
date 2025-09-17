@@ -64,7 +64,7 @@ export function MessageRenderer({
         }
 
         // 커스텀 데이터가 있고 resource 배열이 있는 경우
-        if (customFileData?.resource?.[0]) {
+        if (customFileData?.resource?.length > 0) {
           const resource = customFileData.resource[0];
           const fileData = {
             ...baseData,
@@ -76,6 +76,7 @@ export function MessageRenderer({
                      resource.fileType === "video" ? "video/mp4" :
                      fileMessage.type || "application/octet-stream",
             thumbnailUrl: resource.thumbUrl || fileMessage.thumbnails?.[0]?.url,
+            resources: customFileData.resource, // 전체 리소스 배열 전달
           };
           return <FileMessage data={fileData} isMine={isMine} />;
         }

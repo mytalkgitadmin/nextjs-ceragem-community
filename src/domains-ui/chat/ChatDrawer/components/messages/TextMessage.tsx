@@ -26,12 +26,16 @@ export function TextMessage({ data, isMine }: TextMessageProps) {
             text-sm leading-relaxed
             ${isLongText ? "overflow-hidden" : "whitespace-pre-wrap"}
           `}
-          style={isLongText ? {
-            display: '-webkit-box',
-            WebkitLineClamp: 10,
-            WebkitBoxOrient: 'vertical',
-            whiteSpace: 'pre-wrap'
-          } : {}}
+          style={
+            isLongText
+              ? {
+                  display: "-webkit-box",
+                  WebkitLineClamp: 15,
+                  WebkitBoxOrient: "vertical",
+                  whiteSpace: "pre-wrap",
+                }
+              : {}
+          }
         >
           {content}
         </div>
