@@ -6,6 +6,7 @@ import {
   PlayCircleOutlined,
 } from "@ant-design/icons";
 import { removeEditPrefix } from "../../utils/messageTextUtils";
+import { MessageText } from "../common/MessageText";
 
 interface ReplyMessageProps {
   data: ReplyMessageData;
@@ -14,7 +15,7 @@ interface ReplyMessageProps {
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_DOMAIN;
 export function ReplyMessage({ data, isMine }: ReplyMessageProps) {
-  const { content, parentMessage } = data;
+  const { content, parentMessage, isLongText = false } = data;
 
   return (
     <div className={`max-w-xs md:max-w-md ${isMine ? "ml-auto" : "mr-auto"}`}>
@@ -96,9 +97,7 @@ export function ReplyMessage({ data, isMine }: ReplyMessageProps) {
 
         {/* 답장 내용 */}
         <div className="p-3">
-          <div className="text-sm whitespace-pre-wrap">
-            {removeEditPrefix(content)}
-          </div>
+          <MessageText content={content} isLongText={isLongText} />
         </div>
       </div>
     </div>
