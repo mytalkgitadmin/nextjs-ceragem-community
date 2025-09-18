@@ -4,6 +4,8 @@ import {
   ChatBubbleLeftEllipsisIcon,
 } from "@heroicons/react/24/outline";
 import { useDrawer } from "@/drawer-system";
+import { Button } from "@/shared-ui";
+import { ChannelParticipantSelector } from "../ChannelParticipantSelector";
 
 type OptionItem = {
   id: string;
@@ -11,26 +13,34 @@ type OptionItem = {
   icon: React.ElementType;
 };
 
-export interface ChannelCreateOptionsProps {
+export interface ChannelCreateMenuProps {
   onChannelCreated?: () => void;
 }
 
-export function ChannelCreateOptions({
+export function ChannelCreateMenu({
   onChannelCreated,
-}: ChannelCreateOptionsProps) {
+}: ChannelCreateMenuProps) {
   const { openDrawer } = useDrawer();
 
-  const handleOptionClick = (optionId: string) => {
-    openDrawer(<>대화상대 선택</>, {
-      width: "max-w-full",
-      title: "대화상대 선택",
-    });
-  };
-
   const options: OptionItem[] = [
-    { id: "option1", label: "1:1 대화형", icon: ChatBubbleLeftEllipsisIcon },
-    { id: "option2", label: "그룹 대화형", icon: ChatBubbleLeftRightIcon },
+    { id: "direct", label: "1:1 대화형", icon: ChatBubbleLeftEllipsisIcon },
+    { id: "group", label: "그룹 대화형", icon: ChatBubbleLeftRightIcon },
   ];
+
+  const handleOptionClick = (optionId: string) => {
+    openDrawer(
+      <div className="flex flex-col gap-4 p-4">
+        <ChannelParticipantSelector />
+        <Button fullWidth onClick={() => console.log("대화방 만들기 클릭!")}>
+          대화방 만들기
+        </Button>
+      </div>,
+      {
+        width: "max-w-full",
+        title: "대화상대 선택",
+      }
+    );
+  };
 
   return (
     <div className="flex gap-4">

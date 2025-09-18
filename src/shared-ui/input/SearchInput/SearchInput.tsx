@@ -1,41 +1,33 @@
-"use client";
-
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import React, { useState, ReactNode, useRef, useEffect } from "react";
+import { ChevronDown, ChevronUp, Search } from "lucide-react";
 
 export interface SearchInputProps {
+  onSearch: (searchTerm: string) => void;
   placeholder?: string;
-  value?: string;
-  onChange?: (value: string) => void;
-  onSearch?: (value: string) => void;
-  className?: string;
 }
 
-export function SearchInput({
-  placeholder = "검색",
-  value,
-  onChange,
+// Search Input Component
+export const SearchInput: React.FC<SearchInputProps> = ({
   onSearch,
-  className = "",
-}: SearchInputProps) {
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      onSearch?.(e.currentTarget.value);
-    }
+  placeholder = "검색",
+}) => {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearch = (value: string) => {
+    setSearchTerm(value);
+    onSearch(value);
   };
 
   return (
-    <div className={`relative w-full ${className}`}>
-      <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
-        <MagnifyingGlassIcon className="w-5 h-5 text-gray-400" />
-      </div>
+    <div className="relative mb-4 px-4">
       <input
         type="text"
+        value={searchTerm}
+        onChange={(e) => handleSearch(e.target.value)}
         placeholder={placeholder}
-        value={value}
-        onChange={(e) => onChange?.(e.target.value)}
-        onKeyPress={handleKeyPress}
-        className="w-full pl-11 pr-4 py-3 bg-white border border-gray-300 rounded-full text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent hover:border-gray-400 transition-colors duration-200"
+        className="w-full px-4 py-3 pr-12 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-50"
       />
+      <Search className="absolute right-7 top-3.5 h-5 w-5 text-gray-400" />
     </div>
   );
-}
+};

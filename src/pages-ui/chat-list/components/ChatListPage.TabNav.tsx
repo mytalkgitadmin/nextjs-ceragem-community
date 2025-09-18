@@ -6,7 +6,7 @@ import {
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 import { useModal } from "@/modal-system";
-import { ChannelCreateOptions } from "@/domains-ui/chat";
+import { ChannelCreateMenu } from "@/domains-ui/chat";
 
 export interface ChatListPageTabNavProps {
   activeTab: string;
@@ -26,9 +26,9 @@ export function ChatListPageTabNav({
     { key: "announcements", label: "공지사항" },
   ];
 
-  const openChannelCreateOptions = () => {
+  const openChannelCreateMenu = () => {
     const id = openModal(
-      <ChannelCreateOptions
+      <ChannelCreateMenu
         onChannelCreated={() => {
           closeModal(id);
         }}
@@ -44,7 +44,7 @@ export function ChatListPageTabNav({
     return (
       <div className="flex items-center space-x-2">
         <button
-          onClick={openChannelCreateOptions}
+          onClick={openChannelCreateMenu}
           className="p-1 hover:bg-gray-100 rounded-full transition-colors duration-200"
         >
           <ChatBubbleOvalLeftIcon className="w-6 h-6 text-gray-600" />

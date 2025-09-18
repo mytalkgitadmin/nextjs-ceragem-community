@@ -1,30 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { SearchInput, CollapsibleSection } from "@/shared-ui";
-import { MyProfileCard } from "@/domains-ui/profile";
-import { UserCard } from "@/domains-ui/organization";
+import { SearchInput } from "@/shared-ui";
 import { mockData } from "./mockData";
 import { EmployeeCardGroup } from "@/domains-ui/organization";
 
-export interface OrganizationPageEmployeeListTabProps {
-  onMessageClick?: (userId: string) => void;
-}
+export interface OrganizationPageEmployeeTabProps {}
 
-export function OrganizationPageEmployeeListTab({
-  onMessageClick,
-}: OrganizationPageEmployeeListTabProps) {
-  const [searchQuery, setSearchQuery] = useState("");
-
+export function OrganizationPageEmployeeTab({}: OrganizationPageEmployeeTabProps) {
   return (
     <div className="flex-1 overflow-y-auto bg-gray-50">
       {/* 검색 */}
       <div className="p-4 bg-white">
-        <SearchInput
-          placeholder="검색"
-          value={searchQuery}
-          onChange={setSearchQuery}
-        />
+        <SearchInput placeholder="검색" onSearch={() => {}} />
       </div>
 
       {/* 내 프로필 */}

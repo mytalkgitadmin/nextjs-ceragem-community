@@ -4,7 +4,7 @@ import { useState } from "react";
 import {
   OrganizationPageHeader,
   OrganizationPageTabNav,
-  OrganizationPageEmployeeListTab,
+  OrganizationPageEmployeeTab,
 } from "./components";
 import { useFriends } from "@/domains/friend/queries";
 import { useRouter } from "next/navigation";
@@ -16,18 +16,10 @@ export function OrganizationPage({}: OrganizationPageProps) {
 
   const [activeTab, setActiveTab] = useState<string>("organization");
 
-  const handleMessageClick = (userId: string) => {
-    console.log("메시지 클릭:", userId);
-  };
-
   const renderTabContent = () => {
     switch (activeTab) {
       case "organization":
-        return (
-          <OrganizationPageEmployeeListTab
-            onMessageClick={handleMessageClick}
-          />
-        );
+        return <OrganizationPageEmployeeTab />;
       case "customers":
         return (
           <div className="flex-1 flex items-center justify-center bg-gray-50">
