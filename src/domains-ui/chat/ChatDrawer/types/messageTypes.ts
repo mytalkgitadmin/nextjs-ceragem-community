@@ -71,6 +71,7 @@ export interface ReplyMessageData extends CustomMessageData {
   parentMessage: {
     messageId: string;
     content: string;
+    sendBirdId: string;
     senderName: string;
     messageType: MessageType;
     // 파일 메시지인 경우 추가 속성

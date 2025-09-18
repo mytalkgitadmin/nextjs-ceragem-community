@@ -177,6 +177,7 @@ export function MessageRenderer({
             parentMessage: {
               messageId: parentMessage.messageId,
               content: parentMessage.message || "",
+              sendBirdId: parentMessage.sender?.userId || "",
               senderName: parentMessage.sender?.nickname || "",
               messageType: getMessageType(parentMessage),
               ...(parentMessage.messageType === "file" && parentMessageData),

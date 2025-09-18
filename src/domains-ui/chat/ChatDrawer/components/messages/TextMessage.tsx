@@ -22,7 +22,11 @@ export function TextMessage({ data, isMine }: TextMessageProps) {
         `}
       >
         {/* 메시지 내용 */}
-        <MessageText content={content} isLongText={isLongText} />
+        <MessageText
+          content={content}
+          isLongText={isLongText}
+          senderName={isMine ? "나" : data.senderName}
+        />
       </div>
     </div>
   );

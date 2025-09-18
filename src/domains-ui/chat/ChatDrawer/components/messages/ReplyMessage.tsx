@@ -9,6 +9,7 @@ import {
 import { removeEditPrefix } from "../../utils/messageTextUtils";
 import { MessageText } from "../common/MessageText";
 import { FileNameDisplay } from "../common/FileNameDisplay";
+import { useAuth } from "@/domains/auth/hooks";
 
 interface ReplyMessageProps {
   data: ReplyMessageData;
@@ -18,6 +19,9 @@ interface ReplyMessageProps {
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_DOMAIN;
 export function ReplyMessage({ data, isMine }: ReplyMessageProps) {
   const { content, parentMessage, isLongText = false } = data;
+
+  const { sendBirdId } = useAuth();
+  const isMyMessage = sendBirdId === parentMessage.sendBirdId;
 
   return (
     <div
@@ -93,8 +97,8 @@ export function ReplyMessage({ data, isMine }: ReplyMessageProps) {
           <div className="min-w-0 flex-1">
             <div className="flex items-center mb-1">
               <span className="text-xs font-medium ">
-                <CommentOutlined />{" "}
-                {isMine ? "나" : `${parentMessage.senderName}(님)`}에게 답장
+                ↪️ {isMyMessage ? "나" : `${parentMessage.senderName}(님)`}에게
+                답장
               </span>
             </div>
 
@@ -121,7 +125,11 @@ export function ReplyMessage({ data, isMine }: ReplyMessageProps) {
 
         {/* 답장 내용 */}
         <div className="p-3">
-          <MessageText content={content} isLongText={isLongText} />
+          <MessageText
+            content={content}
+            isLongText={isLongText}
+            senderName={isMine ? "나" : data.senderName}
+          />
         </div>
       </div>
     </div>
