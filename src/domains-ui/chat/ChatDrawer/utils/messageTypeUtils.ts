@@ -25,7 +25,13 @@ export function getMessageType(message: BaseMessage): MessageType {
         const customData = JSON.parse((message as any).data);
         if (customData?.resource?.[0]?.fileType) {
           const fileType = customData.resource[0].fileType;
-          if (fileType === "image") return MESSAGE_TYPES.IMAGE;
+          if (fileType === "image") {
+            if (customData.resource.length > 1) {
+              return MESSAGE_TYPES.IMAGES;
+            } else {
+              return MESSAGE_TYPES.IMAGE;
+            }
+          }
           if (fileType === "video") return MESSAGE_TYPES.VIDEO;
           return MESSAGE_TYPES.FILE;
         }

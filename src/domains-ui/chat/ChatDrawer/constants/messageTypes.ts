@@ -7,6 +7,7 @@ export const MESSAGE_TYPES = {
   // 파일 메시지
   FILE: "file",
   IMAGE: "image",
+  IMAGES: "images",
   VIDEO: "video",
 
   // 조합 메시지 (커스텀)

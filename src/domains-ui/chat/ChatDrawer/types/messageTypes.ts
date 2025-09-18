@@ -72,6 +72,15 @@ export interface ReplyMessageData extends CustomMessageData {
     content: string;
     senderName: string;
     messageType: MessageType;
+    // 파일 메시지인 경우 추가 속성
+    resource?: {
+      originalUrl: string;
+      originalFileName: string;
+      originalFileSize: number;
+      fileType: string;
+      thumbUrl?: string;
+    };
+    fileCount?: number;
   };
 }
 
