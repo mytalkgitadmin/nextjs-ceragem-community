@@ -16,10 +16,10 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <head></head>
-      <body className="antialiased bg-gray-50">
+      <body className="antialiased">
         <AntdRegistry>
           <Providers>
-            <div className="flex flex-col h-screen bg-gray-50">{children}</div>
+            <div className="flex flex-col h-screen">{children}</div>
           </Providers>
         </AntdRegistry>
       </body>

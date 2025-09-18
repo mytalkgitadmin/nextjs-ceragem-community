@@ -3,6 +3,7 @@ import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { ConfigProvider } from "antd";
 import koKR from "antd/locale/ko_KR";
 import { DrawerProvider, DrawerManager } from "@/drawer-system";
+import { ModalProvider, ModalManager } from "@/modal-system";
 
 export function UIProviders({ children }: { children: ReactNode }) {
   return (
@@ -17,7 +18,10 @@ export function UIProviders({ children }: { children: ReactNode }) {
         }}
       >
         <DrawerProvider>
-          {children}
+          <ModalProvider>
+            {children}
+            <ModalManager />
+          </ModalProvider>
           <DrawerManager />
         </DrawerProvider>
       </ConfigProvider>

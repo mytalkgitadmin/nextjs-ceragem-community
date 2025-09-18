@@ -31,13 +31,11 @@ export function OrganizationTabNav({
   ];
 
   return (
-    <div className="px-4 border-b border-gray-200">
-      <TabNavigation
-        tabs={tabs}
-        activeKey={activeTab}
-        onTabChange={(tabId) => onTabChange(tabId as OrganizationTabType)}
-        className={className}
-      />
-    </div>
+    <TabNavigation
+      tabs={tabs}
+      activeKey={activeTab}
+      onTabChange={(tabId) => onTabChange(tabId as OrganizationTabType)}
+      className={className}
+    />
   );
 }

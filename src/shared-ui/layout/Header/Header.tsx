@@ -35,7 +35,7 @@ export function Header({
 }: HeaderProps) {
   return (
     <header
-      className={`flex items-center justify-between px-4 py-3 bg-white border-b border-gray-200 ${className}`}
+      className={`flex items-center justify-between px-4 py-3 bg-whit ${className}`}
     >
       <h1 className="text-lg font-semibold text-gray-900">{title}</h1>
 
