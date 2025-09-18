@@ -1,5 +1,6 @@
 import { DownloadOutlined, FileTextOutlined } from "@ant-design/icons";
 import { FileMessageData } from "../../types/messageTypes";
+import { FileNameDisplay } from "../common/FileNameDisplay";
 
 interface FileMessageProps {
   data: FileMessageData;
@@ -57,7 +58,8 @@ export function FileMessage({ data, isMine }: FileMessageProps) {
 
     // 이미지 개수에 따른 그리드 클래스 결정
     const getGridClasses = (count: number) => {
-      const base = "grid gap-1 min-w-[80px] min-h-[80px] max-w-[min(300px,60vw)]";
+      const base =
+        "grid gap-1 min-w-[80px] min-h-[80px] max-w-[min(300px,60vw)]";
       const configs = {
         1: "grid-cols-1",
         2: "grid-cols-2 aspect-[2/1] min-h-[150px]",
@@ -75,7 +77,13 @@ export function FileMessage({ data, isMine }: FileMessageProps) {
       if (count === 1) return `${base} aspect-auto max-h-[min(300px,60vw)]`;
       if (count === 3 && index === 0) return `${base} col-span-2 aspect-square`;
       if (count === 5) {
-        const span5Configs = ["col-span-3", "col-span-3", "col-span-2", "col-span-2", "col-span-2"];
+        const span5Configs = [
+          "col-span-3",
+          "col-span-3",
+          "col-span-2",
+          "col-span-2",
+          "col-span-2",
+        ];
         return `${base} ${span5Configs[index] || ""} aspect-square`;
       }
       if (count === 6 && index === 5) {

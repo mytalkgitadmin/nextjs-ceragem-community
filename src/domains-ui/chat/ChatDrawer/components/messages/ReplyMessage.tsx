@@ -7,6 +7,7 @@ import {
 } from "@ant-design/icons";
 import { removeEditPrefix } from "../../utils/messageTextUtils";
 import { MessageText } from "../common/MessageText";
+import { FileNameDisplay } from "../common/FileNameDisplay";
 
 interface ReplyMessageProps {
   data: ReplyMessageData;
@@ -18,7 +19,9 @@ export function ReplyMessage({ data, isMine }: ReplyMessageProps) {
   const { content, parentMessage, isLongText = false } = data;
 
   return (
-    <div className={`max-w-xs md:max-w-md ${isMine ? "ml-auto" : "mr-auto"}`}>
+    <div
+      className={`max-w-[calc(100vw-120px)] md:max-w-md ${isMine ? "ml-auto" : "mr-auto"}`}
+    >
       <div
         className={`
           rounded-lg overflow-hidden
@@ -51,10 +54,13 @@ export function ReplyMessage({ data, isMine }: ReplyMessageProps) {
               {removeEditPrefix(parentMessage.content)}
             </div>
           ) : parentMessage.messageType === "file" ? (
-            <>
-              <FileTextOutlined />
-              {parentMessage.resource?.originalFileName}
-            </>
+            <div className="flex items-center space-x-2 min-w-0">
+              <FileTextOutlined className="flex-shrink-0" />
+              <FileNameDisplay
+                fileName={parentMessage.resource?.originalFileName || "파일"}
+                className="text-xs flex items-center gap-0 min-w-0"
+              />
+            </div>
           ) : (
             <div className="w-12 h-12 bg-blue-50 rounded-lg overflow-hidden relative">
               {parentMessage.messageType === "video" ? (
