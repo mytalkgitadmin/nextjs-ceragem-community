@@ -4,6 +4,7 @@ import { useMemo, useCallback } from "react";
 import { Avatar } from "@/shared-ui";
 import { useAuth } from "@/domains/auth/hooks/useAuth";
 import { MessageRenderer } from "./components/MessageRenderer";
+import { isEditedMessage } from "./utils/messageTextUtils";
 
 interface MessageProps {
   messageContent: any; // Sendbird의 MessageContentProps 타입을 any로 처리
@@ -19,8 +20,7 @@ export function Message({ messageContent }: MessageProps) {
     return null;
   }
 
-  const isEdited = message.message.startsWith("✍🏻 ");
-
+  const isEdited = isEditedMessage(message.message);
   const isMyMessage = sendBirdId === message.sender?.userId;
   const showProfile = !isMyMessage && chainTop;
   const showSenderName = !isMyMessage && chainTop;
