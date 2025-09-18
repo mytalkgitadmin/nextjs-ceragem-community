@@ -71,7 +71,7 @@ export function Message({ messageContent }: MessageProps) {
       ) : null}
 
       <div
-        className={`max-w-[70%] ${isMyMessage ? "flex flex-col items-end" : ""}`}
+        className={`max-w-[95%] ${isMyMessage ? "flex flex-col items-end" : ""}`}
       >
         {/* 발신자 이름 */}
         {showSenderName && (
