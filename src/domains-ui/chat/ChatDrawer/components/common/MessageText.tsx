@@ -1,16 +1,21 @@
+import { useState } from "react";
 import { removeEditPrefix } from "../../utils/messageTextUtils";
+import { MessageViewModal } from "./MessageViewModal";
 
 interface MessageTextProps {
   content: string;
   isLongText?: boolean;
   className?: string;
+  senderName?: string;
 }
 
 export function MessageText({
   content,
   isLongText = false,
   className = "",
+  senderName,
 }: MessageTextProps) {
+  const [modalOpen, setModalOpen] = useState(false);
   const displayContent = removeEditPrefix(content);
 
   return (
@@ -41,15 +46,19 @@ export function MessageText({
         <div className="mt-2">
           <button
             className="text-xs opacity-60 hover:opacity-80 underline"
-            onClick={() => {
-              // TODO: 모달로 전체 텍스트 보기 구현 예정
-              console.log("전체보기 클릭");
-            }}
+            onClick={() => setModalOpen(true)}
           >
             전체보기
           </button>
         </div>
       )}
+
+      <MessageViewModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        content={content}
+        senderName={senderName}
+      />
     </>
   );
 }
