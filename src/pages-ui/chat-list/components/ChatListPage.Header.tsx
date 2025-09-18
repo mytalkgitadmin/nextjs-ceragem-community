@@ -3,9 +3,9 @@
 import { Header } from "@/shared-ui";
 import { useRouter } from "next/navigation";
 
-export interface ChatListHeaderProps {}
+export interface ChatListPageHeaderProps {}
 
-export function ChatListHeader({}: ChatListHeaderProps) {
+export function ChatListPageHeader({}: ChatListPageHeaderProps) {
   const router = useRouter();
 
   const onSettingsClick = () => {

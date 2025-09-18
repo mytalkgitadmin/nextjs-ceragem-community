@@ -1,1 +1,0 @@
-export { ChatMemberAvatars } from "./ChatMemberAvatars";

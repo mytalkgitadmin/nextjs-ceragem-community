@@ -2,19 +2,17 @@
 
 import { TabNavigation, type TabItem } from "@/shared-ui";
 
-export type OrganizationTabType = "organization" | "customers" | "family";
-
-export interface OrganizationTabNavProps {
-  activeTab: OrganizationTabType;
-  onTabChange: (tab: OrganizationTabType) => void;
+export interface OrganizationPageTabNavProps {
+  activeTab: string;
+  onTabChange: (tab: string) => void;
   className?: string;
 }
 
-export function OrganizationTabNav({
+export function OrganizationPageTabNav({
   activeTab,
   onTabChange,
   className = "",
-}: OrganizationTabNavProps) {
+}: OrganizationPageTabNavProps) {
   const tabs: TabItem[] = [
     {
       key: "organization",
@@ -34,7 +32,7 @@ export function OrganizationTabNav({
     <TabNavigation
       tabs={tabs}
       activeKey={activeTab}
-      onTabChange={(tabId) => onTabChange(tabId as OrganizationTabType)}
+      onTabChange={(tabId) => onTabChange(tabId)}
       className={className}
     />
   );

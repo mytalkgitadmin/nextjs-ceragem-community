@@ -77,11 +77,11 @@ export function Drawer({
       // 열기: 먼저 보이게 하고, 바로 다음에 애니메이션 시작
       setIsVisible(true);
       // 브라우저가 DOM을 렌더링할 시간을 주고 애니메이션 시작
-      requestAnimationFrame(() => {
+      setTimeout(() => {
         requestAnimationFrame(() => {
           setIsAnimating(true);
         });
-      });
+      }, 100);
     }
   }, [isOpen, isClosing]);
 

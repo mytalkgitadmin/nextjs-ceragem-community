@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { SendbirdChannelList } from "@/domains-ui/chat";
 
-export function ChatListTab() {
+export function ChatListPageChatListTab() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {

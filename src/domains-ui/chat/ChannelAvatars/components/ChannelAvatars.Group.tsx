@@ -2,11 +2,11 @@ import React from "react";
 import { Avatar, AvatarGroup } from "@/shared-ui/display";
 import { memberProfileShortImg } from "@/domains/chat/utils/memberProfile";
 
-interface ChatMemberAvatarsGroupProps {
+interface ChannelAvatarsGroupProps {
   members: any[];
 }
 
-export const ChatMemberAvatarsGroup: React.FC<ChatMemberAvatarsGroupProps> = ({
+export const ChannelAvatarsGroup: React.FC<ChannelAvatarsGroupProps> = ({
   members,
 }) => {
   const memberCount = members.length;
@@ -42,4 +42,4 @@ export const ChatMemberAvatarsGroup: React.FC<ChatMemberAvatarsGroupProps> = ({
   );
 };
 
-ChatMemberAvatarsGroup.displayName = "ChatMemberAvatarsGroup";
+ChannelAvatarsGroup.displayName = "ChannelAvatarsGroup";

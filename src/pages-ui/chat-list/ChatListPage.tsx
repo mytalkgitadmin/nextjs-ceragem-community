@@ -1,21 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import { ChatListHeader } from "./ChatListHeader";
-import { ChatListTabNav, type ChatListTabType } from "./ChatListTabNav";
-import { ChatListTab } from "./ChatListTab";
+import {
+  ChatListPageHeader,
+  ChatListPageTabNav,
+  ChatListPageChatListTab,
+} from "./components";
 
 export interface ChatListPageProps {}
 
 export function ChatListPage({}: ChatListPageProps) {
-  const [activeTab, setActiveTab] = useState<ChatListTabType>("chats");
+  const [activeTab, setActiveTab] = useState("chats");
 
   const renderTabContent = () => {
     switch (activeTab) {
       case "chats":
         return (
           <div className="flex-1 overflow-y-auto">
-            <ChatListTab />
+            <ChatListPageChatListTab />
           </div>
         );
       case "announcements":
@@ -30,10 +32,10 @@ export function ChatListPage({}: ChatListPageProps) {
   return (
     <>
       {/* Header */}
-      <ChatListHeader />
+      <ChatListPageHeader />
 
       {/* Tab Navigation */}
-      <ChatListTabNav activeTab={activeTab} onTabChange={setActiveTab} />
+      <ChatListPageTabNav activeTab={activeTab} onTabChange={setActiveTab} />
 
       {/* Chat List / Announcement List */}
       {renderTabContent()}

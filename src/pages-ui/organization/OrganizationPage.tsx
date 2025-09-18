@@ -1,12 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { OrganizationHeader } from "./OrganizationHeader";
 import {
-  OrganizationTabNav,
-  type OrganizationTabType,
-} from "./OrganizationTabNav";
-import { OrganizationTab } from "./OrganizationTab";
+  OrganizationPageHeader,
+  OrganizationPageTabNav,
+  OrganizationPageEmployeeListTab,
+} from "./components";
 import { useFriends } from "@/domains/friend/queries";
 import { useRouter } from "next/navigation";
 
@@ -15,8 +14,7 @@ export interface OrganizationPageProps {}
 export function OrganizationPage({}: OrganizationPageProps) {
   const {} = useFriends(); //TODO: 친구 목록 조회
 
-  const [activeTab, setActiveTab] =
-    useState<OrganizationTabType>("organization");
+  const [activeTab, setActiveTab] = useState<string>("organization");
 
   const handleMessageClick = (userId: string) => {
     console.log("메시지 클릭:", userId);
@@ -25,7 +23,11 @@ export function OrganizationPage({}: OrganizationPageProps) {
   const renderTabContent = () => {
     switch (activeTab) {
       case "organization":
-        return <OrganizationTab onMessageClick={handleMessageClick} />;
+        return (
+          <OrganizationPageEmployeeListTab
+            onMessageClick={handleMessageClick}
+          />
+        );
       case "customers":
         return (
           <div className="flex-1 flex items-center justify-center bg-gray-50">
@@ -46,10 +48,13 @@ export function OrganizationPage({}: OrganizationPageProps) {
   return (
     <>
       {/* Header */}
-      <OrganizationHeader />
+      <OrganizationPageHeader />
 
       {/* Tab Navigation */}
-      <OrganizationTabNav activeTab={activeTab} onTabChange={setActiveTab} />
+      <OrganizationPageTabNav
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+      />
 
       {renderTabContent()}
     </>

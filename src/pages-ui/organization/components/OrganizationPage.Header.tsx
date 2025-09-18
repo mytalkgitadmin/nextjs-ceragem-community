@@ -3,9 +3,9 @@
 import { Header } from "@/shared-ui";
 import { useRouter } from "next/navigation";
 
-export interface OrganizationHeaderProps {}
+export interface OrganizationPageHeaderProps {}
 
-export function OrganizationHeader({}: OrganizationHeaderProps) {
+export function OrganizationPageHeader({}: OrganizationPageHeaderProps) {
   const router = useRouter();
 
   const onChatClick = () => {
