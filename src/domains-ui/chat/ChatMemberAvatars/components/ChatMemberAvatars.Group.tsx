@@ -1,23 +1,18 @@
 import React from "react";
 import { Avatar, AvatarGroup } from "@/shared-ui/display";
-import styles from "./ChatMemberAvatars.module.css";
 import { memberProfileShortImg } from "@/domains/chat/utils/memberProfile";
 
-interface GroupChatAvatarsProps {
+interface ChatMemberAvatarsGroupProps {
   members: any[];
 }
 
-export const GroupChatAvatars: React.FC<GroupChatAvatarsProps> = ({
+export const ChatMemberAvatarsGroup: React.FC<ChatMemberAvatarsGroupProps> = ({
   members,
 }) => {
   const memberCount = members.length;
+
   const renderMemberAvatars = () => (
-    <AvatarGroup
-      maxCount={4}
-      size={44}
-      prefixCls="preview_avatar"
-      className={styles.group_avatar_list}
-    >
+    <AvatarGroup>
       {members.map((member, index) => {
         // 그룹에서는 본인 제외
         if (memberCount !== 1 && member.relationType === "ME") {
@@ -28,7 +23,6 @@ export const GroupChatAvatars: React.FC<GroupChatAvatarsProps> = ({
           <Avatar
             key={`member_${member.accountId}_${index}`}
             src={memberProfileShortImg(member, "short")}
-            className={styles.group_avatar}
           />
         );
       })}
@@ -36,10 +30,16 @@ export const GroupChatAvatars: React.FC<GroupChatAvatarsProps> = ({
   );
 
   return (
-    <div className={`${styles.group_chat_container}`}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       {renderMemberAvatars()}
     </div>
   );
 };
 
-GroupChatAvatars.displayName = "GroupChatAvatars";
+ChatMemberAvatarsGroup.displayName = "ChatMemberAvatarsGroup";

@@ -4,3 +4,9 @@ export {
   useChannelName,
   useChannelMembers,
 } from "./hooks";
+
+export {
+  shouldHideMessageForMe,
+  renderFileMessage,
+  renderMessage,
+} from "./utils";

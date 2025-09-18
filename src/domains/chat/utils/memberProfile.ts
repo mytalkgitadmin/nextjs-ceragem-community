@@ -13,12 +13,12 @@ export const memberProfileShortImg = (member: any, size: string) => {
   const memberProfile = member.profile;
   const memberStatus = member.accountStatus;
 
-  let img = "/assets/profile/bemily_default_profile.webp";
+  let img = "/assets/images/profile/bemily_default_profile.webp";
 
   if (memberStatus && memberStatus === "EXIT") {
-    return (img = "/assets/profile/exit_profile.png");
+    return (img = "/assets/images/profile/exit_profile.png");
   } else if (memberStatus && memberStatus === "LEAVE") {
-    return (img = "/assets/profile/leave_profile.png");
+    return (img = "/assets/images/profile/leave_profile.png");
   }
 
   if (memberProfile?.profileKind === "normal") {
@@ -33,13 +33,13 @@ export const memberProfileShortImg = (member: any, size: string) => {
   } else if (memberProfile?.profileKind === "emoticon") {
     img =
       size === "short"
-        ? `/assets/profile/bemily_small_profile$${String(memberProfile?.emoticonId || 0).padStart(3, "0")}.png`
-        : `/assets/profile/bemily_profile${String(memberProfile?.emoticonId || 0).padStart(3, "0")}.png`;
+        ? `/assets/images/profile/bemily_small_profile$${String(memberProfile?.emoticonId || 0).padStart(3, "0")}.png`
+        : `/assets/images/profile/bemily_profile${String(memberProfile?.emoticonId || 0).padStart(3, "0")}.png`;
   } else if (memberProfile?.profileKind === "basic") {
     if (memberProfile?.profileName === NICKNAME_NONE) {
-      img = "/assets/profile/exit_profile.png";
+      img = "/assets/images/profile/exit_profile.png";
     } else {
-      img = "/assets/profile/bemily_default_profile.webp";
+      img = "/assets/images/profile/bemily_default_profile.webp";
     }
   }
   return img;

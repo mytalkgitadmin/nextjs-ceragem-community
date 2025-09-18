@@ -1,15 +1,14 @@
 import React from "react";
 import { Avatar } from "@/shared-ui/display";
-import styles from "./ChatMemberAvatars.module.css";
 import { memberProfileShortImg } from "@/domains/chat/utils/memberProfile";
 
-interface SingleChatAvatarProps {
+interface ChatMemberAvatarsSingleProps {
   members: any[];
 }
 
-export const SingleChatAvatar: React.FC<SingleChatAvatarProps> = ({
-  members,
-}) => {
+export const ChatMemberAvatarsSingle: React.FC<
+  ChatMemberAvatarsSingleProps
+> = ({ members }) => {
   const memberCount = members.length;
 
   const renderMemberAvatar = (member: any, index: number) => {
@@ -18,9 +17,8 @@ export const SingleChatAvatar: React.FC<SingleChatAvatarProps> = ({
       return (
         <Avatar
           key={`mem_${member.accountId}_${index}`}
-          src={"/assets/profile/bemily_default_profile.webp"}
+          src={"/assets/images/profile/bemily_default_profile.webp"}
           size={64}
-          className={styles.single_avatar}
         />
       );
     }
@@ -35,16 +33,21 @@ export const SingleChatAvatar: React.FC<SingleChatAvatarProps> = ({
         key={`member_${member.accountId}_${index}`}
         src={memberProfileShortImg(member, "short")}
         size={64}
-        className={styles.single_avatar}
       />
     );
   };
 
   return (
-    <div className={`${styles.single_chat_container}`}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       {members?.map(renderMemberAvatar)}
     </div>
   );
 };
 
-SingleChatAvatar.displayName = "SingleChatAvatar";
+ChatMemberAvatarsSingle.displayName = "ChatMemberAvatarsSingle";

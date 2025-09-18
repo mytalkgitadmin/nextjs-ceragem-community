@@ -1,7 +1,6 @@
 "use client";
 
 import { useGroupChannel } from "@sendbird/uikit-react/GroupChannel/context";
-import { Avatar } from "@/shared-ui";
 import { useDrawer } from "@/drawer-system";
 
 interface ChannelHeaderProps {
@@ -134,8 +133,6 @@ export function ChannelHeader({
         )}
 
         <div className="flex items-center space-x-3 flex-1 min-w-0">
-          <Avatar src={getChannelAvatar()} alt={getChannelName()} size="md" />
-
           <div className="flex-1 min-w-0">
             <h2 className="text-lg font-semibold text-gray-900 truncate">
               {getChannelName()}

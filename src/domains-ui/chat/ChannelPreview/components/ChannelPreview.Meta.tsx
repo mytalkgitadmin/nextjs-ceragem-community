@@ -1,15 +1,15 @@
 import React from "react";
 import dayjs from "dayjs";
-import styles from "./ChannelPreview.module.css";
+import styles from "./ChannelPreview.Meta.module.css";
 import { Badge } from "@/shared-ui/display";
 
-export interface PreviewMetaProps {
+export interface ChannelPreviewMetaProps {
   channel: any;
   isYesterday?: boolean;
   className?: string;
 }
 
-export const PreviewMeta: React.FC<PreviewMetaProps> = ({
+export const ChannelPreviewMeta: React.FC<ChannelPreviewMetaProps> = ({
   channel,
   isYesterday = false,
   className,
@@ -44,4 +44,4 @@ export const PreviewMeta: React.FC<PreviewMetaProps> = ({
   );
 };
 
-PreviewMeta.displayName = "PreviewMeta";
+ChannelPreviewMeta.displayName = "ChannelPreviewMeta";

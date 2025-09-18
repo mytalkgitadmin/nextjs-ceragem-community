@@ -1,7 +1,7 @@
 import React, { useState, SetStateAction, Dispatch } from "react";
 import { GroupChannelListProvider } from "@sendbird/uikit-react/GroupChannelList/context";
 import { useChannelOpen } from "@/domains/chat";
-import { ChannelList } from "./ChannelList";
+import { SendbirdChannelListList } from "./components/SendbirdChannelList.List";
 import "./sendbird.css";
 
 export const SendbirdChannelList = ({}) => {
@@ -17,7 +17,7 @@ export const SendbirdChannelList = ({}) => {
       }}
       disableAutoSelect
     >
-      <ChannelList />
+      <SendbirdChannelListList />
     </GroupChannelListProvider>
   );
 };

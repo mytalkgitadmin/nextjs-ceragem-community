@@ -1,6 +1,4 @@
-import { GroupChannel } from "@sendbird/chat/groupChannel";
 import { getMemberName, joinSortedMemberNames } from "./memberNames";
-import { sortMembersByPriority } from "./memberSorting";
 
 /**
  * 1:1 채널명을 생성하는 함수

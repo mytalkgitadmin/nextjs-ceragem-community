@@ -1,22 +1,26 @@
 import React from "react";
 import { GroupChannel } from "@sendbird/chat/groupChannel";
-import { SingleChatAvatar } from "./SingleChatAvatar";
-import { GroupChatAvatars } from "./GroupChatAvatars";
+import { ChatMemberAvatarsSingle } from "./components/ChatMemberAvatars.Single";
+import { ChatMemberAvatarsGroup } from "./components/ChatMemberAvatars.Group";
+import { useChannelMembers } from "@/domains/chat";
 
 export interface ChatMemberAvatarsProps {
-  isGroup: boolean;
-  members: any[];
+  channel: GroupChannel;
 }
 
+const CHAT_TYPE_THRESHOLD = 2;
+
 export const ChatMemberAvatars: React.FC<ChatMemberAvatarsProps> = ({
-  members,
-  isGroup,
+  channel,
 }) => {
+  const members = useChannelMembers(channel);
+  const isGroup = members.length > CHAT_TYPE_THRESHOLD;
+
   if (!isGroup) {
-    return <SingleChatAvatar members={members} />;
+    return <ChatMemberAvatarsSingle members={members} />;
   }
 
-  return <GroupChatAvatars members={members} />;
+  return <ChatMemberAvatarsGroup members={members} />;
 };
 
 ChatMemberAvatars.displayName = "ChatMemberAvatars";

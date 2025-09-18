@@ -2,17 +2,16 @@ import React, { useState, useCallback } from "react";
 import { useGroupChannelListContext } from "@sendbird/uikit-react/GroupChannelList/context";
 import PlaceHolder from "@sendbird/uikit-react/ui/PlaceHolder";
 import { GroupChannel } from "@sendbird/chat/groupChannel";
-import { ListEmpty } from "./ListEmpty";
+import { SendbirdChannelListEmpty } from "./SendbirdChannelList.Empty";
 import { useInfiniteScroll } from "@/shared/hooks";
-import { ChannelPreview } from "../ChannelPreview";
-
-import styles from "./ChannelList.module.css";
+import { ChannelPreview } from "../../ChannelPreview";
+import styles from "./SendbirdChannelList.List.module.css";
 
 const SCROLL_CONTAINER_ID = "sendbird_channel_list";
 
-interface ChannelListProps {}
+interface SendbirdChannelListListProps {}
 
-export const ChannelList = ({}: ChannelListProps) => {
+export const SendbirdChannelListList = ({}: SendbirdChannelListListProps) => {
   const {
     groupChannels,
     onChannelSelect,
@@ -64,7 +63,7 @@ export const ChannelList = ({}: ChannelListProps) => {
             )}
           </>
         ) : (
-          <ListEmpty />
+          <SendbirdChannelListEmpty />
         )}
       </div>
     </div>
