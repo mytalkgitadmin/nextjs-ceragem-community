@@ -3,7 +3,10 @@ interface FileNameDisplayProps {
   className?: string;
 }
 
-export function FileNameDisplay({ fileName, className = "" }: FileNameDisplayProps) {
+export function FileNameDisplay({
+  fileName,
+  className = "",
+}: FileNameDisplayProps) {
   if (!fileName) return <span className={className}>파일</span>;
 
   const lastDotIndex = fileName.lastIndexOf(".");
@@ -17,8 +20,8 @@ export function FileNameDisplay({ fileName, className = "" }: FileNameDisplayPro
   const extension = fileName.substring(lastDotIndex);
 
   return (
-    <span className={className}>
-      <span className="truncate">{name}</span>
+    <span className={`flex items-center min-w-0 ${className}`}>
+      <span className="truncate min-w-0">{name}</span>
       <span className="flex-shrink-0">{extension}</span>
     </span>
   );
