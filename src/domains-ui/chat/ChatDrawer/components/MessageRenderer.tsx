@@ -25,12 +25,15 @@ export function MessageRenderer({
   const messageType = getMessageType(message);
 
   // 메시지 데이터 생성 (기본 구조) - 메모이제이션 적용
-  const baseData = useMemo(() => ({
-    timestamp: message.createdAt,
-    senderId: message.sender?.userId || "",
-    senderName: senderName,
-    channelUrl: message.channelUrl,
-  }), [message.createdAt, message.sender?.userId, senderName, message.channelUrl]);
+  const baseData = useMemo(
+    () => ({
+      timestamp: message.createdAt,
+      senderId: message.sender?.userId || "",
+      senderName: senderName,
+      channelUrl: message.channelUrl,
+    }),
+    [message.createdAt, message.sender?.userId, senderName, message.channelUrl]
+  );
 
   // 메시지 타입에 따른 컴포넌트 렌더링
   switch (messageType) {
@@ -72,9 +75,12 @@ export function MessageRenderer({
             fileUrl: resource.originalUrl || fileMessage.url || "",
             fileName: resource.originalFileName || fileMessage.name || "",
             fileSize: resource.originalFileSize || fileMessage.size || 0,
-            mimeType: resource.fileType === "image" ? "image/jpeg" :
-                     resource.fileType === "video" ? "video/mp4" :
-                     fileMessage.type || "application/octet-stream",
+            mimeType:
+              resource.fileType === "image"
+                ? "image/jpeg"
+                : resource.fileType === "video"
+                  ? "video/mp4"
+                  : fileMessage.type || "application/octet-stream",
             thumbnailUrl: resource.thumbUrl || fileMessage.thumbnails?.[0]?.url,
             resources: customFileData.resource, // 전체 리소스 배열 전달
           };
@@ -146,8 +152,22 @@ export function MessageRenderer({
       if (message.messageType === "user") {
         const userMessage = message as any;
         const parentMessage = userMessage.parentMessage;
-
         if (parentMessage) {
+          let parentMessageData = {};
+
+          // parentMessage가 file 타입일 경우 data 파싱
+          if (parentMessage.messageType === "file") {
+            try {
+              const parsedData = JSON.parse(parentMessage.data);
+              parentMessageData = {
+                resource: parsedData.resource[0],
+                fileCount: parsedData.resource.length,
+              };
+            } catch (error) {
+              console.warn("부모 메시지 데이터 파싱 실패:", error);
+            }
+          }
+
           const replyData = {
             ...baseData,
             messageType: MESSAGE_TYPES.REPLY,
@@ -157,6 +177,7 @@ export function MessageRenderer({
               content: parentMessage.message || "",
               senderName: parentMessage.sender?.nickname || "",
               messageType: getMessageType(parentMessage),
+              ...(parentMessage.messageType === "file" && parentMessageData),
             },
           };
           return <ReplyMessage data={replyData} isMine={isMine} />;
