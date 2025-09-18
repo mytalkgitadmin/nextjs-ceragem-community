@@ -137,50 +137,6 @@ export function Drawer({
           ${className} flex flex-col
         `}
       >
-        {/* Header */}
-        {(title || showBackButton || headerActions) && (
-          <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-white">
-            <div className="flex items-center space-x-3">
-              {/* 뒤로가기 버튼 */}
-              {showBackButton && (
-                <button
-                  onClick={handleClose}
-                  className="p-1 hover:bg-gray-100 rounded-full transition-colors"
-                  aria-label="닫기"
-                >
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M15 18L9 12L15 6"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
-              )}
-
-              {/* 제목 */}
-              {title && (
-                <h2 className="text-lg font-semibold text-gray-900 truncate">
-                  {title}
-                </h2>
-              )}
-            </div>
-
-            {/* 헤더 액션 버튼들 */}
-            {headerActions && (
-              <div className="flex items-center space-x-2">{headerActions}</div>
-            )}
-          </div>
-        )}
-
         {/* Content */}
         <div className="flex-1 flex flex-col overflow-hidden">{children}</div>
       </div>

@@ -12,7 +12,7 @@ import { ScrollController } from "./ScrollController";
 import { SendbirdMessageInput } from "./SendbirdMessageInput";
 import { useMessageActions } from "./hooks";
 import { ReplyType } from "@sendbird/chat/message";
-// import { ChannelHeader } from "./ChannelHeader";
+import { ChannelHeader } from "./ChannelHeader";
 // import "./sendbird-overrides.css";
 
 export interface SendbirdChatDrawerContentProps {
@@ -44,16 +44,16 @@ export function SendbirdChatDrawerContent({
               } as MessageListQueryParamsType
             }
             // 채널 헤더
-            // renderChannelHeader={
-            //   showHeader
-            //     ? () => (
-            //         <ChannelHeader
-            //           showBackButton={true}
-            //           onBackClick={onBackClick}
-            //         />
-            //       )
-            //     : undefined
-            // }
+            renderChannelHeader={
+              showHeader
+                ? () => (
+                    <ChannelHeader
+                      showBackButton={true}
+                      onBackClick={onBackClick}
+                    />
+                  )
+                : undefined
+            }
             // 날짜 구분선
             renderCustomSeparator={({ message }) => (
               <DateSeparator createdAt={message.createdAt} />
