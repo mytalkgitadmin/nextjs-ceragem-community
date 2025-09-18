@@ -54,7 +54,7 @@ export function ChatListPageTabNav({
   };
 
   return (
-    <div className="flex items-center space-x-2 border-b border-gray-200 justify-between">
+    <div className="flex items-center space-x-2 border-b border-gray-200 justify-between pr-4">
       <TabNavigation
         tabs={tabs}
         activeKey={activeTab}

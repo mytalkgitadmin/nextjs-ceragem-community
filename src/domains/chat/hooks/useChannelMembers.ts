@@ -5,15 +5,20 @@ import { sortMembersByPriority } from "../utils/memberSorting";
 export const useChannelMembers = (channel: GroupChannel) => {
   const channelInfo = useChannelInfo(channel.url);
 
-  let members = channelInfo?.members;
+  let members = [];
 
-  if (members) {
-    members = members.filter(
-      (member: any) =>
-        member.accountStatus === "NORMAL" && member.participantType !== "KICKED"
-    );
-    members = sortMembersByPriority(members);
+  if (channelInfo) {
+    if (channelInfo.members) {
+      members = channelInfo.members.filter(
+        (member: any) =>
+          member.accountStatus === "NORMAL" &&
+          member.participantType !== "KICKED"
+      );
+      members = sortMembersByPriority(members);
+    } else {
+      members = channel.members;
+    }
   }
 
-  return members ?? channel.members;
+  return members;
 };

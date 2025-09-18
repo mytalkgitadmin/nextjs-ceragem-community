@@ -43,7 +43,7 @@ export function OrganizationPageEmployeeListTab({
       </div>
 
       {/* 부서별 목록 */}
-      <div className="bg-white">
+      <div className="bg-white flex flex-col">
         {mockData.map((employeeGroup: any) => (
           <EmployeeCardGroup
             key={employeeGroup.id}
