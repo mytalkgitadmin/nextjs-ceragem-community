@@ -63,10 +63,11 @@ export interface NoticeMessageData extends CustomMessageData {
   };
 }
 
-// 답장 메시지 데이터
+// 답글 메시지 데이터
 export interface ReplyMessageData extends CustomMessageData {
   messageType: "reply";
   content: string;
+  isLongText?: boolean; // 긴 텍스트 여부
   parentMessage: {
     messageId: string;
     content: string;

@@ -168,10 +168,12 @@ export function MessageRenderer({
             }
           }
 
+          const content = userMessage.message || "";
           const replyData = {
             ...baseData,
             messageType: MESSAGE_TYPES.REPLY,
-            content: userMessage.message || "",
+            content,
+            isLongText: content.length > 500,
             parentMessage: {
               messageId: parentMessage.messageId,
               content: parentMessage.message || "",
