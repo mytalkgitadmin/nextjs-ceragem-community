@@ -5,16 +5,21 @@ import { Badge } from "@/shared-ui/display";
 
 export interface ChannelPreviewMetaProps {
   channel: any;
-  isYesterday?: boolean;
   className?: string;
 }
 
 export const ChannelPreviewMeta: React.FC<ChannelPreviewMetaProps> = ({
   channel,
-  isYesterday = false,
   className,
 }) => {
   const formatDate = () => {
+    const targetDate = dayjs(channel?.lastMessage?.createdAt);
+    const yesterday = dayjs().subtract(1, "day").startOf("day");
+
+    const isYesterday =
+      targetDate.isAfter(yesterday) &&
+      targetDate.isBefore(dayjs().startOf("day"));
+
     if (isYesterday) {
       return "어제";
     }
