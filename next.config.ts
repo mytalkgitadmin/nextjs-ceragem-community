@@ -3,7 +3,22 @@ import path from "path";
 
 const nextConfig: NextConfig = {
   /* config options here */
-
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "dev-mobile.familytown.net",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "web.family-town.com",
+        port: "",
+        pathname: "/**",
+      },
+    ],
+  },
   // Ant Design 최적화를 위한 transpile 설정
   transpilePackages: ["antd", "@ant-design/icons"],
 

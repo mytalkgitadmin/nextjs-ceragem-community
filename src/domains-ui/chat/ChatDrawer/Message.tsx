@@ -1,8 +1,10 @@
 "use client";
 
+import { useMemo, useCallback } from "react";
 import { Avatar } from "@/shared-ui";
 import { useAuth } from "@/domains/auth/hooks/useAuth";
 import { MessageRenderer } from "./components/MessageRenderer";
+import { isEditedMessage } from "./utils/messageTextUtils";
 
 interface MessageProps {
   messageContent: any; // Sendbird의 MessageContentProps 타입을 any로 처리
@@ -18,19 +20,25 @@ export function Message({ messageContent }: MessageProps) {
     return null;
   }
 
+  const isEdited = isEditedMessage(message.message);
   const isMyMessage = sendBirdId === message.sender?.userId;
   const showProfile = !isMyMessage && chainTop;
   const showSenderName = !isMyMessage && chainTop;
   const senderName = message.sender?.nickname || "사용자";
 
-  const formatTime = (createdAt: number) => {
+  const formatTime = useCallback((createdAt: number) => {
     const date = new Date(createdAt);
     const hours = date.getHours();
     const minutes = date.getMinutes();
     const ampm = hours >= 12 ? "오후" : "오전";
     const displayHours = hours % 12 || 12;
     return `${ampm} ${displayHours}:${minutes.toString().padStart(2, "0")}`;
-  };
+  }, []);
+
+  const formattedTime = useMemo(
+    () => formatTime(message.createdAt),
+    [formatTime, message.createdAt]
+  );
 
   // Admin 메시지는 중앙 정렬로 별도 처리
   if (message?.messageType === "admin" || message?.messageType === "MESG") {
@@ -63,7 +71,7 @@ export function Message({ messageContent }: MessageProps) {
       ) : null}
 
       <div
-        className={`max-w-[70%] ${isMyMessage ? "flex flex-col items-end" : ""}`}
+        className={`max-w-[95%] ${isMyMessage ? "flex flex-col items-end" : ""}`}
       >
         {/* 발신자 이름 */}
         {showSenderName && (
@@ -89,11 +97,16 @@ export function Message({ messageContent }: MessageProps) {
 
           {/* 메시지 전송 시간 */}
           <div className="flex-shrink-0">
-            <span className="text-xs text-gray-500">
-              {formatTime(message.createdAt)}
-            </span>
+            <span className="text-xs text-gray-500">{formattedTime}</span>
           </div>
         </div>
+
+        {/* 편집됨 표시 - 메시지와 같은 정렬 */}
+        {isEdited && (
+          <div className={`mt-1 ${isMyMessage ? "text-right" : "text-left"}`}>
+            <span className="text-xs text-gray-500">편집됨</span>
+          </div>
+        )}
       </div>
     </div>
   );

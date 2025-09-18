@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { BaseMessage } from "@sendbird/chat/message";
 import { getMessageType } from "../utils/messageTypeUtils";
 import { MESSAGE_TYPES } from "../constants/messageTypes";
@@ -23,13 +24,16 @@ export function MessageRenderer({
 }: MessageRendererProps) {
   const messageType = getMessageType(message);
 
-  // 메시지 데이터 생성 (기본 구조)
-  const baseData = {
-    timestamp: message.createdAt,
-    senderId: message.sender?.userId || "",
-    senderName: senderName,
-    channelUrl: message.channelUrl,
-  };
+  // 메시지 데이터 생성 (기본 구조) - 메모이제이션 적용
+  const baseData = useMemo(
+    () => ({
+      timestamp: message.createdAt,
+      senderId: message.sender?.userId || "",
+      senderName: senderName,
+      channelUrl: message.channelUrl,
+    }),
+    [message.createdAt, message.sender?.userId, senderName, message.channelUrl]
+  );
 
   // 메시지 타입에 따른 컴포넌트 렌더링
   switch (messageType) {
@@ -63,7 +67,7 @@ export function MessageRenderer({
         }
 
         // 커스텀 데이터가 있고 resource 배열이 있는 경우
-        if (customFileData?.resource?.[0]) {
+        if (customFileData?.resource?.length > 0) {
           const resource = customFileData.resource[0];
           const fileData = {
             ...baseData,
@@ -71,10 +75,14 @@ export function MessageRenderer({
             fileUrl: resource.originalUrl || fileMessage.url || "",
             fileName: resource.originalFileName || fileMessage.name || "",
             fileSize: resource.originalFileSize || fileMessage.size || 0,
-            mimeType: resource.fileType === "image" ? "image/jpeg" :
-                     resource.fileType === "video" ? "video/mp4" :
-                     fileMessage.type || "application/octet-stream",
+            mimeType:
+              resource.fileType === "image"
+                ? "image/jpeg"
+                : resource.fileType === "video"
+                  ? "video/mp4"
+                  : fileMessage.type || "application/octet-stream",
             thumbnailUrl: resource.thumbUrl || fileMessage.thumbnails?.[0]?.url,
+            resources: customFileData.resource, // 전체 리소스 배열 전달
           };
           return <FileMessage data={fileData} isMine={isMine} />;
         }
@@ -144,17 +152,35 @@ export function MessageRenderer({
       if (message.messageType === "user") {
         const userMessage = message as any;
         const parentMessage = userMessage.parentMessage;
-
         if (parentMessage) {
+          let parentMessageData = {};
+
+          // parentMessage가 file 타입일 경우 data 파싱
+          if (parentMessage.messageType === "file") {
+            try {
+              const parsedData = JSON.parse(parentMessage.data);
+              parentMessageData = {
+                resource: parsedData.resource[0],
+                fileCount: parsedData.resource.length,
+              };
+            } catch (error) {
+              console.warn("부모 메시지 데이터 파싱 실패:", error);
+            }
+          }
+
+          const content = userMessage.message || "";
           const replyData = {
             ...baseData,
             messageType: MESSAGE_TYPES.REPLY,
-            content: userMessage.message || "",
+            content,
+            isLongText: content.length > 500,
             parentMessage: {
               messageId: parentMessage.messageId,
               content: parentMessage.message || "",
+              sendBirdId: parentMessage.sender?.userId || "",
               senderName: parentMessage.sender?.nickname || "",
               messageType: getMessageType(parentMessage),
+              ...(parentMessage.messageType === "file" && parentMessageData),
             },
           };
           return <ReplyMessage data={replyData} isMine={isMine} />;

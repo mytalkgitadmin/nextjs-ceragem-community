@@ -1,6 +1,9 @@
 "use client";
 
-import { GroupChannelProvider } from "@sendbird/uikit-react/GroupChannel/context";
+import {
+  GroupChannelProvider,
+  MessageListQueryParamsType,
+} from "@sendbird/uikit-react/GroupChannel/context";
 import { GroupChannel as GroupChannelType } from "@sendbird/chat/groupChannel";
 import GroupChannel from "@sendbird/uikit-react/GroupChannel";
 import { DateSeparator } from "./DateSeparator";
@@ -8,6 +11,7 @@ import { Message } from "./Message";
 import { ScrollController } from "./ScrollController";
 import { SendbirdMessageInput } from "./SendbirdMessageInput";
 import { useMessageActions } from "./hooks";
+import { ReplyType } from "@sendbird/chat/message";
 import { ChannelHeader } from "./ChannelHeader";
 // import "./sendbird-overrides.css";
 
@@ -34,6 +38,11 @@ export function SendbirdChatDrawerContent({
             scrollBehavior="smooth" // 스크롤 부드럽게 이동
             isMultipleFilesMessageEnabled={true} // 다중 파일 메시지 기능 활성화
             replyType="QUOTE_REPLY" // 'NONE' | 'QUOTE_REPLY' | 'THREAD'
+            messageListQueryParams={
+              {
+                replyType: ReplyType.ALL, // 답장 메시지 표시
+              } as MessageListQueryParamsType
+            }
             // 채널 헤더
             renderChannelHeader={
               showHeader
@@ -45,7 +54,6 @@ export function SendbirdChatDrawerContent({
                   )
                 : undefined
             }
-            // renderChannelHeader={() => <></>}
             // 날짜 구분선
             renderCustomSeparator={({ message }) => (
               <DateSeparator createdAt={message.createdAt} />

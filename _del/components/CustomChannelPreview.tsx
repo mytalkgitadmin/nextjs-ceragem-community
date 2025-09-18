@@ -8,15 +8,16 @@ interface CustomChannelPreviewProps {
   isSelected?: boolean;
 }
 
-export function CustomChannelPreview({ channel, isSelected }: CustomChannelPreviewProps) {
+export function CustomChannelPreview({
+  channel,
+  isSelected,
+}: CustomChannelPreviewProps) {
   const lastMessage = channel.lastMessage;
   const unreadCount = channel.unreadMessageCount;
 
   const { channelName, channelData } = useChannelName(channel, {
-    includesMyProfile: false
+    includesMyProfile: false,
   });
-
-  console.log(channelData);
 
   return (
     <div
