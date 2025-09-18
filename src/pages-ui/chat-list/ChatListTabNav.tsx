@@ -6,6 +6,7 @@ import {
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 import { useModal } from "@/modal-system";
+import { ChannelCreateOptions } from "@/domains-ui/chat";
 
 export type ChatListTabType = "chats" | "announcements";
 
@@ -20,21 +21,21 @@ export function ChatListTabNav({
   onTabChange,
   className = "",
 }: ChatListTabNavProps) {
+  const { openModal } = useModal();
+
   const tabs: TabItem[] = [
     { key: "chats", label: "대화방" },
     { key: "announcements", label: "공지사항" },
   ];
 
   const renderCreateChatButton = () => {
-    const { openModal } = useModal();
     return (
       <button
         onClick={() => {
-          openModal(
-            <div>
-              <h1>Create Chat</h1>
-            </div>
-          );
+          openModal(<ChannelCreateOptions />, {
+            title: "대화방 만들기",
+            size: "md",
+          });
         }}
         className="p-1 hover:bg-gray-100 rounded-full transition-colors duration-200"
       >

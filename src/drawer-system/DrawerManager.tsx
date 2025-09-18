@@ -57,7 +57,7 @@ export function DrawerManager() {
 
         return (
           <Drawer
-            key={id}
+            key={`${id}-${index}`}
             isOpen={true}
             onClose={() => {
               onClose?.();

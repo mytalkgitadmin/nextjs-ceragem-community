@@ -59,7 +59,7 @@ export function ModalManager() {
 
         return (
           <Modal
-            key={id}
+            key={`${id}-${index}`}
             isOpen={true}
             onClose={() => {
               onClose?.();
