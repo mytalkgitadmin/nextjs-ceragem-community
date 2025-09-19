@@ -1,6 +1,6 @@
 import React from "react";
 import { Avatar } from "@/shared-ui/display";
-import { memberProfileShortImg } from "@/domains/chat/utils/memberProfile";
+import { memberProfileShortImg } from "@/domains/chat/utils/memberProfileUtils";
 
 interface ChannelAvatarsSingleProps {
   members: any[];

@@ -1,6 +1,6 @@
 import { GroupChannel } from "@sendbird/chat/groupChannel";
 import { useChannelInfo } from "./useChannelInfo";
-import { sortMembersByPriority } from "../utils/memberSorting";
+import { sortMembersByPriority } from "../utils/memberSortUtils";
 
 export const useChannelMembers = (channel: GroupChannel) => {
   const channelInfo = useChannelInfo(channel.url);

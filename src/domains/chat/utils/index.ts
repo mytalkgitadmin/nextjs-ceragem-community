@@ -1,5 +1,1 @@
-export {
-  shouldHideMessageForMe,
-  renderFileMessage,
-  renderMessage,
-} from "./messageRenderer";
+export { getMessageType, getMessageData } from "./messageTypeUtils";

@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-import { filterActiveMembers } from "../utils/memberFilters";
+import { filterActiveMembers } from "../utils/memberFilterUtils";
 
 export const useActiveMembers = (
   channelInfo: any,

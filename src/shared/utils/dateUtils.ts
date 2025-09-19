@@ -15,23 +15,34 @@ export const isYesterday = (targetDate: string | Date | number): boolean => {
 };
 
 /**
+ * 시간 포맷팅
+ * @param at - 포맷팅할 시간
+ * @returns 포맷팅된 시간 : a HH:mm
+ */
+
+export const formatTime = (timestamp: string | Date | number): string => {
+  const date = new Date(timestamp);
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const ampm = hours >= 12 ? "오후" : "오전";
+  const displayHours = hours % 12 || 12;
+  return `${ampm} ${displayHours}:${minutes.toString().padStart(2, "0")}`;
+};
+
+/**
  * 날짜 포맷팅
- * @param date - 포맷팅할 날짜
+ * @param at - 포맷팅할 날짜
  * @returns 포맷팅된 날짜 : 어제, 오늘[a HH:mm], 날짜[YYYY-MM-DD]
  */
 
-export const formatDate = (date: string | Date | number): string => {
-  const target = dayjs(date);
-
-  if (isYesterday(date)) {
+export const formatDate = (timestamp: string | Date | number): string => {
+  const target = dayjs(timestamp);
+  if (isYesterday(timestamp)) {
     return "어제";
   }
-
   const daysDiff = dayjs().diff(target, "day");
-
   if (daysDiff < 1) {
-    return target.format("a HH:mm");
+    return formatTime(timestamp);
   }
-
   return target.format("YYYY-MM-DD");
 };

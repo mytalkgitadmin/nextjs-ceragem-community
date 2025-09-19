@@ -1,5 +1,5 @@
 import { compareByName } from "@/shared/utils/stringUtils";
-import { getMemberName } from "./memberNames";
+import { getMemberName } from "./memberNameUtils";
 
 /**
  * 멤버 우선순위를 반환하는 함수

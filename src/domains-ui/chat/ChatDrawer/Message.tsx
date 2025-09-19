@@ -1,39 +1,27 @@
 "use client";
 
+import { MessageContentProps } from "@sendbird/uikit-react/ui/MessageContent";
 import { useMemo, useCallback } from "react";
 import { Avatar } from "@/shared-ui";
 import { useAuth } from "@/domains/auth/hooks/useAuth";
 import { MessageRenderer } from "./components/MessageRenderer";
 import { isEditedMessage } from "./utils/messageTextUtils";
+import { formatTime } from "@/shared/utils/dateUtils";
 
 interface MessageProps {
-  messageContent: any; // Sendbird의 MessageContentProps 타입을 any로 처리
+  messageContent: MessageContentProps;
 }
 
 export function Message({ messageContent }: MessageProps) {
   const { message, chainTop, chainBottom } = messageContent;
   const { sendBirdId } = useAuth();
 
-  // 메시지가 없으면 early return
-  if (!message) {
-    console.warn("Message is null or undefined");
-    return null;
-  }
-
   const isEdited = isEditedMessage(message.message);
   const isMyMessage = sendBirdId === message.sender?.userId;
-  const showProfile = !isMyMessage && chainTop;
-  const showSenderName = !isMyMessage && chainTop;
+  const showProfile = !isMyMessage && !chainTop;
+  const showSenderName = !isMyMessage && !chainTop;
+  const showTime = !chainBottom;
   const senderName = message.sender?.nickname || "사용자";
-
-  const formatTime = useCallback((createdAt: number) => {
-    const date = new Date(createdAt);
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    const ampm = hours >= 12 ? "오후" : "오전";
-    const displayHours = hours % 12 || 12;
-    return `${ampm} ${displayHours}:${minutes.toString().padStart(2, "0")}`;
-  }, []);
 
   const formattedTime = useMemo(
     () => formatTime(message.createdAt),
@@ -63,7 +51,7 @@ export function Message({ messageContent }: MessageProps) {
           <Avatar
             src={message.sender?.profileUrl || ""}
             alt={senderName}
-            size="sm"
+            size={48}
           />
         </div>
       ) : !isMyMessage ? (
@@ -96,9 +84,11 @@ export function Message({ messageContent }: MessageProps) {
           </div>
 
           {/* 메시지 전송 시간 */}
-          <div className="flex-shrink-0">
-            <span className="text-xs text-gray-500">{formattedTime}</span>
-          </div>
+          {showTime && (
+            <div className="flex-shrink-0">
+              <span className="text-xs text-gray-500">{formattedTime}</span>
+            </div>
+          )}
         </div>
 
         {/* 편집됨 표시 - 메시지와 같은 정렬 */}

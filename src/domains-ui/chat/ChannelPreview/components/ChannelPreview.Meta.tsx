@@ -1,7 +1,8 @@
 import React from "react";
 import dayjs from "dayjs";
-import styles from "./ChannelPreview.Meta.module.css";
+import styles from "./components.module.css";
 import { Badge } from "@/shared-ui/display";
+import { formatDate } from "@/shared/utils/dateUtils";
 
 export interface ChannelPreviewMetaProps {
   channel: any;
@@ -12,33 +13,12 @@ export const ChannelPreviewMeta: React.FC<ChannelPreviewMetaProps> = ({
   channel,
   className,
 }) => {
-  const formatDate = () => {
-    const targetDate = dayjs(channel?.lastMessage?.createdAt);
-    const yesterday = dayjs().subtract(1, "day").startOf("day");
-
-    const isYesterday =
-      targetDate.isAfter(yesterday) &&
-      targetDate.isBefore(dayjs().startOf("day"));
-
-    if (isYesterday) {
-      return "어제";
-    }
-
-    const daysDiff = dayjs().diff(
-      dayjs(channel?.lastMessage?.createdAt),
-      "day"
-    );
-
-    if (daysDiff < 1) {
-      return dayjs(channel?.lastMessage?.createdAt).format("a HH:mm");
-    }
-
-    return dayjs(channel?.lastMessage?.createdAt).format("YYYY-MM-DD");
-  };
+  const createdAt = channel?.lastMessage?.createdAt;
+  const formattedDate = formatDate(createdAt);
 
   return (
     <div className={`${styles.chat_list_meta} ${className || ""}`}>
-      <div className={styles.chat_list_date}>{formatDate()}</div>
+      <div className={styles.chat_list_date}>{formattedDate}</div>
 
       {channel?.unreadMessageCount > 0 && (
         <Badge variant="danger" size="xs">

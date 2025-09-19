@@ -6,6 +6,7 @@ interface AdminMessageProps {
 
 export function AdminMessage({ data }: AdminMessageProps) {
   const { content } = data;
+  console.log(content);
 
   return (
     <div className="flex justify-center my-2">

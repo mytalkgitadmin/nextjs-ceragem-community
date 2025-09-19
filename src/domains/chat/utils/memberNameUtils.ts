@@ -1,4 +1,4 @@
-import { sortMembersByPriority } from "./memberSorting";
+import { sortMembersByPriority } from "./memberSortUtils";
 
 /**
  * 멤버 이름을 가져오는 함수

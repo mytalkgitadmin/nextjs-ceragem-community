@@ -1,4 +1,4 @@
-import { getMemberName, joinSortedMemberNames } from "./memberNames";
+import { getMemberName, joinSortedMemberNames } from "./memberNameUtils";
 
 /**
  * 1:1 채널명을 생성하는 함수

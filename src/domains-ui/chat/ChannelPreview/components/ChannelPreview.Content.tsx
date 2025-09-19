@@ -1,15 +1,12 @@
 import React from "react";
-import styles from "./ChannelPreview.Content.module.css";
+import styles from "./components.module.css";
 import { GroupChannel } from "@sendbird/chat/groupChannel";
+import { ChannelPreviewMessage } from "./ChannelPreview.Message";
 import {
   useChannelInfo,
   useChannelName,
   useChannelMembers,
-  shouldHideMessageForMe,
-  renderFileMessage,
-  renderMessage,
 } from "@/domains/chat";
-import { useAuth } from "@/domains/auth";
 
 export interface ChannelPreviewContentProps {
   channel: GroupChannel;
@@ -22,7 +19,6 @@ export const ChannelPreviewContent: React.FC<ChannelPreviewContentProps> = ({
 
   className,
 }) => {
-  const { sendBirdId } = useAuth();
   const channelInfo = useChannelInfo(channel.url);
   const channelName = useChannelName(channel);
   const members = useChannelMembers(channel);
@@ -42,21 +38,6 @@ export const ChannelPreviewContent: React.FC<ChannelPreviewContentProps> = ({
     return channelName;
   };
 
-  const renderLastMessage = () => {
-    const lastMessage = channel?.lastMessage;
-
-    if (!lastMessage) return "";
-    if (shouldHideMessageForMe(sendBirdId, lastMessage)) {
-      return "메시지가 삭제되었습니다.";
-    }
-
-    if (lastMessage.messageType === "file") {
-      return renderFileMessage(lastMessage);
-    }
-
-    return renderMessage(lastMessage);
-  };
-
   // const renderIcons = () => ( //TODO : 추후 추가
   //   <div style={{ minWidth: 40 }}>
   //     {pinnedChannels.includes(channel) && pin && <img src={pin} alt="pin" />}
@@ -73,23 +54,15 @@ export const ChannelPreviewContent: React.FC<ChannelPreviewContentProps> = ({
     <div className={`${styles.chat_list_content} ${className || ""}`}>
       <div className={styles.chat_list_content_up}>
         <div className={styles.chat_list_content_name_wrap}>
-          <span
-            className={`${styles.chat_list_content_name} ${
-              memberCount <= 2 ? styles.name_type_1 : styles.name_type_2
-            }`}
-          >
+          <span className={`${styles.chat_list_content_name}`}>
             {renderChannelName()}
           </span>
           {/* {renderIcons()} */}
         </div>
       </div>
-      <div
-        className={`${styles.chat_list_content_down} ${
-          memberCount <= 2 ? styles.down_me : ""
-        }`}
-      >
+      <div className={`${styles.chat_list_content_down}`}>
         <span className={styles.chat_list_content_message}>
-          {renderLastMessage()}
+          <ChannelPreviewMessage channel={channel} />
         </span>
       </div>
     </div>

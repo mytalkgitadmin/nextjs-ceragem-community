@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import {
   getGroupChannelName,
   getDirectChannelName,
-} from "../utils/channelNames";
+} from "../utils/channelNameUtils";
 
 export const useChannelName = (channel: GroupChannel) => {
   const channelInfo = useChannelInfo(channel.url);
