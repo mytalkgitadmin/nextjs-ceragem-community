@@ -1,1 +1,0 @@
-export { useFriends } from "./friendsQueries";

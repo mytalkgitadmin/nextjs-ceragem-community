@@ -1,0 +1,1 @@
+export { SendbirdChatRoom } from "./SendbirdChatRoom";

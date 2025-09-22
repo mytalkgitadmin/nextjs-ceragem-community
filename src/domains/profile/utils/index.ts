@@ -1,0 +1,1 @@
+export { getUserNameFromProfile } from "./profileUtils";

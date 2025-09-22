@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
-import { SendbirdChannelList } from "@/domains-ui/chat";
+import { SendbirdChannelList } from "@/domains-ui/channel";
 
 export function ChatListPageChatListTab() {
   const [mounted, setMounted] = useState(false);

@@ -1,0 +1,1 @@
+export { getSendbirdProfile } from "./profileAPI";

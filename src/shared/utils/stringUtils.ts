@@ -63,10 +63,10 @@ export const includesIgnoreCase = (
 };
 
 /**
- * 문자열이 비어있는지 확인하는 함수
- * @param value - 확인할 문자열
- * @returns 비어있는지 여부
+ * 문자열을 JSON 객체로 파싱하는 함수
+ * @param value - 파싱할 문자열
+ * @returns JSON 객체
  */
-export const isEmpty = (value: string | null | undefined): boolean => {
-  return !value || value.trim().length === 0;
+export const parseJson = (value: string) => {
+  return value ? JSON.parse(value) : null;
 };

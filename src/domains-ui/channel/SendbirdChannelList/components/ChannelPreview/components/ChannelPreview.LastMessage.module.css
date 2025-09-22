@@ -1,0 +1,19 @@
+.chat_list_content_message {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #999999;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.message_img {
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+  margin-bottom: 1px;
+}

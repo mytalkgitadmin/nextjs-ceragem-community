@@ -1,0 +1,1 @@
+export { useSendbirdProfile } from "./profileQueries";

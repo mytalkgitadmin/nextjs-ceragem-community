@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { SearchInput } from "@/shared-ui";
 import { mockData } from "./mockData";
-import { EmployeeCardGroup } from "@/domains-ui/organization";
+import { EmployeeCardGroup } from "@/domains-ui/contact";
 
 export interface OrganizationPageEmployeeTabProps {}
 

@@ -6,14 +6,12 @@ import {
   OrganizationPageTabNav,
   OrganizationPageEmployeeTab,
 } from "./components";
-import { useFriends } from "@/domains/friend/queries";
+
 import { useRouter } from "next/navigation";
 
 export interface OrganizationPageProps {}
 
 export function OrganizationPage({}: OrganizationPageProps) {
-  const {} = useFriends(); //TODO: 친구 목록 조회
-
   const [activeTab, setActiveTab] = useState<string>("organization");
 
   const renderTabContent = () => {

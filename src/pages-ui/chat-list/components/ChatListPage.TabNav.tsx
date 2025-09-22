@@ -6,7 +6,7 @@ import {
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 import { useModal } from "@/modal-system";
-import { ChannelCreateMenu } from "@/domains-ui/chat";
+import { ChatListPageCreateMenu } from "./ChatListPage.CreateMenu";
 
 export interface ChatListPageTabNavProps {
   activeTab: string;
@@ -28,7 +28,7 @@ export function ChatListPageTabNav({
 
   const openChannelCreateMenu = () => {
     const id = openModal(
-      <ChannelCreateMenu
+      <ChatListPageCreateMenu
         onChannelCreated={() => {
           closeModal(id);
         }}
