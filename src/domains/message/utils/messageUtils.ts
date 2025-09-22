@@ -13,13 +13,13 @@ const IMAGE_FILE_TYPES = ["gif", "image", "webp"];
 
 /**
  * Sendbird 메시지 타입을 UI 메시지 타입으로 변환
- * @param sendBirdId Sendbird 사용자 ID
+ * @param userId 사용자 ID
  * @param message Sendbird 메시지
  * @returns UIMessageType
  */
 
 export const getUIMessageType = (
-  sendBirdId: string,
+  userId: string,
   message: BaseMessage
 ): UIMessageType => {
   const customType = message.customType;
@@ -33,7 +33,7 @@ export const getUIMessageType = (
     message.data === "[TYPE_DELETED]" ||
     message.message === "[TYPE_DELETED]" ||
     message.data?.includes("[TYPE_DELETED]") ||
-    deleteUserIds.includes(sendBirdId)
+    deleteUserIds.includes(userId)
   ) {
     return UIMessageType.DELETED;
   }
