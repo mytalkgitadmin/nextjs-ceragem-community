@@ -9,12 +9,12 @@ import { RelationType } from "@/domains/contact";
 import { MessageDataType } from "../constants";
 
 /**
- * 어드민 메시지에서 사용자 이름을 추출
+ * 시스템 메시지에서 사용자 이름을 추출
  * @param message 메시지
  * @returns 사용자 이름
  */
 
-export async function getUserNamesFromAdminMessage(message: BaseMessage) {
+export async function extractNamesFromSysMsg(message: BaseMessage) {
   const data = parseJson(message.data || "");
   const users = data?.users || [];
   const userNames = [];
@@ -57,4 +57,18 @@ export async function getUserNamesFromAdminMessage(message: BaseMessage) {
     }
   }
   return userNames;
+}
+
+/**
+ * 템플릿에 사용자 이름을 삽입
+ * @param template 템플릿
+ * @param names 사용자 이름 배열
+ * @returns 삽입된 템플릿
+ */
+
+export function insertNamesIntoTemplate(template: string, names: string[]) {
+  return template.replace(
+    "{names}",
+    names.map((name) => `'${name}'`).join(", ")
+  );
 }

@@ -11,11 +11,7 @@ import "./sendbird.css";
 
 const SCROLL_CONTAINER_ID = "sendbird_channel_list";
 
-export const SendbirdChannelList = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const SendbirdChannelList = ({ children }: { children: React.ReactNode }) => {
   const { openChannel } = useChannelOpen();
   return (
     <GroupChannelListProvider
@@ -42,13 +38,11 @@ export const Content = ({}) => {
     refreshing,
   } = useGroupChannelListContext();
 
-  const { isLoadingMore, loadMoreTriggerRef, error, retry } = useInfiniteScroll(
-    {
-      hasNext: !!loadMore,
-      loadMore,
-      scrollContainerId: SCROLL_CONTAINER_ID,
-    }
-  );
+  const { isLoadingMore, loadMoreTriggerRef, error, retry } = useInfiniteScroll({
+    hasNext: !!loadMore,
+    loadMore,
+    scrollContainerId: SCROLL_CONTAINER_ID,
+  });
 
   if (!initialized) {
     return <PlaceHolder type={"LOADING"} />;
@@ -56,30 +50,18 @@ export const Content = ({}) => {
 
   return (
     <div className={styles.sendbird_channel_list}>
-      <div
-        id={SCROLL_CONTAINER_ID}
-        className={styles.sendbird_channel_list_body}
-        ref={sendbirdScrollRef}
-      >
+      <div id={SCROLL_CONTAINER_ID} className={styles.sendbird_channel_list_body} ref={sendbirdScrollRef}>
         {groupChannels.length > 0 ? (
           <>
             {groupChannels.map((channel: GroupChannel, index: number) => {
               return (
-                <div
-                  key={`channel_list_${channel.url}_${index}`}
-                  onClick={() => onChannelSelect(channel)}
-                >
+                <div key={`channel_list_${channel.url}_${index}`} onClick={() => onChannelSelect(channel)}>
                   <ChannelPreview channel={channel} />
                 </div>
               );
             })}
             {/* 무한 스크롤 트리거 (Intersection Observer용) */}
-            {!!loadMore && !refreshing && (
-              <div
-                ref={loadMoreTriggerRef}
-                className={styles.load_more_trigger}
-              />
-            )}
+            {!!loadMore && !refreshing && <div ref={loadMoreTriggerRef} className={styles.load_more_trigger} />}
           </>
         ) : (
           <SendbirdChannelListEmpty />

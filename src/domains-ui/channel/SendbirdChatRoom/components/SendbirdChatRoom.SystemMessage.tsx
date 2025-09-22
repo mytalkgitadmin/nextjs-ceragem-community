@@ -1,22 +1,24 @@
 import { useState, useEffect } from "react";
-import { getSysMsgUserNames } from "@/domains/message";
+import { BaseMessage } from "@sendbird/chat/message";
+import {
+  extractNamesFromSysMsg,
+  insertNamesIntoTemplate,
+  SYSTEM_MESSAGE_TEMPLATES,
+  MessageDataType,
+} from "@/domains/message";
+import { parseJson } from "@/shared/utils";
 import styles from "./SendbirdChatRoom.SystemMessage.module.css";
+
+interface SendbirdChatRoomSystemMessageProps {
+  message: BaseMessage;
+}
 
 export const SendbirdChatRoomSystemMessage = ({
   //   channelInfo,
   message,
-}: any) => {
-  console.log("message", message);
+}: SendbirdChatRoomSystemMessageProps) => {
+  const [text, setText] = useState("");
   const [reInvite, setReInvite]: any = useState([]);
-  const data = (() => {
-    try {
-      return message?.message?.data ? JSON.parse(message?.message?.data) : {};
-    } catch {
-      return {};
-    }
-  })();
-  const type = data?.type ? data.type : "";
-  let resultMessage = "";
 
   //   // sendbird id를 통한 프로필 정보 가져오기
   //   const getUserBySendbirdId = (sendbirdId: string) => {
@@ -59,35 +61,19 @@ export const SendbirdChatRoomSystemMessage = ({
   //   };
 
   useEffect(() => {
-    const userNames = getSysMsgUserNames(message);
-    console.log("userNames", userNames);
+    extractNamesFromSysMsg(message).then((names) => {
+      const data = parseJson(message.data || "");
+      const template =
+        SYSTEM_MESSAGE_TEMPLATES[
+          data.type as keyof typeof SYSTEM_MESSAGE_TEMPLATES
+        ];
+      setText(template ? insertNamesIntoTemplate(template, names) : "");
+    });
   }, [message]);
-
-  //   const generateResultMessage = () => {
-  //     const names = getUserNamesFromMessage();
-
-  //     switch (type) {
-  //       case MessageType.USER_JOIN:
-  //         return formatAdminMessage(ADMIN_MESSAGE_TEMPLATES.USER_INVITED, names);
-  //       case MessageType.CHANNEL_ASSIGN_MASTER:
-  //         return formatAdminMessage(
-  //           ADMIN_MESSAGE_TEMPLATES.MASTER_CHANGED,
-  //           names
-  //         );
-  //       case MessageType.USER_LEAVE:
-  //         return formatAdminMessage(ADMIN_MESSAGE_TEMPLATES.USER_LEFT, names);
-  //       case MessageType.CHANNEL_KICK_USERS:
-  //         return formatAdminMessage(ADMIN_MESSAGE_TEMPLATES.USER_KICKED, names);
-  //       default:
-  //         return "";
-  //     }
-  //   };
-
-  //   resultMessage = generateResultMessage();
 
   return (
     <div className={styles.chat_message_content_wrap}>
-      <div className={styles.chat_message}>{resultMessage}</div>
+      <div className={styles.chat_message}>{text}</div>
       {reInvite &&
         reInvite.length > 0 &&
         reInvite.map((invite: any, index: number) => {

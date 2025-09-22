@@ -31,7 +31,6 @@ export function SendbirdChatRoom({
 
   const renderMessage = (messageContent: MessageContentProps) => {
     const { message } = messageContent;
-    // if (!message) return null;
 
     const uiType = getUIMessageType(sendBirdId, message);
     switch (uiType) {

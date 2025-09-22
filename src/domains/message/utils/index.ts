@@ -1,1 +1,4 @@
-export { getSysMsgUserNames } from "./systemMessageUtils";
+export {
+  extractNamesFromSysMsg,
+  insertNamesIntoTemplate,
+} from "./systemMessageUtils";
