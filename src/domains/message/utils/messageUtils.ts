@@ -8,8 +8,14 @@ import {
   MessageDataType,
   MessageType,
 } from "../constants/messageEnum";
+import { DeliveryMessageRequest } from "../api";
 
 const IMAGE_FILE_TYPES = ["gif", "image", "webp"];
+const CUSTOM_SYSTEM_MESSAGE_TYPES = [
+  MessageDataType.UPDATE_TIMER_NOTI,
+  MessageDataType.ALBUM_ADD_PHOTO,
+  MessageDataType.ALBUM_ADD_LIKE,
+];
 
 /**
  * Sendbird 메시지 타입을 UI 메시지 타입으로 변환
@@ -39,8 +45,11 @@ export const getUIMessageType = (
   }
 
   if (
-    message.data?.includes("UPDATED_TIMER_MESSAGE") ||
-    message.data?.includes("DELETED_TIMER_MESSAGE")
+    message.data?.includes(MessageDataType.UPDATED_TIMER_MESSAGE) ||
+    message.data?.includes(MessageDataType.DELETED_TIMER_MESSAGE) ||
+    dataType === MessageDataType.UPDATED_TIMER_MESSAGE ||
+    dataType === MessageDataType.DELETED_TIMER_MESSAGE ||
+    dataType === MessageDataType.MESSAGE_DELETED_ALL_SCREEN
   ) {
     return UIMessageType.INVISIBLE;
   }
@@ -53,8 +62,8 @@ export const getUIMessageType = (
         dataType === MessageDataType.CHANNEL_KICK_USERS ||
         dataType === MessageDataType.CHANNEL_ASSIGN_MASTER))
   ) {
-    // 1. ADMIN 메시지 판단
-    return UIMessageType.ADMIN;
+    // 1. System 메시지 판단
+    return UIMessageType.SYSTEM;
   }
 
   // 2. BEFAMILY 커스텀 메시지들
@@ -82,7 +91,7 @@ export const getUIMessageType = (
 
     // 버블 메시지
     if (dataType === MessageDataType.MESSAGE_BUBBLE) {
-      return UIMessageType.NOT_IMPLEMENTED; // UI 미구현
+      return UIMessageType.BUBBLE; // UI 미구현
     }
 
     // 조합 메시지들 (제휴사, 이벤트 등)
@@ -94,20 +103,12 @@ export const getUIMessageType = (
         MessageDataType.MESSAGE_DDAY_EVENT,
       ].includes(dataType as MessageDataType)
     ) {
-      return UIMessageType.NOT_IMPLEMENTED; // UI 미구현
+      return UIMessageType.EVENT; // UI 미구현
     }
 
     // BeFamily 특수 메시지들
-    if (
-      [
-        MessageDataType.MESSAGE_DELETED_ALL_SCREEN,
-        MessageDataType.DELETED_TIMER_MESSAGE,
-        MessageDataType.UPDATE_TIMER_NOTI,
-        MessageDataType.ALBUM_ADD_PHOTO,
-        MessageDataType.ALBUM_ADD_LIKE,
-      ].includes(dataType as MessageDataType)
-    ) {
-      return UIMessageType.NOT_IMPLEMENTED;
+    if (CUSTOM_SYSTEM_MESSAGE_TYPES.includes(dataType as MessageDataType)) {
+      return UIMessageType.SYSTEM;
     }
 
     // 답장 메시지
@@ -119,6 +120,26 @@ export const getUIMessageType = (
   }
 
   return UIMessageType.TEXT;
+};
+
+/**
+ * UI 미구현 메시지 타입인지 확인
+ * @param uiType UI 메시지 타입
+ * @returns 미구현 메시지 타입인지 여부
+ */
+export const isNotImplementedUI = (uiType: UIMessageType): boolean => {
+  return [UIMessageType.BUBBLE, UIMessageType.EVENT].includes(uiType);
+};
+
+/**
+ * 커스텀 시스템 메시지 타입인지 확인
+ * @param dataType 메시지 데이터 타입
+ * @returns 커스텀 시스템 메시지 타입인지 여부
+ */
+export const isCustomSystemMessageType = (
+  dataType: MessageDataType
+): boolean => {
+  return CUSTOM_SYSTEM_MESSAGE_TYPES.includes(dataType);
 };
 
 /**
@@ -139,4 +160,54 @@ export function removeEditPrefix(text: string): string {
 export function isEditedMessage(text: string): boolean {
   const EDIT_PREFIX = "✍🏻 ";
   return text.startsWith(EDIT_PREFIX);
+}
+
+/**
+ * 메시지 공유를 위한 데이터 준비
+ * @param message - 메시지
+ * @returns 메시지 공유를 위한 데이터
+ */
+export function getDataForShare(message: BaseMessage): DeliveryMessageRequest {
+  const getType = (messageType: MessageType) => {
+    if (messageType === MessageType.ADMIN) {
+      return "ADMM";
+    } else if (messageType === MessageType.FILE) {
+      return "FILE";
+    } else if (messageType === MessageType.USER) {
+      return "MESG";
+    }
+    return "MESG";
+  };
+
+  return {
+    message: {
+      customType: message?.customType || MessageCustomType.BEFAMILY,
+      data: message?.data || "",
+      message: message?.message || "",
+      type: getType(message?.messageType),
+    },
+    target: {
+      channelIds: [], //[localStorage.getItem("myChannel")],
+      targetType: "CHANNEL",
+    },
+  };
+}
+
+export function canShareFileMessage(message: BaseMessage): boolean {
+  if (message?.messageType === MessageType.FILE) {
+    const messageData = parseJson(message.data || "");
+    const resource = messageData?.resource || [];
+    let isShared = true;
+    let notSharedCnt = 0;
+
+    for (const file of resource) {
+      if (file?.shared === false) {
+        isShared = false;
+        notSharedCnt += 1;
+      }
+    }
+
+    return !
+  }
+  return false;
 }

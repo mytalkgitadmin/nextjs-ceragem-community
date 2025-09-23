@@ -1,6 +1,7 @@
 import React from "react";
 import { Avatar } from "@/shared-ui/display";
 import { memberProfileShortImg } from "@/domains/channel/utils/memberProfileUtils";
+import styles from "./ChannelPreview.SingleAvatar.module.css";
 
 interface ChannelPreviewSingleAvatarProps {
   members: any[];
@@ -17,8 +18,9 @@ export const ChannelPreviewSingleAvatar: React.FC<
       return (
         <Avatar
           key={`mem_${member.accountId}_${index}`}
-          src={"/assets/images/profile/bemily_default_profile.webp"}
+          src={"/assets/images/profile/bemily_profile000.png"}
           size={64}
+          className={styles.none}
         />
       );
     }
@@ -33,6 +35,7 @@ export const ChannelPreviewSingleAvatar: React.FC<
         key={`member_${member.accountId}_${index}`}
         src={memberProfileShortImg(member, "short")}
         size={64}
+        className={styles.chat_list_avatar}
       />
     );
   };

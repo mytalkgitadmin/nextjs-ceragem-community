@@ -4,3 +4,4 @@ export {
   useChannelName,
   useChannelMembers,
 } from "./hooks";
+export { useChannelList, chatQueryKeys } from "./queries";

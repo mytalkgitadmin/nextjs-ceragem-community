@@ -1,1 +1,1 @@
-export { getUserNameFromProfile } from "./profileUtils";
+export { getUserNameFromProfile, getImgFromProfile } from "./profileUtils";

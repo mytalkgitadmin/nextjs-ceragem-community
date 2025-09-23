@@ -1,1 +1,1 @@
-export { SendbirdChatRoomSystemMessage } from "./SendbirdChatRoom.SystemMessage";
+export { SendbirdChatRoomHeader } from "./SendbirdChatRoom.Header";

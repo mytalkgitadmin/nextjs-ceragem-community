@@ -21,7 +21,7 @@ export const ChannelPreviewContent: React.FC<ChannelPreviewContentProps> = ({
 }) => {
   const channelInfo = useChannelInfo(channel.url);
   const channelName = useChannelName(channel);
-  const members = useChannelMembers(channel);
+  const members = useChannelMembers(channel.url);
 
   const memberCount = members.length;
 

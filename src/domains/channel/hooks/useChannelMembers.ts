@@ -2,8 +2,8 @@ import { GroupChannel } from "@sendbird/chat/groupChannel";
 import { useChannelInfo } from "./useChannelInfo";
 import { sortMembersByPriority } from "../utils/memberSortUtils";
 
-export const useChannelMembers = (channel: GroupChannel) => {
-  const channelInfo = useChannelInfo(channel.url);
+export const useChannelMembers = (channelUrl: string) => {
+  const channelInfo = useChannelInfo(channelUrl);
 
   let members = [];
 
@@ -15,9 +15,10 @@ export const useChannelMembers = (channel: GroupChannel) => {
           member.participantType !== "KICKED"
       );
       members = sortMembersByPriority(members);
-    } else {
-      members = channel.members;
     }
+    // else {  //CHECK : 버그 발생 시 주석 해제
+    //   members = channel.members;
+    // }
   }
 
   return members;

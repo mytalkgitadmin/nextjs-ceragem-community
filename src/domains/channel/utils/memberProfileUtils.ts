@@ -33,7 +33,7 @@ export const memberProfileShortImg = (member: any, size: string) => {
   } else if (memberProfile?.profileKind === "emoticon") {
     img =
       size === "short"
-        ? `/assets/images/profile/bemily_small_profile$${String(memberProfile?.emoticonId || 0).padStart(3, "0")}.png`
+        ? `/assets/images/profile/bemily_small_profile${String(memberProfile?.emoticonId || 0).padStart(3, "0")}.png`
         : `/assets/images/profile/bemily_profile${String(memberProfile?.emoticonId || 0).padStart(3, "0")}.png`;
   } else if (memberProfile?.profileKind === "basic") {
     if (memberProfile?.profileName === NICKNAME_NONE) {

@@ -1,0 +1,31 @@
+.none {
+  opacity: 0.5;
+  filter: grayscale(1);
+}
+.chat_list_avatar > :nth-child(n + 5) {
+  align-self: self-end;
+  width: 42px !important;
+  height: 42px !important;
+  background: #f1f1f1;
+  border: 1px solid #ffffff;
+  color: #f1f1f1;
+}
+
+.chat_list_avatar > :nth-child(5) span {
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+}
+.chat_list_avatar > :nth-child(n + 5)::before {
+  content: "...";
+  color: #a6a6a6;
+}
+.chat_avatar {
+  background: #ffffff;
+  border: 2px solid #ffffff !important;
+}

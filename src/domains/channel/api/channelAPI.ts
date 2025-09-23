@@ -1,4 +1,4 @@
-import { get } from "@/shared/api/client";
+import { get, post } from "@/shared/api/client";
 
 export const getChannelList = async () => {
   const response = await get({

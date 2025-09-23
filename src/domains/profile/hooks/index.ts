@@ -1,0 +1,1 @@
+export { useMessageSenderProfile } from "./useMessageProfile";

@@ -49,14 +49,28 @@ export enum MessageDataType {
 }
 
 export enum UIMessageType {
-  ADMIN = "admin", // 관리자 메시지
+  // 시스템 메시지
+  SYSTEM = "system",
+
+  // 텍스트 메시지
   TEXT = "text",
+
+  // 파일 메시지 (이미지, 비디오, 파일)
   FILE = "file",
   IMAGE = "image",
   VIDEO = "video",
-  CONTACT = "contact", // 연락처
-  REPLY = "reply", // 답장
-  DELETED = "deleted", // 삭제된 메시지
-  NOT_IMPLEMENTED = "not_implemented", // 미구현
-  INVISIBLE = "invisible", // 보이지 않는 메시지
+
+  // 연락처 메시지
+  CONTACT = "contact",
+
+  // 답장 메시지
+  REPLY = "reply",
+
+  // 삭제된 메시지 및 보이지 않는 메시지
+  DELETED = "deleted",
+  INVISIBLE = "invisible",
+
+  // 미구현 메시지
+  BUBBLE = "bubble",
+  EVENT = "event",
 }

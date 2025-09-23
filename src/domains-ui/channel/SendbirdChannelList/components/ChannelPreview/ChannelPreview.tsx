@@ -16,7 +16,7 @@ export interface ChannelPreviewProps {
 const CHAT_TYPE_THRESHOLD = 2;
 
 export const ChannelPreview: React.FC<ChannelPreviewProps> = ({ channel }) => {
-  const members = useChannelMembers(channel);
+  const members = useChannelMembers(channel.url);
   const isGroup = members.length > CHAT_TYPE_THRESHOLD;
 
   return (

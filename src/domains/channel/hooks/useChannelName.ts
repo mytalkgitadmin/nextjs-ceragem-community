@@ -7,7 +7,7 @@ import {
   getDirectChannelName,
 } from "../utils/channelNameUtils";
 
-export const useChannelName = (channel: GroupChannel) => {
+export const useChannelName = (channel: GroupChannel): string => {
   const channelInfo = useChannelInfo(channel.url);
 
   const channelName = useMemo(() => {

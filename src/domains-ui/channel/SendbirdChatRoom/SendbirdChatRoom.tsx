@@ -8,41 +8,48 @@ import { MessageContentProps } from "@sendbird/uikit-react/ui/MessageContent";
 import { GroupChannel as GroupChannelType } from "@sendbird/chat/groupChannel";
 import GroupChannel from "@sendbird/uikit-react/GroupChannel";
 import { ReplyType } from "@sendbird/chat/message";
-import { getUIMessageType } from "@/domains/message/utils/messageUtils";
-import { UIMessageType } from "@/domains/message/constants/messageEnum";
+import {
+  getUIMessageType,
+  UIMessageType,
+  isNotImplementedUI,
+} from "@/domains/message";
+
 import { useAuth } from "@/domains/auth";
-import { SendbirdChatRoomSystemMessage } from "./components";
+import { SystemMessage, Message } from "@/domains-ui/message";
+import { SendbirdChatRoomHeader } from "./components";
 
 export interface SendbirdChatRoomContentProps {
   channel: GroupChannelType;
-  showHeader?: boolean;
   onBackClick?: () => void;
 }
 
 export function SendbirdChatRoom({
   channel,
-  showHeader = true,
   onBackClick,
 }: SendbirdChatRoomContentProps) {
   const { sendBirdId } = useAuth();
   const channelUrl = channel?.url || "";
 
-  //   const { handleSendMessage } = useMessageActions();
-
   const renderMessage = (messageContent: MessageContentProps) => {
-    const { message } = messageContent;
+    const { message, chainTop, chainBottom } = messageContent;
 
     const uiType = getUIMessageType(sendBirdId, message);
+
     switch (uiType) {
+      case UIMessageType.SYSTEM:
+        return <SystemMessage message={message} />;
       case UIMessageType.INVISIBLE:
       case UIMessageType.DELETED:
         return <></>;
-      case UIMessageType.ADMIN:
-        return <SendbirdChatRoomSystemMessage message={message} />;
       default:
-        break;
+        return (
+          <Message
+            message={message}
+            chainTop={chainTop}
+            chainBottom={chainBottom}
+          />
+        );
     }
-    return <></>;
   };
 
   return (
@@ -60,18 +67,9 @@ export function SendbirdChatRoom({
               } as MessageListQueryParamsType
             }
             // 채널 헤더
-            renderChannelHeader={
-              showHeader
-                ? () => (
-                    <>
-                      {/* <ChannelHeader
-                      showBackButton={true}
-                      onBackClick={onBackClick}
-                    /> */}
-                    </>
-                  )
-                : undefined
-            }
+            renderChannelHeader={() => (
+              <SendbirdChatRoomHeader onBackClick={onBackClick} />
+            )}
             // 날짜 구분선
             renderCustomSeparator={({ message }) => (
               <>{/* <DateSeparator createdAt={message.createdAt} /> */}</>
