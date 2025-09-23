@@ -123,15 +123,6 @@ export const getUIMessageType = (
 };
 
 /**
- * UI 미구현 메시지 타입인지 확인
- * @param uiType UI 메시지 타입
- * @returns 미구현 메시지 타입인지 여부
- */
-export const isNotImplementedUI = (uiType: UIMessageType): boolean => {
-  return [UIMessageType.BUBBLE, UIMessageType.EVENT].includes(uiType);
-};
-
-/**
  * 커스텀 시스템 메시지 타입인지 확인
  * @param dataType 메시지 데이터 타입
  * @returns 커스텀 시스템 메시지 타입인지 여부
@@ -167,24 +158,42 @@ export function isEditedMessage(text: string): boolean {
  * @param message - 메시지
  * @returns 메시지 공유를 위한 데이터
  */
-export function getDataForShare(message: BaseMessage): DeliveryMessageRequest {
-  const getType = (messageType: MessageType) => {
-    if (messageType === MessageType.ADMIN) {
-      return "ADMM";
-    } else if (messageType === MessageType.FILE) {
-      return "FILE";
-    } else if (messageType === MessageType.USER) {
-      return "MESG";
-    }
-    return "MESG";
-  };
+export function getDataForShare(
+  message: BaseMessage,
+  options: {
+    channelTarget?: {
+      channelIds: string[];
+      targetType: "CHANNEL";
+    };
+    friendTarget?: {
+      friendIds: string[];
+      targetType: "FRIEND_DIRECT" | "FRIEND_GROUP";
+    };
+  }
+): DeliveryMessageRequest {
+  const data = message?.data || "";
+  const messageType = message?.messageType;
+  const customType = message?.customType || MessageCustomType.BEFAMILY;
+  // const data = message?.data || albumDataConvert(message, type) || '' //TODO: 가족앨범 전달 시 메시지 처리
+
+  let type: "MESG" | "ADMM" | "FILE" = "MESG";
+  if (messageType === MessageType.ADMIN) {
+    type = "ADMM";
+  } else if (messageType === MessageType.FILE) {
+    // else if (message?.messageType === 'file' || type === 'ALBUM') { //TODO: 가족앨범 전달 시 메시지 처리
+    type = "FILE";
+  } else if (messageType === MessageType.USER) {
+    type = "MESG";
+  }
+
+  const target = options.channelTarget || options.friendTarget;
 
   return {
     message: {
-      customType: message?.customType || MessageCustomType.BEFAMILY,
-      data: message?.data || "",
       message: message?.message || "",
-      type: getType(message?.messageType),
+      customType: customType as MessageCustomType,
+      data,
+      type,
     },
     target: {
       channelIds: [], //[localStorage.getItem("myChannel")],
@@ -193,21 +202,71 @@ export function getDataForShare(message: BaseMessage): DeliveryMessageRequest {
   };
 }
 
-export function canShareFileMessage(message: BaseMessage): boolean {
-  if (message?.messageType === MessageType.FILE) {
-    const messageData = parseJson(message.data || "");
-    const resource = messageData?.resource || [];
-    let isShared = true;
-    let notSharedCnt = 0;
-
-    for (const file of resource) {
-      if (file?.shared === false) {
-        isShared = false;
-        notSharedCnt += 1;
-      }
-    }
-
-    return !
+/**
+ * 메시지의 파일 공유 상태를 검증합니다.
+ * @param {Object} message - 메시지 객체
+ * @returns {Object} 공유 검증 결과 객체
+ *   - canShare: boolean - 공유 가능 여부
+ *   - status: string - 상태 ('all_shared' | 'partial_shared' | 'none_shared' | 'not_file')
+ *   - totalCount: number - 전체 파일 수
+ *   - notSharedCount: number - 공유되지 않은 파일 수
+ */
+export function validateFileSharing(message: BaseMessage) {
+  if (message.messageType !== MessageType.FILE) {
+    return {
+      canShare: true,
+      status: "not_file",
+      totalCount: 0,
+      notSharedCount: 0,
+    };
   }
-  return false;
+
+  const messageData = parseJson(message.data || "");
+  const resource = messageData?.resource || [];
+
+  const totalCount = resource.length;
+  const notSharedCount = resource.filter(
+    (file: any) => file?.shared === false
+  ).length;
+
+  if (notSharedCount === 0) {
+    // 모든 파일이 공유 가능
+    return {
+      canShare: true,
+      status: "all_shared",
+      totalCount,
+      notSharedCount,
+    };
+  } else if (totalCount > notSharedCount) {
+    // 일부 파일만 공유되지 않음
+    return {
+      canShare: true,
+      status: "partial_shared",
+      totalCount,
+      notSharedCount,
+    };
+  } else {
+    // 모든 파일이 공유되지 않음
+    return {
+      canShare: false,
+      status: "none_shared",
+      totalCount,
+      notSharedCount,
+    };
+  }
+}
+
+/**
+ * 메시지의 공유된 파일 목록을 반환합니다.
+ * @param message - 메시지 객체
+ * @returns 공유된 파일 목록
+ */
+export function getShareFiles(message: BaseMessage) {
+  if (message.messageType !== MessageType.FILE) {
+    return [];
+  }
+
+  const messageData = parseJson(message.data || "");
+  const resource = messageData?.resource || [];
+  return resource.filter((file: any) => file?.shared === true);
 }

@@ -8,11 +8,7 @@ import { MessageContentProps } from "@sendbird/uikit-react/ui/MessageContent";
 import { GroupChannel as GroupChannelType } from "@sendbird/chat/groupChannel";
 import GroupChannel from "@sendbird/uikit-react/GroupChannel";
 import { ReplyType } from "@sendbird/chat/message";
-import {
-  getUIMessageType,
-  UIMessageType,
-  isNotImplementedUI,
-} from "@/domains/message";
+import { getUIMessageType, UIMessageType } from "@/domains/message";
 
 import { useAuth } from "@/domains/auth";
 import { SystemMessage, Message } from "@/domains-ui/message";

@@ -7,7 +7,8 @@ export {
 } from "./systemMessageUtils";
 export {
   getUIMessageType,
-  isNotImplementedUI,
   isCustomSystemMessageType,
   getDataForShare,
+  validateFileSharing,
+  getShareFiles,
 } from "./messageUtils";

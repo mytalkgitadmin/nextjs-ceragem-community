@@ -34,3 +34,28 @@ export function formatFileName(fileName: string, maxLength: number = 100) {
     displayName: `${truncatedName}${extension}`,
   };
 }
+
+/**
+ * 파일을 다운로드하는 유틸리티 함수
+ * @param fileUrl - 파일 URL
+ * @param fileName - 파일명
+ * @param baseUrl - 기본 URL (기본값: process.env.NEXT_PUBLIC_BASE_DOMAIN)
+ */
+export async function downloadFile(
+  fileUrl: string,
+  fileName: string,
+  baseUrl?: string
+) {
+  const domain = baseUrl || process.env.NEXT_PUBLIC_BASE_DOMAIN;
+  const response = await fetch(`${domain}${fileUrl}?attachment=true`);
+  const blob = await response.blob();
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.target = "_self";
+  link.download = fileName;
+  link.click();
+
+  URL.revokeObjectURL(url);
+}

@@ -1,8 +1,7 @@
 import React from "react";
 import { useAuth } from "@/domains/auth";
-import { getUIMessageType } from "@/domains/message/utils/messageUtils";
 import { parseJson } from "@/shared/utils";
-import { UIMessageType } from "@/domains/message/constants/messageEnum";
+import { UIMessageType, getUIMessageType } from "@/domains/message";
 import styles from "./ChannelPreview.LastMessage.module.css";
 import { BaseMessage } from "@sendbird/chat/message";
 
@@ -73,7 +72,9 @@ export const ChannelPreviewLastMessage = ({
       );
     }
 
-    case UIMessageType.NOT_IMPLEMENTED: {
+    case UIMessageType.BUBBLE:
+    case UIMessageType.EVENT: {
+      //TODO : 추후 구현 필요
       return (
         <span className={styles.chat_list_content_message}>
           [미구현 메시지]

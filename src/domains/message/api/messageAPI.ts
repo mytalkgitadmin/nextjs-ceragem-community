@@ -1,15 +1,17 @@
 import { get, post } from "@/shared/api/client";
+import { MessageCustomType, MessageType } from "../constants";
 
 export interface DeliveryMessageRequest {
   message: {
-    customType: string;
+    customType: MessageCustomType;
     data: string;
     message: string;
-    type: string; //MESG, FILE
+    type: "ADMM" | "FILE" | "MESG";
   };
   target: {
-    channelIds: number[];
-    targetType: string;
+    channelIds?: string[];
+    friendIds?: string[];
+    targetType: "FRIEND_DIRECT" | "CHANNEL" | "FRIEND_GROUP";
   };
 }
 
@@ -20,3 +22,10 @@ export const deliveryMessage = async (data: DeliveryMessageRequest) => {
   });
   return response;
 };
+
+export interface DeleteMessageRequest {
+  // messageIds: string[];
+  // deleteType: MESSAGE_DELETE_TYPE;
+}
+
+export const deleteMessage = async (data: DeleteMessageRequest) => {};

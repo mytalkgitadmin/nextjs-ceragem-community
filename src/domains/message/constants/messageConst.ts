@@ -35,3 +35,8 @@ export const TIMER_MESSAGES = {
   ONE_WEEK: "자동 삭제 타이머를 1주로 설정하였습니다.",
   FOUR_WEEKS: "자동 삭제 타이머를 4주로 설정하였습니다.",
 };
+
+export const MESSAGE_DELETE_TYPE = {
+  DELETE_MY: "DELETE_MY", // 메시지 삭제(내화면)
+  DELETE_ALL: "DELETE_ALL", // 메시지 삭제(친구화면까지)
+};
