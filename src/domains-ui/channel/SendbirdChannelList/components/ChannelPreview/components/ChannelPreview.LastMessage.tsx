@@ -1,7 +1,11 @@
 import React from "react";
 import { useAuth } from "@/domains/auth";
 import { parseJson } from "@/shared/utils";
-import { UIMessageType, getUIMessageType } from "@/domains/message";
+import {
+  UIMessageType,
+  getUIMessageType,
+  isDeletedMessageToUser,
+} from "@/domains/message";
 import styles from "./ChannelPreview.LastMessage.module.css";
 import { BaseMessage } from "@sendbird/chat/message";
 
@@ -24,16 +28,15 @@ export const ChannelPreviewLastMessage = ({
 }: ChannelPreviewLastMessageProps) => {
   const { sendBirdId } = useAuth();
 
-  const uiType = getUIMessageType(sendBirdId, lastMessage);
+  if (isDeletedMessageToUser(lastMessage, sendBirdId)) {
+    return (
+      <span className={styles.chat_list_content_message}>
+        메시지가 삭제되었습니다.
+      </span>
+    );
+  }
 
-  switch (uiType) {
-    case UIMessageType.DELETED: {
-      return (
-        <span className={styles.chat_list_content_message}>
-          메시지가 삭제되었습니다.
-        </span>
-      );
-    }
+  switch (getUIMessageType(lastMessage)) {
     case UIMessageType.IMAGE: {
       return (
         <span className={styles.chat_list_content_message}>
@@ -74,7 +77,7 @@ export const ChannelPreviewLastMessage = ({
 
     case UIMessageType.BUBBLE:
     case UIMessageType.EVENT: {
-      //TODO : 추후 구현 필요
+      //CHECK : 패밀리타운에서는 구현된 메시지임
       return (
         <span className={styles.chat_list_content_message}>
           [미구현 메시지]

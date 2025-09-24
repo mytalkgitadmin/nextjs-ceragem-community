@@ -1,0 +1,216 @@
+.fileWrap {
+  background: #ffffff;
+  border-radius: 18px;
+  width: 224px;
+  min-width: 224px;
+  height: 72px;
+  min-height: 72px;
+  display: flex;
+  padding: 20px;
+}
+
+.fileWrap img {
+  width: 32px;
+  height: 32px;
+}
+.fileName {
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: rgba(0, 0, 0, 0.8);
+  margin-left: 12px;
+  margin-bottom: 2px;
+  margin-top: -3px;
+  display: flex; /* Flexbox를 사용하여 이름과 확장자를 나란히 배치합니다 */
+}
+
+.fileName > span:first-child {
+  /* 첫 번째 span 요소 (파일 이름)에 대한 스타일입니다 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  max-width: 100px;
+}
+
+.fileInfo {
+  display: flex;
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.fileSize {
+  margin-left: 12px;
+}
+
+.videoViewWrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  text-align: center;
+  color: #fff;
+  z-index: 1;
+}
+
+/*  */
+.videoViewPlayImg {
+  width: 55px !important;
+  height: 55px !important;
+  margin-bottom: 6px;
+}
+
+/*  */
+.videoRelative {
+  position: relative;
+}
+.videoRelative::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  display: block;
+  background-color: rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 20px;
+}
+
+.chat_message_content_in_out_wrap_in_right_unread {
+  position: absolute;
+  font-size: 12px;
+  bottom: 0;
+  right: 20px;
+}
+
+/*  */
+.img1,
+.imgsGroup {
+  max-width: min(300px, 50vw);
+  max-height: min(300px, 50vw);
+  min-width: 100px;
+  min-height: 100px;
+  cursor: pointer;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.imgsGroup {
+  display: grid;
+  gap: 4px;
+}
+.imgsGroup [class*="ant-image"] {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  aspect-ratio: 1;
+}
+
+.imgsGroup [class*="ant-image"] [class*="ant-image-img"] {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 2단 */
+.imgs2,
+.imgs3,
+.imgs4 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* 3단 */
+.imgs6 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.imgs5 {
+  grid-template-columns: repeat(6, 1fr);
+}
+
+/* 1행 */
+.imgs2 {
+  height: 150px;
+  max-height: min(150px, 50vw);
+}
+
+/* 2행 */
+.imgs3,
+.imgs4,
+.imgs5,
+.imgs6 {
+  grid-template-rows: repeat(2, 1fr);
+}
+
+.imgs3 [class*="ant-image"]:nth-child(1) {
+  grid-column: 1 / 3;
+  grid-row: 1 / 2;
+}
+.imgs3,
+.imgs4,
+.imgs5 {
+  height: 300px;
+  max-height: min(300px, 50vw);
+}
+
+.imgs5 {
+  height: 250px;
+  max-height: min(250px, 50vw);
+  grid-template-rows: 3fr 2fr;
+}
+
+.imgs6 {
+  min-width: 0;
+  height: 200px;
+  max-height: min(200px, 50vw);
+}
+
+.imgs5 [class*="ant-image"]:nth-child(1) {
+  grid-column: 1 / 4;
+  grid-row: 1 / 2;
+}
+.imgs5 [class*="ant-image"]:nth-child(2) {
+  grid-column: 4/ 7;
+  grid-row: 1 / 2;
+}
+.imgs5 [class*="ant-image"]:nth-child(3) {
+  grid-column: 1 / 3;
+  grid-row: 2 / 3;
+}
+.imgs5 [class*="ant-image"]:nth-child(4) {
+  grid-column: 3 / 5;
+  grid-row: 2 / 3;
+}
+.imgs5 [class*="ant-image"]:nth-child(5) {
+  grid-column: 5 / 7;
+  grid-row: 2 / 3;
+}
+
+/* 6개 이상인 경우 */
+.imgs6 [class*="ant-image"]:nth-child(6) {
+  grid-column: 3 / 4;
+  grid-row: 2 / 3;
+}
+.imgs6 .dimmed {
+  grid-column: 3 / 4;
+  grid-row: 2 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.6);
+
+  color: white;
+  font-size: 16px;
+}
+
+.imgsGroup [class*="ant-image"],
+.dimmed {
+  border-radius: 8px;
+}

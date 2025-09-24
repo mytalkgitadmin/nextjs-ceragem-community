@@ -19,7 +19,7 @@ export const SendbirdChannelList = () => {
       onChannelCreated={() => {}}
       channelListQueryParams={{
         // 운영 PRIVATE 제외
-        customTypesFilter: ["DIRECT", "GROUP", "FAMILY"], // 'PRIVATE', 'DIRECT', 'MY', 'GROUP'
+        customTypesFilter: ["DIRECT", "GROUP"], // 'PRIVATE', 'DIRECT', 'MY', 'GROUP'
       }}
       disableAutoSelect
     >

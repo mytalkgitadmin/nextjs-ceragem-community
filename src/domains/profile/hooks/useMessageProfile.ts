@@ -16,7 +16,7 @@ export const useMessageSenderProfile = (message: BaseMessage) => {
   const channelMembers = useChannelMembers(channelUrl);
   const sendbirdId = sender?.userId;
   const userInfo = channelMembers.find(
-    (member) => member.accountId === sendbirdId
+    (member) => member.sendbirdId === sendbirdId
   );
 
   const { data } = useSendbirdProfile(sendbirdId);
@@ -28,7 +28,7 @@ export const useMessageSenderProfile = (message: BaseMessage) => {
       const nickname =
         userInfo.relationType === "LEAVE"
           ? sender?.nickname || DEFAULT_NICKNAME
-          : getUserNameFromProfile(userInfo.profile, DEFAULT_NICKNAME);
+          : getUserNameFromProfile(userInfo, DEFAULT_NICKNAME);
 
       const profileImg = getImgFromProfile(userInfo.profile);
 

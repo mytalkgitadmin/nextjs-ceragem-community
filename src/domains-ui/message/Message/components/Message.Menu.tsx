@@ -12,11 +12,11 @@ import {
   useDeliveryMessage,
   deleteMessage as deleteMessageAPI,
   getDeleteMessageRequestData,
+  getShareFileDonwloadUrl,
 } from "@/domains/message";
 import { useAuth } from "@/domains/auth";
 import { ContextMenuWrapper, ContextMenuItem } from "@/shared-ui/feedback";
-
-import { downloadFile } from "@/shared/utils";
+import { downloadFileByUrl } from "@/shared/utils";
 import { useChannelInfo } from "@/domains/channel";
 
 export interface MessageMenuProps {
@@ -29,9 +29,7 @@ export const MessageMenu = ({ message, children }: MessageMenuProps) => {
   const { mutate: deliveryMessage } = useDeliveryMessage();
   const channelInfo = useChannelInfo(message.channelUrl);
 
-  console.log(channelInfo);
-
-  const uiType = getUIMessageType(mySendBirdId, message);
+  const uiType = getUIMessageType(message);
   const messageData = parseJson(message.data || "");
   const menuConfig = MESSAGE_MENU_CONFIG[uiType];
 
@@ -103,7 +101,8 @@ export const MessageMenu = ({ message, children }: MessageMenuProps) => {
       const shareFiles = getShareFiles(message);
 
       for (const file of shareFiles) {
-        await downloadFile(file?.originalUrl, file?.originalFileName);
+        const downloadUrl = getShareFileDonwloadUrl(file);
+        await downloadFileByUrl(downloadUrl, file?.originalFileName);
       }
     }
   };

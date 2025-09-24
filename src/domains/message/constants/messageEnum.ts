@@ -66,8 +66,7 @@ export enum UIMessageType {
   // 답장 메시지
   REPLY = "reply",
 
-  // 삭제된 메시지 및 보이지 않는 메시지
-  DELETED = "deleted",
+  // 숨김 메시지
   INVISIBLE = "invisible",
 
   // 미구현 메시지

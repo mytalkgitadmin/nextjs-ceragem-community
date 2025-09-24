@@ -12,4 +12,12 @@ export {
   validateFileSharing,
   getShareFiles,
   getDeleteMessageRequestData,
+  isDeletedMessageToUser,
+  isEditedMessage,
+  removeEditPrefix,
+  isLongTextMessage,
+  getReplyMessageThumbUrl,
+  getReplyMessageContents,
+  getShareFileDonwloadUrl,
+  getShareFileThumbnailHeight,
 } from "./messageUtils";

@@ -1,0 +1,16 @@
+.total_view_wrap {
+  text-align: right;
+  margin-top: 10px;
+  padding-top: 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.viewModal {
+  min-height: 500px;
+  max-height: 700px;
+  overflow: hidden;
+  overflow-y: auto;
+}

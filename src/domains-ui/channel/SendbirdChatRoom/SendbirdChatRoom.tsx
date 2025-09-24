@@ -8,7 +8,11 @@ import { MessageContentProps } from "@sendbird/uikit-react/ui/MessageContent";
 import { GroupChannel as GroupChannelType } from "@sendbird/chat/groupChannel";
 import GroupChannel from "@sendbird/uikit-react/GroupChannel";
 import { ReplyType } from "@sendbird/chat/message";
-import { getUIMessageType, UIMessageType } from "@/domains/message";
+import {
+  getUIMessageType,
+  UIMessageType,
+  isDeletedMessageToUser,
+} from "@/domains/message";
 
 import { useAuth } from "@/domains/auth";
 import { SystemMessage, Message } from "@/domains-ui/message";
@@ -29,13 +33,14 @@ export function SendbirdChatRoom({
   const renderMessage = (messageContent: MessageContentProps) => {
     const { message, chainTop, chainBottom } = messageContent;
 
-    const uiType = getUIMessageType(sendBirdId, message);
+    if (isDeletedMessageToUser(message, sendBirdId)) {
+      return <></>;
+    }
 
-    switch (uiType) {
+    switch (getUIMessageType(message)) {
       case UIMessageType.SYSTEM:
         return <SystemMessage message={message} />;
       case UIMessageType.INVISIBLE:
-      case UIMessageType.DELETED:
         return <></>;
       default:
         return (

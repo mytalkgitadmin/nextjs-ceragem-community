@@ -1,0 +1,44 @@
+.chat_message_replay_wrap {
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #efefef;
+  min-width: 178px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  max-width: 330px;
+}
+.chat_message_replay_wrap.long {
+  max-width: 100%;
+}
+.chat_message_replay_file {
+  padding: 10px 0;
+  min-width: 50px;
+}
+
+.chat_message_replay_file img {
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.chat_message_replay_contents {
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* 표시할 줄의 수를 2줄로 제한 */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  max-height: 3em; /* 두 줄의 최대 높이 (글꼴 크기에 따라 조정할 수 있음) */
+}
+
+.flexWrap {
+  display: flex;
+  align-items: center;
+  gap: 0.2em;
+}
+.icon {
+  display: inline-flex;
+  align-items: center;
+  width: 1em;
+  height: auto;
+}

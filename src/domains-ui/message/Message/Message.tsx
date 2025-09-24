@@ -53,37 +53,11 @@ export const Message = ({
 
           <div className={styles.content_wrap}>
             <MessageMenu message={message}>
-              <div
-                className={styles.contents}
-                // onContextMenu={handleContextMenu}
-              >
+              <div className={styles.contents}>
                 {/* 메시지 fontSize를 인라인 스타일로 적용 - 사용자 사이즈 조절 */}
                 <div style={{ fontSize }} className={styles.contents_inner}>
-                  <MessageContent />
+                  <MessageContent message={message} />
                 </div>
-
-                {/*  메시지 메뉴 */}
-
-                {/* {!chatDeleteMode &&
-                selectedMessageId === messageData?.message?.messageId && (
-                  <MessageMenu
-                    type={!isSender ? "RECIEVER" : null}
-                    copyDisabled={copyDisabled === true ? true : false}
-                    channelInfo={channelInfo}
-                    message={messageData}
-                    openMessageControl={openMessageControl}
-                    setOpenMessageControl={setOpenMessageControl}
-                    handleMessageDelete={handleMessageDelete}
-                    setOpenModalShare={setOpenModalShare}
-                    setEditMessage={setEditMessage}
-                    setParentMessage={setParentMessage}
-                    // file
-                    setToastMessage={setToastMessage}
-                    fileResource={
-                      data?.type !== "MESSAGE_BUBBLE" && data?.resource
-                    }
-                  />
-                )} */}
               </div>
             </MessageMenu>
 
