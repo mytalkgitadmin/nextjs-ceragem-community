@@ -24,7 +24,7 @@ const CUSTOM_SYSTEM_MESSAGE_TYPES = [
 ];
 
 /**
- * 메시지가 삭제된 메시지인지 확인 (특정 사용자에게 삭제된 메시지인지 확인)
+ * 메시지가 특정 사용자에게 삭제된 메시지인지 확인
  * @param message 메시지
  * @param userId 사용자 ID
  * @returns 삭제된 메시지인지 여부

@@ -46,3 +46,37 @@ export const formatDate = (timestamp: string | Date | number): string => {
   }
   return target.format("YYYY-MM-DD");
 };
+
+/**
+ * 한국어 날짜 포맷팅
+ * @param timestamp - 포맷팅할 날짜
+ * @returns 포맷팅된 날짜 : 어제, 오늘, 날짜[YYYY년 MM월 DD일 (요일)]
+ */
+
+export const formatKoreanDate = (timestamp: string | Date | number): string => {
+  const date = new Date(timestamp);
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const messageDate = new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate()
+  );
+
+  const diffTime = today.getTime() - messageDate.getTime();
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  if (diffDays === 0) {
+    return "오늘";
+  } else if (diffDays === 1) {
+    return "어제";
+  } else {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const dayNames = ["일", "월", "화", "수", "목", "금", "토"];
+    const dayName = dayNames[date.getDay()];
+
+    return `${year}년 ${month}월 ${day}일 (${dayName})`;
+  }
+};

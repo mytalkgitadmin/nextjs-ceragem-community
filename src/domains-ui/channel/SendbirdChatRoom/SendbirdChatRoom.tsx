@@ -16,7 +16,10 @@ import {
 
 import { useAuth } from "@/domains/auth";
 import { SystemMessage, Message } from "@/domains-ui/message";
-import { SendbirdChatRoomHeader } from "./components";
+import {
+  SendbirdChatRoomHeader,
+  SendbirdChatRoomDateSeparator,
+} from "./components";
 
 export interface SendbirdChatRoomContentProps {
   channel: GroupChannelType;
@@ -37,20 +40,21 @@ export function SendbirdChatRoom({
       return <></>;
     }
 
-    switch (getUIMessageType(message)) {
-      case UIMessageType.SYSTEM:
-        return <SystemMessage message={message} />;
-      case UIMessageType.INVISIBLE:
-        return <></>;
-      default:
-        return (
-          <Message
-            message={message}
-            chainTop={chainTop}
-            chainBottom={chainBottom}
-          />
-        );
+    const uiType = getUIMessageType(message);
+
+    if (uiType === UIMessageType.SYSTEM) {
+      return <SystemMessage message={message} />;
     }
+    if (uiType === UIMessageType.INVISIBLE) {
+      return <></>;
+    }
+    return (
+      <Message
+        message={message}
+        chainTop={chainTop}
+        chainBottom={chainBottom}
+      />
+    );
   };
 
   return (
@@ -73,7 +77,7 @@ export function SendbirdChatRoom({
             )}
             // 날짜 구분선
             renderCustomSeparator={({ message }) => (
-              <>{/* <DateSeparator createdAt={message.createdAt} /> */}</>
+              <SendbirdChatRoomDateSeparator message={message} />
             )}
             // 개별 메시지
             renderMessageContent={renderMessage}
