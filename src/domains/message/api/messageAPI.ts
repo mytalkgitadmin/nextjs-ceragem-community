@@ -1,21 +1,29 @@
-import { get, post } from "@/shared/api/client";
+import { get, post, put } from "@/shared/api/client";
 import { MessageCustomType, MessageType } from "../constants";
 
-export interface DeliveryMessageRequest {
+export type RequestMessageType = "FILE" | "MESG" | "ADMM";
+export type DeleteMessageRequestType = "MY" | "ALL";
+
+export type ShareRequestTargetType =
+  | "FRIEND_DIRECT"
+  | "CHANNEL"
+  | "FRIEND_GROUP";
+
+export interface DeliveryMessageRequestData {
   message: {
     customType: MessageCustomType;
     data: string;
     message: string;
-    type: "ADMM" | "FILE" | "MESG";
+    type: RequestMessageType;
   };
   target: {
     channelIds?: string[];
     friendIds?: string[];
-    targetType: "FRIEND_DIRECT" | "CHANNEL" | "FRIEND_GROUP";
+    targetType: ShareRequestTargetType;
   };
 }
 
-export const deliveryMessage = async (data: DeliveryMessageRequest) => {
+export const deliveryMessage = async (data: DeliveryMessageRequestData) => {
   const response = await post({
     url: "/channel/delivery",
     data,
@@ -23,9 +31,18 @@ export const deliveryMessage = async (data: DeliveryMessageRequest) => {
   return response;
 };
 
-export interface DeleteMessageRequest {
-  // messageIds: string[];
-  // deleteType: MESSAGE_DELETE_TYPE;
+export interface DeleteMessageRequestData {
+  channelId: number;
+  messageId: number;
+  type: RequestMessageType;
+  deleteType: DeleteMessageRequestType;
+  data: { data: string };
 }
 
-export const deleteMessage = async (data: DeleteMessageRequest) => {};
+export const deleteMessage = async (data: DeleteMessageRequestData) => {
+  const response = await put({
+    url: `/channel/${data.channelId}/user-message/${data.type}/${data.messageId}/${data.deleteType}`,
+    data: data.data,
+  });
+  return response;
+};

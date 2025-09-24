@@ -1,1 +1,1 @@
-export { useDeliveryMessage } from "./channelMutations";
+export { useDeliveryMessage } from "./messageMutations";

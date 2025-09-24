@@ -5,14 +5,19 @@ import {
   MESSAGE_MENU_CONFIG,
   getUIMessageType,
   MessageType,
-  getDataForShare,
+  getShareMessageRequestData,
   validateFileSharing,
   getShareFiles,
+  type DeleteMessageRequestType,
+  useDeliveryMessage,
+  deleteMessage as deleteMessageAPI,
+  getDeleteMessageRequestData,
 } from "@/domains/message";
 import { useAuth } from "@/domains/auth";
 import { ContextMenuWrapper, ContextMenuItem } from "@/shared-ui/feedback";
-import { useDeliveryMessage } from "@/domains/message";
+
 import { downloadFile } from "@/shared/utils";
+import { useChannelInfo } from "@/domains/channel";
 
 export interface MessageMenuProps {
   message: BaseMessage;
@@ -22,6 +27,9 @@ export interface MessageMenuProps {
 export const MessageMenu = ({ message, children }: MessageMenuProps) => {
   const { sendBirdId: mySendBirdId } = useAuth();
   const { mutate: deliveryMessage } = useDeliveryMessage();
+  const channelInfo = useChannelInfo(message.channelUrl);
+
+  console.log(channelInfo);
 
   const uiType = getUIMessageType(mySendBirdId, message);
   const messageData = parseJson(message.data || "");
@@ -66,11 +74,9 @@ export const MessageMenu = ({ message, children }: MessageMenuProps) => {
     //CHECK: 패밀리타운 My 메모 추가 필요
     if (validate(message)) {
       deliveryMessage(
-        getDataForShare(message, {
-          channelTarget: {
-            channelIds: [], // [localStorage.getItem("myChannel")], // MY 채널 id
-            targetType: "CHANNEL",
-          },
+        getShareMessageRequestData(message, {
+          channelIds: [], // [localStorage.getItem("myChannel")], // MY 채널 id
+          targetType: "CHANNEL",
         }),
         {
           onSuccess: () => {
@@ -102,7 +108,18 @@ export const MessageMenu = ({ message, children }: MessageMenuProps) => {
     }
   };
 
-  const deleteMessage = async (message: BaseMessage) => {};
+  const deleteMessage = async (
+    message: BaseMessage,
+    type: DeleteMessageRequestType
+  ) => {
+    const channelId = channelInfo.channelId;
+    if (type === "ALL") {
+      // CHECK: 패밀리타운은 '내화면만', '친구화면까지' 삭제 옵션 존재
+    } else {
+      // 내 화면만 삭제
+      deleteMessageAPI(getDeleteMessageRequestData(channelId, message, type));
+    }
+  };
 
   const items: ContextMenuItem[] = [];
   if (!cantCopy) {
@@ -141,7 +158,7 @@ export const MessageMenu = ({ message, children }: MessageMenuProps) => {
       label: "삭제",
       onClick: () => {
         // CHECK: 패밀리타운에서는 체크박스 활성화 (다중 선택 삭제)
-        // CHECK: 패밀리타운은 '내화면만', '친구화면까지' 삭제 옵션 존재
+        // TODO: 삭제하기 모달 추가
       },
     });
   }
@@ -149,14 +166,22 @@ export const MessageMenu = ({ message, children }: MessageMenuProps) => {
     items.push({
       id: "edit",
       label: "편집",
-      onClick: () => {},
+      onClick: () => {
+        //TODO : input에 text 추가
+        //TODO: Context Bar 표시
+        //TODO: 편집중이라는 상태를 channel 글로벌 상태로 관리
+      },
     });
   }
   if (menuConfig.reply) {
     items.push({
       id: "reply",
       label: "답장",
-      onClick: () => {},
+      onClick: () => {
+        //TODO: input focus
+        //TODO: Context Bar 표시
+        //TODO: 답장중이라는 상태를 channel 글로벌 상태로 관리
+      },
     });
   }
 

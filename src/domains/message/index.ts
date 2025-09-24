@@ -6,9 +6,10 @@ export {
   getUIMessageType,
   isCustomSystemMessageType,
   getTimerMessage,
-  getDataForShare,
+  getShareMessageRequestData,
   validateFileSharing,
   getShareFiles,
+  getDeleteMessageRequestData,
 } from "./utils";
 export {
   SYSTEM_MESSAGE_TEMPLATES,
@@ -20,5 +21,12 @@ export {
   MESSAGE_DELETE_TYPE,
 } from "./constants";
 
-export { deliveryMessage, type DeliveryMessageRequest } from "./api";
+export {
+  deliveryMessage,
+  type DeliveryMessageRequestData,
+  type RequestMessageType,
+  type DeleteMessageRequestType,
+  type ShareRequestTargetType,
+} from "./api";
+export { deleteMessage, type DeleteMessageRequestData } from "./api";
 export { useDeliveryMessage } from "./queries";

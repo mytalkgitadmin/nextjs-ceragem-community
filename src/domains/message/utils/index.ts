@@ -8,7 +8,8 @@ export {
 export {
   getUIMessageType,
   isCustomSystemMessageType,
-  getDataForShare,
+  getShareMessageRequestData,
   validateFileSharing,
   getShareFiles,
+  getDeleteMessageRequestData,
 } from "./messageUtils";

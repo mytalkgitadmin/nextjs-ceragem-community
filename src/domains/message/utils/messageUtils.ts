@@ -8,7 +8,13 @@ import {
   MessageDataType,
   MessageType,
 } from "../constants/messageEnum";
-import { DeliveryMessageRequest } from "../api";
+import {
+  type DeliveryMessageRequestData,
+  type ShareRequestTargetType,
+  type RequestMessageType,
+  type DeleteMessageRequestType,
+  type DeleteMessageRequestData,
+} from "../api";
 
 const IMAGE_FILE_TYPES = ["gif", "image", "webp"];
 const CUSTOM_SYSTEM_MESSAGE_TYPES = [
@@ -154,39 +160,28 @@ export function isEditedMessage(text: string): boolean {
 }
 
 /**
- * 메시지 공유를 위한 데이터 준비
+ * 메시지 공유를 위한 메시지 요청 데이터 준비
  * @param message - 메시지
  * @returns 메시지 공유를 위한 데이터
  */
-export function getDataForShare(
+export function getShareMessageRequestData(
   message: BaseMessage,
-  options: {
-    channelTarget?: {
-      channelIds: string[];
-      targetType: "CHANNEL";
-    };
-    friendTarget?: {
-      friendIds: string[];
-      targetType: "FRIEND_DIRECT" | "FRIEND_GROUP";
-    };
-  }
-): DeliveryMessageRequest {
+  target: DeliveryMessageRequestData["target"]
+) {
   const data = message?.data || "";
   const messageType = message?.messageType;
   const customType = message?.customType || MessageCustomType.BEFAMILY;
-  // const data = message?.data || albumDataConvert(message, type) || '' //TODO: 가족앨범 전달 시 메시지 처리
+  // const data = message?.data || albumDataConvert(message, type) || '' //CHECK: 패밀리타운 가족앨범 전달 시 메시지 처리
 
-  let type: "MESG" | "ADMM" | "FILE" = "MESG";
+  let type: RequestMessageType = "MESG";
   if (messageType === MessageType.ADMIN) {
     type = "ADMM";
   } else if (messageType === MessageType.FILE) {
-    // else if (message?.messageType === 'file' || type === 'ALBUM') { //TODO: 가족앨범 전달 시 메시지 처리
+    // else if (message?.messageType === 'file' || type === 'ALBUM') { //CHECK: 패밀리타운 가족앨범 전달 시 메시지 처리
     type = "FILE";
   } else if (messageType === MessageType.USER) {
     type = "MESG";
   }
-
-  const target = options.channelTarget || options.friendTarget;
 
   return {
     message: {
@@ -195,10 +190,38 @@ export function getDataForShare(
       data,
       type,
     },
-    target: {
-      channelIds: [], //[localStorage.getItem("myChannel")],
-      targetType: "CHANNEL",
-    },
+    target,
+  };
+}
+
+/**
+ * 메시지 삭제를 위한 메시지 요청 데이터 준비
+ * @param channelId - 채널 Info ID
+ * @param message - 메시지
+ * @returns 메시지 삭제를 위한 데이터
+ */
+
+export function getDeleteMessageRequestData(
+  channelId: number,
+  message: BaseMessage,
+  deleteType: DeleteMessageRequestType
+): DeleteMessageRequestData {
+  const data = message?.data || "";
+
+  let type: RequestMessageType = "MESG";
+  if (
+    message.messageType === MessageType.FILE ||
+    data.includes("MESSAGE_FILE")
+  ) {
+    type = "FILE";
+  }
+
+  return {
+    channelId,
+    messageId: message.messageId,
+    type,
+    deleteType,
+    data: { data },
   };
 }
 
