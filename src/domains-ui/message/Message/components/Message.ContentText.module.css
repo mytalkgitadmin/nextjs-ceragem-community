@@ -14,3 +14,14 @@
   overflow: hidden;
   overflow-y: auto;
 }
+
+.register-date-btn {
+  padding: 0;
+  margin: 0;
+
+  color: #7940ff;
+  text-decoration: underline;
+  font-weight: inherit;
+  font-size: inherit;
+  vertical-align: bottom;
+}

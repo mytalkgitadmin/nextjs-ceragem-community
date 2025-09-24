@@ -86,6 +86,7 @@ export const MessageContentText = ({
       // CHECK: 패밀리타운에서는 구현된 버튼임
       elements.push(
         <button
+          className={styles.register_date_btn}
           key={`date_${elementIndex}_${currentIndex}`}
           //   message={match[0]}
           //   isSender={isSender}

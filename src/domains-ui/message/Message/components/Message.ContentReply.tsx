@@ -21,9 +21,10 @@ export const MessageContentReply = ({
 }: MessageContentReplyProps) => {
   const groupChannelContext = useGroupChannelContext();
   const { sendBirdId } = useAuth();
-  const { nickname: toName } = useMessageSenderProfile(message.parentMessage);
+  const parentMessage = message.parentMessage;
+  const { nickname: toName } = useMessageSenderProfile(parentMessage);
 
-  const toMe = sendBirdId === message.parentMessage?.sender?.userId;
+  const toMe = sendBirdId === parentMessage?.sender?.userId;
   const isMyMessage = sendBirdId === message.sender?.userId;
 
   const isLongText = isLongTextMessage(message);
@@ -35,9 +36,11 @@ export const MessageContentReply = ({
       !!groupChannelContext?.scrollToMessage ||
       !!groupChannelContext?.setAnimatedMessageId
     ) {
-      groupChannelContext.scrollToMessage(message.createdAt, message.messageId);
-      groupChannelContext.setAnimatedMessageId(message.messageId);
-      // channelContext.setHighLightedMessageId(message.messageId)
+      groupChannelContext.scrollToMessage(
+        parentMessage.createdAt,
+        parentMessage.messageId
+      );
+      groupChannelContext.setAnimatedMessageId(parentMessage.messageId); //TODO: 잘 동작하지 않음 확인필요
     }
   };
 

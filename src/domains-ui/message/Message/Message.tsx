@@ -1,6 +1,6 @@
 import { useAuth } from "@/domains/auth";
 import { BaseMessage } from "@sendbird/chat/message";
-import { UIMessageType } from "@/domains/message";
+import { UIMessageType, isEditedMessage } from "@/domains/message";
 import styles from "./Message.module.css";
 import {
   MessageProfile,
@@ -10,7 +10,6 @@ import {
 } from "./components";
 import { useMyChatSettingsStore } from "@/domains/settings";
 import { formatTime } from "@/shared/utils/dateUtils";
-import { ContextMenuWrapper } from "@/shared-ui/feedback";
 
 export interface MessageProps {
   message: BaseMessage;
@@ -32,6 +31,7 @@ export const Message = ({
   const showTime = !chainBottom;
   const senderName = message.sender?.nickname || "사용자";
   const createdAt = message.createdAt;
+  const isEdited = isEditedMessage(message.message || "");
 
   return (
     <>
@@ -73,11 +73,8 @@ export const Message = ({
               )}
             </div>
           </div>
-
-          {/*    // 일정 등록 버튼   //TODO: 추후 구현
-          {(showScheduleRegisterButton || isEditedMessage) && (
-            <div className={styles.add_content}>
-              
+          <div className={styles.add_content}>
+            {/*    // 일정 등록 버튼   //CHECK: 패밀리타운에서는 구현되어있음     
               {showScheduleRegisterButton && messageData?.message && (
                 <div className={styles.calendarBtn}>
                   <ScheduleRegisterButton
@@ -85,11 +82,9 @@ export const Message = ({
                     channelInfo={channelInfo}
                   ></ScheduleRegisterButton>
                 </div>
-              )}
-
-              {isEditedMessage && <p className={styles.editText}>편집됨</p>}
-            </div>
-          )} */}
+              )}*/}
+            {isEdited && <p className={styles.editText}>편집됨</p>}
+          </div>
         </div>
       </div>
 
