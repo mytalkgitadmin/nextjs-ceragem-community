@@ -92,7 +92,15 @@ export async function POST(req: NextRequest) {
     path: "/",
     httpOnly: true,
     sameSite: "lax",
-    maxAge: accessMaxAge,
+    maxAge: 60 * 60 * 24 * 365, // agreement가 변경될 경우 -> agreement_v2
+    secure: process.env.NODE_ENV === "production",
+  });
+  res.cookies.set("coach_connected", accountProfile.coachConnected || false, {
+    //TODO: API 파라미터 확인 필요
+    path: "/",
+    httpOnly: true,
+    sameSite: "lax",
+    maxAge: 60 * 60 * 24 * 365,
     secure: process.env.NODE_ENV === "production",
   });
   return res;

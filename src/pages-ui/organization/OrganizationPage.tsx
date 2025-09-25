@@ -1,13 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   OrganizationPageHeader,
   OrganizationPageTabNav,
   OrganizationPageEmployeeTab,
 } from "./components";
-
-import { useRouter } from "next/navigation";
 
 export interface OrganizationPageProps {}
 

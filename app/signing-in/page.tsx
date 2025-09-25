@@ -1,17 +1,17 @@
 import Client from "./Client";
 
-export default async function SigningInPage({
-  searchParams,
-}: {
+export interface SigningInProps {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
-}) {
+}
+
+export default async function SigningIn({ searchParams }: SigningInProps) {
   const resolved = await searchParams;
   const toParam =
     typeof resolved.to === "string"
       ? resolved.to
       : Array.isArray(resolved.to)
-      ? resolved.to[0]
-      : "/";
+        ? resolved.to[0]
+        : "/";
 
   return (
     <div
@@ -25,7 +25,7 @@ export default async function SigningInPage({
       }}
     >
       <div>SigningInPage</div>
-      <Client to={toParam || "/"} />
+      <Client to={toParam} />
     </div>
   );
 }

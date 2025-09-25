@@ -19,8 +19,11 @@ interface ConsentItem {
   content: string;
 }
 
-export const ConsentPage: React.FC = () => {
-  const router = useRouter();
+export interface ConsentPageProps {
+  onAgree: () => void;
+}
+
+export const ConsentPage: React.FC<ConsentPageProps> = ({ onAgree }) => {
   const { openDrawer, requestCloseDrawer } = useDrawer();
 
   const [consentItems] = useState<ConsentItem[]>([
@@ -81,7 +84,7 @@ export const ConsentPage: React.FC = () => {
     if (areRequiredItemsChecked()) {
       console.log("동의 완료:", checkedItems);
       //TODO: 동의 API 호출 성공 시 다음 단계로 진행
-      router.push("/");
+      onAgree();
     }
   };
 

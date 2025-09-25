@@ -1,4 +1,4 @@
-import { ConsentPage } from "@/pages-ui/consent";
+import { CoachConnectPage } from "@/pages-ui/coach-connect";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -6,11 +6,11 @@ export interface ConsentProps {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }
 
-async function setAgreementCookie(toUrl: string) {
+async function setCoachConnectedCookie(toUrl: string) {
   "use server";
 
   const cookieStore = await cookies();
-  cookieStore.set("agreement", "true", {
+  cookieStore.set("coach_connected", "true", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
@@ -20,7 +20,7 @@ async function setAgreementCookie(toUrl: string) {
   redirect(toUrl);
 }
 
-export default async function Consent({ searchParams }: ConsentProps) {
+export default async function CoachConnect({ searchParams }: ConsentProps) {
   const resolved = await searchParams;
   const toParam =
     typeof resolved.to === "string"
@@ -29,7 +29,7 @@ export default async function Consent({ searchParams }: ConsentProps) {
         ? resolved.to[0]
         : "/";
 
-  const boundAction = setAgreementCookie.bind(null, toParam);
+  const boundAction = setCoachConnectedCookie.bind(null, toParam);
 
-  return <ConsentPage onAgree={boundAction} />;
+  return <CoachConnectPage onConnect={boundAction} />;
 }
