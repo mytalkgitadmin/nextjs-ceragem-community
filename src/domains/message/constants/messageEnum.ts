@@ -66,7 +66,7 @@ export enum UIMessageType {
   // 답장 메시지
   REPLY = "reply",
 
-  // 미구현 메시지
+  // CHECK: 미구현 메시지 (패밀리타운에서는 구현되어있음, 이모티콘, 행사)
   BUBBLE = "bubble",
   EVENT = "event",
 }
