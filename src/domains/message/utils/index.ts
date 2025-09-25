@@ -20,6 +20,7 @@ export {
   getReplyMessageContents,
   getShareFileDonwloadUrl,
   getShareFileThumbnailHeight,
+  isInvisibleMessage,
 } from "./messageUtils";
 export {
   sendFileMessage,

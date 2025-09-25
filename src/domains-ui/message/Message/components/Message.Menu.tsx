@@ -18,6 +18,7 @@ import { useAuth } from "@/domains/auth";
 import { ContextMenuWrapper, ContextMenuItem } from "@/shared-ui/feedback";
 import { downloadFileByUrl } from "@/shared/utils";
 import { useChannelInfo } from "@/domains/channel";
+import { App as AntdApp } from "antd";
 
 export interface MessageMenuProps {
   message: BaseMessage;
@@ -25,6 +26,8 @@ export interface MessageMenuProps {
 }
 
 export const MessageMenu = ({ message, children }: MessageMenuProps) => {
+  const { message: antMessage } = AntdApp.useApp();
+
   const { sendBirdId: mySendBirdId } = useAuth();
   const { mutate: deliveryMessage } = useDeliveryMessage();
   const channelInfo = useChannelInfo(message.channelUrl);
@@ -52,18 +55,27 @@ export const MessageMenu = ({ message, children }: MessageMenuProps) => {
     tempInput.select();
     document.execCommand("copy");
     document.body.removeChild(tempInput);
-    // showMessage('메시지가 복사되었습니다.') //TODO: 메시지 복사 알림 추가
+    antMessage.open({
+      type: "success",
+      content: "메시지가 복사되었습니다.",
+    });
   };
 
   const validate = (message: BaseMessage) => {
     const { canShare, status } = validateFileSharing(message);
     if (canShare) {
       if (status === "partial_shared") {
-        //setToastMessage('공유가 허용되지 않은 콘텐츠는 제외됩니다. ') //TODO
+        antMessage.open({
+          type: "warning",
+          content: "공유가 허용되지 않은 콘텐츠는 제외됩니다. ",
+        });
       }
       return true;
     } else {
-      // setToastMessage('공유가 허용되지 않은 콘텐츠 입니다.') //TODO
+      antMessage.open({
+        type: "error",
+        content: "공유가 허용되지 않은 콘텐츠 입니다.",
+      });
       return false;
     }
   };
@@ -78,7 +90,10 @@ export const MessageMenu = ({ message, children }: MessageMenuProps) => {
         }),
         {
           onSuccess: () => {
-            // showMessage('메시지를 전달하였습니다.')
+            antMessage.open({
+              type: "success",
+              content: "메시지를 전달하였습니다.",
+            });
           },
           onError: (error) => {
             // setErrorMessage(e.response.data?.localeMessage) // 오류 모달
@@ -158,6 +173,7 @@ export const MessageMenu = ({ message, children }: MessageMenuProps) => {
       onClick: () => {
         // CHECK: 패밀리타운에서는 체크박스 활성화 (다중 선택 삭제)
         // TODO: 삭제하기 모달 추가
+        deleteMessage(message, "MY");
       },
     });
   }

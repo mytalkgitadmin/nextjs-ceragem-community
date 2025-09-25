@@ -20,6 +20,7 @@ export {
   getShareFileThumbnailHeight,
   sendFileMessage,
   getSendirdFileMessageParamsList,
+  isInvisibleMessage,
 } from "./utils";
 
 export {

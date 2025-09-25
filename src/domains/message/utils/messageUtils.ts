@@ -46,6 +46,19 @@ export const isDeletedMessageToUser = (
   );
 };
 
+export const isInvisibleMessage = (message: BaseMessage) => {
+  const messageData = parseJson(message.data || "");
+  const dataType = messageData?.type;
+
+  return (
+    message.data?.includes(MessageDataType.UPDATED_TIMER_MESSAGE) ||
+    message.data?.includes(MessageDataType.DELETED_TIMER_MESSAGE) ||
+    dataType === MessageDataType.UPDATED_TIMER_MESSAGE ||
+    dataType === MessageDataType.DELETED_TIMER_MESSAGE ||
+    dataType === MessageDataType.MESSAGE_DELETED_ALL_SCREEN
+  );
+};
+
 /**
  * 메시지를 UI 타입으로 변환
  * @param message 메시지
@@ -57,16 +70,6 @@ export const getUIMessageType = (message: BaseMessage): UIMessageType => {
   const messageType = message.messageType;
   const messageData = parseJson(message.data || ""); // JSON 파싱해서 data 가져오기
   const dataType = messageData?.type;
-
-  if (
-    message.data?.includes(MessageDataType.UPDATED_TIMER_MESSAGE) ||
-    message.data?.includes(MessageDataType.DELETED_TIMER_MESSAGE) ||
-    dataType === MessageDataType.UPDATED_TIMER_MESSAGE ||
-    dataType === MessageDataType.DELETED_TIMER_MESSAGE ||
-    dataType === MessageDataType.MESSAGE_DELETED_ALL_SCREEN
-  ) {
-    return UIMessageType.INVISIBLE;
-  }
 
   if (
     customType === MessageCustomType.SENDBIRD ||

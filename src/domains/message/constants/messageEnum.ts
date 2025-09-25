@@ -66,9 +66,6 @@ export enum UIMessageType {
   // 답장 메시지
   REPLY = "reply",
 
-  // 숨김 메시지
-  INVISIBLE = "invisible",
-
   // 미구현 메시지
   BUBBLE = "bubble",
   EVENT = "event",

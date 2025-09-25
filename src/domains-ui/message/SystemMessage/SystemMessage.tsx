@@ -22,7 +22,7 @@ export const SystemMessage = ({ message }: SystemMessageProps) => {
   const [text, setText] = useState("");
   const data = parseJson(message.data || "");
   const isCustom = isCustomSystemMessageType(data.type);
-  // const [reInvite, setReInvite]: any = useState([]); //??
+  // const [reInvite, setReInvite]: any = useState([]); // Q: ???
 
   useEffect(() => {
     if (!isCustom) {
@@ -57,7 +57,7 @@ export const SystemMessage = ({ message }: SystemMessageProps) => {
   return (
     <div className={styles.chat_message_content_wrap}>
       <div className={styles.chat_message}>{text}</div>
-      {/* {reInvite && // ??
+      {/* {reInvite && // Q: ???
         reInvite.length > 0 &&
         reInvite.map((invite: any, index: number) => {
           return (

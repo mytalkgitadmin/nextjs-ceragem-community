@@ -19,7 +19,11 @@ export const useChannelStatus = (channelUrl: string) => {
   //     return ChannelStatus.ACTIVE;
   //   }
 
-  const members = channelInfo?.members.filter(
+  if (!channelInfo?.members) {
+    return ChannelStatus.NO_MEMBERS;
+  }
+
+  const members = channelInfo.members.filter(
     (member: any) => member?.relationType !== "ME"
   );
 
