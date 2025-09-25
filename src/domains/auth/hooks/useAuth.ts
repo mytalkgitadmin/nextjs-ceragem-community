@@ -25,14 +25,21 @@ export const useAuth = () => {
       });
 
       const { accountProfile } = response.data;
+      const agreement = accountProfile.agreement || false; //TODO: API 파라미터 확인 필요
+
       profileStore.setProfile({
         email: accountProfile.email,
         editedName: accountProfile.editedName,
         nationalNumber: accountProfile.nationalNumber,
         phoneNumber: accountProfile.phoneNumber,
+        agreement,
       });
 
-      router.replace(to || "/");
+      if (!agreement) {
+        router.replace("/consent");
+      } else {
+        router.replace(to || "/");
+      }
     } catch (error) {
       console.error("로그인 실패:", error);
       router.replace("/invalid-state");

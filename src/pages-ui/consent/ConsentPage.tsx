@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Button } from "@/shared-ui/display";
 import { Checkbox } from "@/shared-ui/input";
 import { useDrawer } from "@/drawer-system";
+import { useRouter } from "next/navigation";
 import {
   TermDetail,
   marketingTermDetailContent,
@@ -19,6 +20,7 @@ interface ConsentItem {
 }
 
 export const ConsentPage: React.FC = () => {
+  const router = useRouter();
   const { openDrawer, requestCloseDrawer } = useDrawer();
 
   const [consentItems] = useState<ConsentItem[]>([
@@ -78,13 +80,13 @@ export const ConsentPage: React.FC = () => {
   const handleStart = () => {
     if (areRequiredItemsChecked()) {
       console.log("동의 완료:", checkedItems);
-      // 다음 단계로 진행하는 로직
+      //TODO: 동의 API 호출 성공 시 다음 단계로 진행
+      router.push("/");
     }
   };
 
   const handleBack = () => {
-    // 뒤로가기 로직
-    console.log("뒤로가기");
+    //TODO: 웹뷰 종료 로직 필요
   };
 
   return (

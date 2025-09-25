@@ -12,6 +12,7 @@ export async function middleware(req: NextRequest) {
   const tokenCookie = req.cookies.get("token_hdr")?.value || "";
   const hasRefresh = Boolean(req.cookies.get("familytown_rt")?.value);
   const hasAccessToken = Boolean(req.cookies.get("familytown_at")?.value);
+  const agreement = req.cookies.get("agreement")?.value;
 
   console.log("[MW] pathname:", pathname);
 
@@ -36,10 +37,14 @@ export async function middleware(req: NextRequest) {
         httpOnly: true,
         sameSite: "lax",
         maxAge: ONE_YEAR_S,
-        // secure: process.env.NODE_ENV === "production", //TODO: 추후 확인
+        secure: process.env.NODE_ENV === "production",
       });
     }
     return res;
+  }
+
+  if (agreement === "false") {
+    return NextResponse.rewrite(new URL("/consent", req.url));
   }
 
   return NextResponse.next();

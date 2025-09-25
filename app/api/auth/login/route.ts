@@ -54,6 +54,7 @@ export async function POST(req: NextRequest) {
   let accessToken = accessTokenRaw;
   let refreshToken = refreshTokenRaw;
   const { accountProfile, sendBirdId, sessionToken } = result.data;
+
   accessToken = accessToken.replace("Bearer ", ""); // Bearer이 같이 넘어오고 있음
   refreshToken = refreshToken.replace("Bearer ", ""); // Bearer이 같이 넘어오고 있음
 
@@ -70,19 +71,29 @@ export async function POST(req: NextRequest) {
     ok: true,
     data: { accountProfile, sendBirdId, sessionToken },
   });
+
   res.cookies.set("familytown_rt", refreshToken, {
     path: "/",
     httpOnly: true,
     sameSite: "lax",
     maxAge: refreshMaxAge,
-    // secure: process.env.NODE_ENV === "production",
+    secure: process.env.NODE_ENV === "production",
   });
   res.cookies.set("familytown_at", accessToken, {
     path: "/",
     httpOnly: true,
     sameSite: "lax",
     maxAge: accessMaxAge,
-    // secure: process.env.NODE_ENV === "production",
+    secure: process.env.NODE_ENV === "production",
+  });
+
+  res.cookies.set("agreement", accountProfile.agreement || false, {
+    //TODO: API 파라미터 확인 필요
+    path: "/",
+    httpOnly: true,
+    sameSite: "lax",
+    maxAge: accessMaxAge,
+    secure: process.env.NODE_ENV === "production",
   });
   return res;
 }

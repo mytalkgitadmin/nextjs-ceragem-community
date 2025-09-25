@@ -10,6 +10,7 @@ interface ProfileState {
   editedName: string;
   nationalNumber?: string | null;
   phoneNumber?: string | null;
+  agreement?: boolean | null;
 }
 
 interface ProfileStore extends ProfileState {
@@ -23,6 +24,7 @@ export const useProfileStore = create<ProfileStore>()(
       editedName: "",
       nationalNumber: null,
       phoneNumber: null,
+      agreement: null,
       setProfile: (state) => set(state),
     }),
     {
@@ -32,6 +34,7 @@ export const useProfileStore = create<ProfileStore>()(
         editedName: state.editedName,
         nationalNumber: state.nationalNumber,
         phoneNumber: state.phoneNumber,
+        agreement: state.agreement,
       }),
     }
   )
