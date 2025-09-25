@@ -19,6 +19,7 @@ import { SystemMessage, Message } from "@/domains-ui/message";
 import {
   SendbirdChatRoomHeader,
   SendbirdChatRoomDateSeparator,
+  SendbirdChatRoomInputContainer,
 } from "./components";
 
 export interface SendbirdChatRoomContentProps {
@@ -89,6 +90,7 @@ export function SendbirdChatRoom({
                   placeholder="메시지를 입력하세요..."
                   onSendMessage={handleSendMessage}
                 /> */}
+                <SendbirdChatRoomInputContainer channel={channel} />
               </>
             )}
           />

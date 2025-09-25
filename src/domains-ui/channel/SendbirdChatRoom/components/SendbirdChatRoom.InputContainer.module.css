@@ -1,0 +1,216 @@
+.message_center_wrap {
+  width: 100%;
+  width: calc(100% - 10vw);
+  max-width: 1200px;
+  margin: auto;
+}
+
+.message_input {
+  width: calc(100% - 10vw - 60px);
+  transform: translateX(-30px);
+}
+
+.icon_title_list {
+  display: flex;
+  align-items: center;
+  min-width: 409px;
+  max-width: 409px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #d9d9d9;
+  justify-content: space-between;
+}
+
+.title_layout {
+  display: flex;
+  align-items: center;
+}
+
+.icon_title_list div {
+  margin-right: 3px;
+}
+
+.icon_title_recent img {
+  cursor: pointer;
+  width: 30px;
+}
+
+.icon_title_status img {
+  cursor: pointer;
+  width: 36px !important;
+  border-radius: 10px;
+}
+
+.icon_title_caractor img {
+  width: 42px !important;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.icon_list_wrap {
+  display: flex;
+  min-width: 409px;
+  min-height: 424px;
+  max-width: 409px;
+  max-height: 424px;
+  padding: 9px 10px;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  align-self: stretch;
+  overflow: hidden;
+  overflow-y: auto;
+  /* background: #f9f9f9; */
+}
+
+.icon_box img {
+  width: 52px !important;
+  cursor: pointer;
+}
+.icon_setting img {
+  width: 24px !important;
+  cursor: pointer;
+}
+
+.iconList {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 12px; /* 원하는 그리드 간격 설정 */
+}
+
+.iconListItem {
+  position: relative;
+  padding: 13px;
+}
+
+.icon_list_wrap img {
+  width: 60px !important;
+  height: 60px !important;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.recentEmoticonsEmpty {
+  color: #999;
+  /* PC_Basic/14_Auto_Rg */
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-top: 120px;
+}
+
+.smileMeEmptyWrap {
+  display: flex;
+  padding: 20px;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  align-self: stretch;
+}
+.smileMeinfo {
+  margin-top: 30px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  color: #999;
+  font-family: Pretendard;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 9px;
+}
+.smileMeinfo img {
+  width: 16px !important;
+  height: 16px !important;
+}
+.smileMeEmptyImg {
+  width: 80px !important;
+  height: 66px !important;
+}
+
+.smileMeEmptyContent {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: #666;
+  font-size: 14px;
+  font-family: Pretendard;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.primary {
+  color: #7940ff;
+}
+
+.smileMebutton {
+  display: flex;
+  height: 36px;
+  padding: 0px 24px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  background: #7940ff;
+  color: var(--text-ffffff, #fff);
+  cursor: pointer;
+  text-align: center;
+  /* PC_Basic/14_Auto_Rg */
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.icon_list_wrap img:hover {
+  /* opacity: 0.5; */
+}
+
+.chat_messages_footer {
+  position: relative;
+  box-sizing: border-box;
+  margin-top: 6px;
+  width: 100%;
+  padding: 0px;
+  display: flex;
+  justify-content: center;
+}
+
+.chat_messages_input_add {
+  position: absolute;
+  right: 0px;
+  top: 4px;
+  display: flex;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.45;
+  padding: 9px 0px;
+  box-sizing: border-box;
+  white-space: pre-wrap;
+  z-index: 8;
+  font-size: 12px;
+}
+.chat_messages_input_add img {
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.smileMeDelete {
+  position: absolute;
+  z-index: 10;
+  right: 6px;
+  top: 3px;
+}
+.smileMeDelete img {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.chat_messages_input_wrap {
+  position: relative;
+  width: 100%;
+}

@@ -1,0 +1,7 @@
+export const ChannelStatus = {
+  ACTIVE: "ACTIVE",
+  NO_MEMBERS: "INACTIVE",
+  LEFT_CHAT: "LEFT_CHAT",
+  USER_NOT_FOUND: "USER_NOT_FOUND",
+  BLOCKED_USER: "BLOCKED_USER",
+};

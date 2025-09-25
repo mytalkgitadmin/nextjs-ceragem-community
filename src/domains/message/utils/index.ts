@@ -21,3 +21,7 @@ export {
   getShareFileDonwloadUrl,
   getShareFileThumbnailHeight,
 } from "./messageUtils";
+export {
+  sendFileMessage,
+  getSendirdFileMessageParamsList,
+} from "./fileMessageUtils";
