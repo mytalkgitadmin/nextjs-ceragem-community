@@ -1,11 +1,11 @@
 import React, { Children, cloneElement, isValidElement } from "react";
-import { Avatar } from "./Avatar";
+import { Avatar, AvatarSize } from "./Avatar";
 
 export interface AvatarGroupProps {
   children: React.ReactNode;
   className?: string;
   isActive?: boolean;
-  size?: number;
+  size?: AvatarSize;
 }
 
 const MAX_COUNT = 4;
@@ -13,7 +13,7 @@ const MAX_COUNT = 4;
 // AvatarGroup 컴포넌트
 export const AvatarGroup = ({
   children,
-  size = 56,
+  size = "md",
   className = "",
 }: AvatarGroupProps) => {
   const validChildren = Children.toArray(children).filter(
@@ -21,14 +21,55 @@ export const AvatarGroup = ({
   );
 
   const memberCount = Math.min(validChildren.length, MAX_COUNT);
-  const containerSize = `${size * 0.625 * 0.1}rem`;
+
+  // 사이즈별 컨테이너 스타일 매핑
+  const sizeConfig = {
+    xs: {
+      container: "w-6 h-6", // 24px
+      childSizes: {
+        1: "xs" as AvatarSize,
+        2: "xs" as AvatarSize,
+        3: "xs" as AvatarSize,
+        4: "xs" as AvatarSize,
+      },
+    },
+    sm: {
+      container: "w-8 h-8", // 32px
+      childSizes: {
+        1: "sm" as AvatarSize,
+        2: "xs" as AvatarSize,
+        3: "xs" as AvatarSize,
+        4: "xs" as AvatarSize,
+      },
+    },
+    md: {
+      container: "w-12 h-12", // 48px
+      childSizes: {
+        1: "md" as AvatarSize,
+        2: "sm" as AvatarSize,
+        3: "xs" as AvatarSize,
+        4: "xs" as AvatarSize,
+      },
+    },
+    lg: {
+      container: "w-16 h-16", // 64px
+      childSizes: {
+        1: "lg" as AvatarSize,
+        2: "md" as AvatarSize,
+        3: "sm" as AvatarSize,
+        4: "xs" as AvatarSize,
+      },
+    },
+  };
+
+  const config = sizeConfig[size];
 
   if (memberCount === 0) {
     return null;
   }
 
   const getLayoutClasses = () => {
-    const baseClasses = `relative flex-shrink-0 bg-white`;
+    const baseClasses = `relative flex-shrink-0 bg-white ${config.container}`;
 
     switch (memberCount) {
       case 1:
@@ -81,24 +122,8 @@ export const AvatarGroup = ({
     }
   };
 
-  const getChildSize = () => {
-    switch (memberCount) {
-      case 1:
-        return size;
-      case 2:
-        return 36;
-      case 3:
-        return 32;
-      case 4:
-        return 30;
-      default:
-        return size;
-    }
-  };
-
-  const containerStyle = {
-    width: containerSize,
-    height: containerSize,
+  const getChildSize = (): AvatarSize => {
+    return config.childSizes[memberCount as keyof typeof config.childSizes];
   };
 
   const childSize = getChildSize();
@@ -106,13 +131,10 @@ export const AvatarGroup = ({
   if (memberCount === 1) {
     const child = validChildren[0];
     return (
-      <div
-        className={`${getLayoutClasses()} ${className}`}
-        style={containerStyle}
-      >
+      <div className={`${getLayoutClasses()} ${className}`}>
         {cloneElement(child as React.ReactElement, {
           size: childSize,
-          isGroupMember: true,
+          isGrouping: true,
           className: "w-full h-full ring-0",
         })}
       </div>
@@ -120,22 +142,15 @@ export const AvatarGroup = ({
   }
 
   return (
-    <div
-      className={`${getLayoutClasses()} ${className}`}
-      style={containerStyle}
-    >
+    <div className={`${getLayoutClasses()} ${className}`}>
       {validChildren.slice(0, MAX_COUNT).map((child: any, index: number) => (
         <div
           key={child.key || index}
           className={getChildPositionClasses(index)}
-          style={{
-            width: `${childSize * 0.625 * 0.1}rem`,
-            height: `${childSize * 0.625 * 0.1}rem`,
-          }}
         >
           {cloneElement(child as React.ReactElement, {
             size: childSize,
-            isGroupMember: true,
+            isGrouping: true,
             className: "w-full h-full ring-0",
           })}
         </div>

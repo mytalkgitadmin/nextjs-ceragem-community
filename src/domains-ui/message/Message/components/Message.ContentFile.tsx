@@ -23,7 +23,7 @@ export const MessageContentFile = ({ message }: MessageContentFileProps) => {
   const file = resource[0]; // Q: 파일 한개만 처리?
 
   if (!file) {
-    return "파일 전송 중 오류가 발생했습니다.";
+    return <span>파일 전송 중 오류가 발생했습니다.</span>;
   }
 
   const {

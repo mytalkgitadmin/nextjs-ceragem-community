@@ -1,7 +1,4 @@
-export const ChannelStatus = {
-  ACTIVE: "ACTIVE",
-  NO_MEMBERS: "INACTIVE",
-  LEFT_CHAT: "LEFT_CHAT",
-  USER_NOT_FOUND: "USER_NOT_FOUND",
-  BLOCKED_USER: "BLOCKED_USER",
-};
+export enum ChannelType {
+  GROUP = "GROUP", // 그룹 대화
+  DIRECT = "DIRECT", // 1:1 대화
+}

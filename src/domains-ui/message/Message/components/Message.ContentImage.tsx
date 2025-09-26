@@ -18,7 +18,7 @@ export const MessageContentImage = ({ message }: MessageContentImageProps) => {
   const imageCount = resource.length;
 
   if (imageCount === 0) {
-    return "이미지 전송 중 오류가 발생했습니다.";
+    return <span>이미지 전송 중 오류가 발생했습니다.</span>;
   }
 
   const openPreview = () => {

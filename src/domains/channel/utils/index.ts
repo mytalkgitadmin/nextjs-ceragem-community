@@ -1,6 +1,2 @@
-export {
-  getMessageType,
-  getMessageData,
-  isAdminMessage,
-} from "../../message/utils/messageUtils";
-export { isEditedMessage } from "./messageTextUtils";
+export { createChatRoom, inviteChatRoom } from "./channelUtils";
+export type { CreateChatRoomInput, InviteChatRoomInput } from "./channelUtils";

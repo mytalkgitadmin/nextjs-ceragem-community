@@ -19,7 +19,7 @@ export const ChannelPreviewSingleAvatar: React.FC<
         <Avatar
           key={`mem_${member.accountId}_${index}`}
           src={"/assets/images/profile/bemily_profile000.png"}
-          size={64}
+          size="lg"
           className={styles.none}
         />
       );
@@ -34,7 +34,7 @@ export const ChannelPreviewSingleAvatar: React.FC<
       <Avatar
         key={`member_${member.accountId}_${index}`}
         src={memberProfileShortImg(member, "short")}
-        size={64}
+        size="lg"
         className={styles.chat_list_avatar}
       />
     );

@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { SearchInput } from "@/shared-ui";
-import { mockData } from "./mockData";
-import { EmployeeCardGroup } from "@/domains-ui/contact";
+import { mockEmployeeData } from "./mockData";
+import { Collapse, PersonCard } from "@/shared-ui/display";
 
 export interface OrganizationPageEmployeeTabProps {}
 
@@ -15,29 +15,17 @@ export function OrganizationPageEmployeeTab({}: OrganizationPageEmployeeTabProps
         <SearchInput placeholder="검색" onSearch={() => {}} />
       </div>
 
-      {/* 내 프로필 */}
-      <div className="p-4 bg-gray-50">
-        {/* <MyProfileCard
-          id={mockData.myProfile.id}
-          name={mockData.myProfile.name}
-          position={mockData.myProfile.position}
-          department={mockData.myProfile.department}
-          statusMessage={mockData.myProfile.statusMessage}
-          badgeText={mockData.myProfile.badgeText}
-          badgeColor={mockData.myProfile.badgeColor}
-          onMessageClick={onMessageClick}
-          onEditClick={() => console.log("프로필 편집 클릭")}
-        /> */}
-      </div>
-
       {/* 부서별 목록 */}
       <div className="bg-white flex flex-col">
-        {mockData.map((employeeGroup: any) => (
-          <EmployeeCardGroup
-            key={employeeGroup.id}
-            employeeGroup={employeeGroup}
-          />
-        ))}
+        {mockEmployeeData.map((employeeGroup: any) => {
+          return (
+            <Collapse key={employeeGroup.id} title={employeeGroup.title}>
+              {employeeGroup.contacts.map((contact: any) => (
+                <PersonCard key={contact.id} name={contact.name} />
+              ))}
+            </Collapse>
+          );
+        })}
       </div>
     </div>
   );

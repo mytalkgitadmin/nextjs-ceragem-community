@@ -4,7 +4,6 @@ import { ChevronDown, ChevronUp, Search } from "lucide-react";
 // Collapse Component with Animation
 interface CollapseProps {
   title: string;
-  isOpen: boolean;
   onToggle?: () => void;
   children: ReactNode;
   className?: string;
@@ -13,7 +12,6 @@ interface CollapseProps {
 
 export const Collapse: React.FC<CollapseProps> = ({
   title,
-  isOpen,
   onToggle,
   children,
   className = "",
@@ -21,11 +19,17 @@ export const Collapse: React.FC<CollapseProps> = ({
 }) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(defaultOpen);
 
   // 초기 상태를 initOpen과 isOpen을 고려해서 설정
   const [height, setHeight] = useState<number>(() => {
     return defaultOpen && isOpen ? ("auto" as any) : 0;
   });
+
+  const handleToggle = () => {
+    setIsOpen(!isOpen);
+    onToggle?.();
+  };
 
   // 첫 번째 렌더링 후 실제 높이를 측정하고 애니메이션 활성화
   useEffect(() => {
@@ -55,7 +59,7 @@ export const Collapse: React.FC<CollapseProps> = ({
   return (
     <div className={`border-b border-gray-100 last:border-b-0 ${className}`}>
       <button
-        onClick={onToggle}
+        onClick={handleToggle}
         className="w-full flex items-center justify-between py-4 px-4 text-left hover:bg-gray-50 transition-colors"
       >
         <h3 className="text-sm font-semibold text-gray-900">{title}</h3>

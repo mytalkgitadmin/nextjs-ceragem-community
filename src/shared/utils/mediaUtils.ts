@@ -1,8 +1,13 @@
-import heic2any from "heic2any";
-
 // 이미지 파일 비율 계산
 export const calculateImageRatio = (file: File): Promise<number> => {
   return new Promise((resolve) => {
+    // 클라이언트 사이드에서만 실행되도록 체크
+    if (typeof window === "undefined") {
+      console.warn("이미지 비율 계산은 클라이언트 사이드에서만 가능합니다.");
+      resolve(1); // 기본값 반환
+      return;
+    }
+
     const img = document.createElement("img");
     const objectUrl = URL.createObjectURL(file);
     img.src = objectUrl;
@@ -18,6 +23,13 @@ export const calculateImageRatio = (file: File): Promise<number> => {
 // 비디오 파일 비율 계산
 export const calculateVideoRatio = (file: File): Promise<number> => {
   return new Promise((resolve) => {
+    // 클라이언트 사이드에서만 실행되도록 체크
+    if (typeof window === "undefined") {
+      console.warn("비디오 비율 계산은 클라이언트 사이드에서만 가능합니다.");
+      resolve(1); // 기본값 반환
+      return;
+    }
+
     const video = document.createElement("video");
     const objectUrl = URL.createObjectURL(file);
     video.src = objectUrl;
@@ -48,7 +60,16 @@ export const isSvg = (file: File): boolean => {
 export const convertHeicToJpeg = async (file: File): Promise<File | null> => {
   if (!isHeic(file)) return null;
 
+  // 클라이언트 사이드에서만 실행되도록 체크
+  if (typeof window === "undefined") {
+    console.warn("HEIC 변환은 클라이언트 사이드에서만 가능합니다.");
+    return null;
+  }
+
   try {
+    // Dynamic import로 heic2any 로드
+    const heic2any = (await import("heic2any")).default;
+
     const convertedBlob = await heic2any({
       blob: file,
       toType: "image/jpeg",
@@ -69,12 +90,17 @@ export const convertHeicToJpeg = async (file: File): Promise<File | null> => {
   } catch (error) {
     console.error("HEIC 변환 오류:", error);
     return null;
-  } finally {
   }
 };
 
 export const convertSvgToJpeg = async (file: File): Promise<File | null> => {
   if (!isSvg(file)) return null;
+
+  // 클라이언트 사이드에서만 실행되도록 체크
+  if (typeof window === "undefined") {
+    console.warn("SVG 변환은 클라이언트 사이드에서만 가능합니다.");
+    return null;
+  }
 
   return new Promise((resolve) => {
     const reader = new FileReader();
@@ -148,6 +174,12 @@ export const convertSvgToJpeg = async (file: File): Promise<File | null> => {
 };
 
 export const convertToJpeg = async (file: File): Promise<File | null> => {
+  // 클라이언트 사이드에서만 실행되도록 체크
+  if (typeof window === "undefined") {
+    console.warn("파일 변환은 클라이언트 사이드에서만 가능합니다.");
+    return file;
+  }
+
   if (isHeic(file)) {
     return await convertHeicToJpeg(file);
   }

@@ -19,7 +19,7 @@ export const MessageContentVideo = ({ message }: MessageContentVideoProps) => {
   const file = resource[0]; // Q: 파일 한개만 처리?
 
   if (!file) {
-    return "비디오 전송 중 오류가 발생했습니다.";
+    return <span>비디오 전송 중 오류가 발생했습니다.</span>;
   }
 
   const videoUrl = DOMAIN + file.originalUrl;

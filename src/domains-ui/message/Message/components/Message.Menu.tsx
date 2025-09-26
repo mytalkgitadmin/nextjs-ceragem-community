@@ -25,7 +25,10 @@ export interface MessageMenuProps {
   children: React.ReactNode;
 }
 
-export const MessageMenu = ({ message, children }: MessageMenuProps) => {
+export const MessageMenu = ({
+  message,
+  children,
+}: MessageMenuProps): React.ReactNode => {
   const { message: antMessage } = AntdApp.useApp();
 
   const { sendBirdId: mySendBirdId } = useAuth();

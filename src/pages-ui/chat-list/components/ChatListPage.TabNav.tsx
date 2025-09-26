@@ -5,7 +5,7 @@ import {
   ChatBubbleOvalLeftIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
-import { useModal } from "@/modal-system";
+import { useAutoModal } from "@/shared-ui/hooks";
 import { ChatListPageCreateMenu } from "./ChatListPage.CreateMenu";
 
 export interface ChatListPageTabNavProps {
@@ -19,7 +19,7 @@ export function ChatListPageTabNav({
   onTabChange,
   className = "",
 }: ChatListPageTabNavProps) {
-  const { openModal, closeModal } = useModal();
+  const { openAutoCloseModal } = useAutoModal();
 
   const tabs: TabItem[] = [
     { key: "chats", label: "대화방" },
@@ -27,30 +27,37 @@ export function ChatListPageTabNav({
   ];
 
   const openChannelCreateMenu = () => {
-    const id = openModal(
-      <ChatListPageCreateMenu
-        onChannelCreated={() => {
-          closeModal(id);
-        }}
-      />,
+    openAutoCloseModal(
+      "대화방 만들기",
+      ChatListPageCreateMenu,
       {
-        title: "대화방 만들기",
-        size: "md",
+        onChannelCreated: () => {
+          console.log("대화방 만들기 완료");
+        },
+      },
+      {
+        autoCloseCallbacks: ["onChannelCreated"],
       }
     );
   };
 
   const renderActions = () => {
-    return (
-      <div className="flex items-center space-x-2">
-        <button
-          onClick={openChannelCreateMenu}
-          className="p-1 hover:bg-gray-100 rounded-full transition-colors duration-200"
-        >
-          <ChatBubbleOvalLeftIcon className="w-6 h-6 text-gray-600" />
-        </button>
-      </div>
-    );
+    if (activeTab === "chats") {
+      return (
+        <div className="flex items-center space-x-2">
+          <button
+            onClick={openChannelCreateMenu}
+            className="p-1 hover:bg-gray-100 rounded-full transition-colors duration-200"
+          >
+            <ChatBubbleOvalLeftIcon className="w-6 h-6 text-gray-600" />
+          </button>
+        </div>
+      );
+    }
+    if (activeTab === "announcements") {
+      return <>구현 예정</>;
+    }
+    return null;
   };
 
   return (

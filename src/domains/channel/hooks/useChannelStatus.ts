@@ -2,7 +2,7 @@
 
 import { useMemo, useCallback } from "react";
 import { useChannelList } from "../queries";
-import { ChannelStatus } from "../constants";
+import { CHANNEL_STATUS } from "../constants";
 
 export const useChannelStatus = (channelUrl: string) => {
   const { data: listData } = useChannelList();
@@ -16,11 +16,11 @@ export const useChannelStatus = (channelUrl: string) => {
 
   //   if (channelInfo?.channelType === 'MY') { //CHECK: 패밀리타운에 구현되어 있음
   //     // MY 타입 채널(메모)은 항상 메시지 입력 가능
-  //     return ChannelStatus.ACTIVE;
+  //     return CHANNEL_STATUS.ACTIVE;
   //   }
 
   if (!channelInfo?.members) {
-    return ChannelStatus.NO_MEMBERS;
+    return CHANNEL_STATUS.NO_MEMBERS;
   }
 
   const members = channelInfo.members.filter(
@@ -28,15 +28,15 @@ export const useChannelStatus = (channelUrl: string) => {
   );
 
   if (members.length === 0) {
-    return ChannelStatus.NO_MEMBERS;
+    return CHANNEL_STATUS.NO_MEMBERS;
   }
 
   if (members.every((item: any) => item?.accountStatus === "EXIT")) {
-    return ChannelStatus.USER_NOT_FOUND;
+    return CHANNEL_STATUS.USER_NOT_FOUND;
   }
 
   if (members.every((item: any) => item?.relationType === "BLOCK")) {
-    return ChannelStatus.BLOCKED_USER;
+    return CHANNEL_STATUS.BLOCKED_USER;
   }
 
   if (
@@ -45,8 +45,8 @@ export const useChannelStatus = (channelUrl: string) => {
         item?.relationType === "LEAVE" || item?.participantType === "KICKED"
     )
   ) {
-    return ChannelStatus.LEFT_CHAT;
+    return CHANNEL_STATUS.LEFT_CHAT;
   }
 
-  return ChannelStatus.ACTIVE;
+  return CHANNEL_STATUS.ACTIVE;
 };

@@ -1,9 +1,9 @@
-export const mockData = [
+export const mockEmployeeData = [
   {
     id: "colleagues",
     title: "본사",
     count: 5,
-    users: [
+    contacts: [
       {
         id: "kim",
         name: "김제라",
@@ -25,7 +25,7 @@ export const mockData = [
     id: "management",
     title: "경기도출장사업장",
     count: 2,
-    users: [
+    contacts: [
       {
         id: "choi_manager",
         name: "최지선장",
@@ -46,7 +46,7 @@ export const mockData = [
     id: "headquarters",
     title: "선남본고장",
     count: 1450,
-    users: [
+    contacts: [
       {
         id: "choi_manager2",
         name: "최지선장",

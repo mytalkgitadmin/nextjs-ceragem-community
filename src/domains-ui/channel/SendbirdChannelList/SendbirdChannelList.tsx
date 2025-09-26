@@ -1,18 +1,20 @@
 import React, { useState, SetStateAction, Dispatch } from "react";
 import { GroupChannel } from "@sendbird/chat/groupChannel";
 import { GroupChannelListProvider } from "@sendbird/uikit-react/GroupChannelList/context";
-import { useChannelOpen } from "@/domains/channel";
+import { useChatRoomOpen } from "@/domains/channel";
 import { useGroupChannelListContext } from "@sendbird/uikit-react/GroupChannelList/context";
 import PlaceHolder from "@sendbird/uikit-react/ui/PlaceHolder";
 import { useInfiniteScroll } from "@/shared/hooks";
-import { ChannelPreview, SendbirdChannelListEmpty } from "./components";
+import { SendbirdChannelListEmpty } from "./components";
+import { ChannelPreview } from "../ChannelPreview";
 import styles from "./SendbirdChannelList.module.css";
 import "./sendbird.css";
 
 const SCROLL_CONTAINER_ID = "sendbird_channel_list";
 
 export const SendbirdChannelList = () => {
-  const { openChannel } = useChannelOpen();
+  const { openChannel } = useChatRoomOpen();
+
   return (
     <GroupChannelListProvider
       onChannelSelect={(channel) => channel && openChannel(channel)}

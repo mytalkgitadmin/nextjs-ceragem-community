@@ -4,7 +4,7 @@ import React from "react";
 interface CheckboxProps {
   checked: boolean;
   onChange: (checked: boolean) => void;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   className?: string;
   disabled?: boolean;
 }
@@ -50,7 +50,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
           )}
         </div>
       </div>
-      <div className="ml-3">{children}</div>
+      {children && <div className="ml-3">{children}</div>}
     </label>
   );
 };

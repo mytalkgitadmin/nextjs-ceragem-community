@@ -3,7 +3,7 @@ import type { ContextMenuWrapperProps } from "./types";
 import { useContextMenu } from "./useContextMenu";
 import ContextMenu from "./ContextMenu";
 
-const ContextMenuWrapper: React.FC<ContextMenuWrapperProps> = ({
+const ContextMenuWrapper = ({
   children,
   items,
   triggerMode = "contextmenu",
@@ -12,7 +12,7 @@ const ContextMenuWrapper: React.FC<ContextMenuWrapperProps> = ({
   onOpen,
   onClose,
   className,
-}) => {
+}: ContextMenuWrapperProps): React.ReactElement => {
   const { isOpen, position, handleClose, triggerProps } = useContextMenu({
     items,
     triggerMode,

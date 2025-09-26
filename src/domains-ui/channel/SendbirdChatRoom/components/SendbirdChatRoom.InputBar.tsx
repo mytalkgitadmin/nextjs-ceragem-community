@@ -5,7 +5,7 @@ import { useState } from "react";
 import TextArea, { TextAreaRef } from "antd/es/input/TextArea";
 import styles from "./SendbirdChatRoom.InputBar.module.css";
 import { MessageCustomType } from "@/domains/message";
-import { useChannelStatus, ChannelStatus } from "@/domains/channel";
+import { useChannelStatus, CHANNEL_STATUS } from "@/domains/channel";
 
 export const CHAT_STATUS_MESSAGES: Record<any, string> = {
   ACTIVE: "메세지 입력",
@@ -106,7 +106,7 @@ export function SendbirdChatRoomInputBar({
           value={message}
           size="large"
           placeholder={CHAT_STATUS_MESSAGES[channelStatus]}
-          disabled={channelStatus !== ChannelStatus.ACTIVE}
+          disabled={channelStatus !== CHANNEL_STATUS.ACTIVE}
           autoSize={{ minRows: 1, maxRows: 20 }}
           autoFocus={true}
           maxLength={5000}

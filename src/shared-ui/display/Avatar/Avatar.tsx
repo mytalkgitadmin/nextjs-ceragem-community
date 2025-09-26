@@ -1,12 +1,14 @@
 import React from "react";
 
+export type AvatarSize = "xs" | "sm" | "md" | "lg";
+
 export interface AvatarProps {
   src?: string;
   alt?: string;
   name?: string;
-  size?: number;
+  size?: AvatarSize;
   className?: string;
-  isGroupMember?: boolean;
+  isGrouping?: boolean;
 }
 
 // Avatar 컴포넌트
@@ -14,9 +16,9 @@ export const Avatar = ({
   src,
   alt = "",
   name = "",
-  size = 56,
+  size = "md",
   className = "",
-  isGroupMember = false,
+  isGrouping = false,
 }: AvatarProps) => {
   const [imageError, setImageError] = React.useState(false);
 
@@ -30,14 +32,33 @@ export const Avatar = ({
       .slice(0, 2);
   };
 
-  const containerSize = `${size * 0.625 * 0.1}rem`;
+  // 사이즈별 스타일 매핑
+  const sizeConfig = {
+    xs: {
+      container: "w-6 h-6", // 24px
+      text: "text-xs",
+    },
+    sm: {
+      container: "w-8 h-8", // 32px
+      text: "text-sm",
+    },
+    md: {
+      container: "w-14 h-14", // 56px
+      text: "text-base",
+    },
+    lg: {
+      container: "w-16 h-16", // 64px
+      text: "text-lg",
+    },
+  };
 
-  if (isGroupMember) {
+  const config = sizeConfig[size];
+
+  if (isGrouping) {
     // 그룹 내부 아바타
     return (
       <div
-        className={`rounded-full overflow-hidden bg-gray-300 ${className}`}
-        style={{ width: containerSize, height: containerSize }}
+        className={`rounded-full overflow-hidden bg-gray-300 ${config.container} ${className}`}
       >
         {!imageError && src ? (
           <img
@@ -47,7 +68,9 @@ export const Avatar = ({
             onError={() => setImageError(true)}
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-gray-600 font-medium text-sm">
+          <div
+            className={`w-full h-full flex items-center justify-center text-gray-600 font-medium ${config.text}`}
+          >
             {getInitials(name)}
           </div>
         )}
@@ -57,14 +80,8 @@ export const Avatar = ({
 
   // 일반 아바타 (그룹 외부)
   return (
-    <div
-      className={`relative ${className}`}
-      style={{ width: containerSize, height: containerSize }}
-    >
-      <div
-        className="relative w-full h-full bg-gray-800 rounded-full overflow-hidden"
-        style={{ aspectRatio: "1" }}
-      >
+    <div className={`relative ${config.container} ${className}`}>
+      <div className="relative w-full h-full bg-gray-800 rounded-full overflow-hidden">
         {!imageError && src ? (
           <img
             src={src}
@@ -73,7 +90,9 @@ export const Avatar = ({
             onError={() => setImageError(true)}
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-white font-medium text-sm">
+          <div
+            className={`w-full h-full flex items-center justify-center text-white font-medium ${config.text}`}
+          >
             {getInitials(name)}
           </div>
         )}

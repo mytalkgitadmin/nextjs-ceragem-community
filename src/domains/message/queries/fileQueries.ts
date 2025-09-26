@@ -7,8 +7,8 @@ export const useFileUploadAcceptList = (
 ) => {
   return useQuery({
     queryKey: [fileQueryKeys.fileUploadAcceptList, category],
-    queryFn: () => {
-      return getFileUploadAcceptList(category).then(
+    queryFn: async () => {
+      return await getFileUploadAcceptList(category).then(
         (res) => res.resultData.accept
       );
     },
